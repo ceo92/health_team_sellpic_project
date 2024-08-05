@@ -20,7 +20,4 @@ public abstract class User {
   private String password; //비밀번호 SHA-256
   private RoleType roleType; //권한
 
-
-
-
 }

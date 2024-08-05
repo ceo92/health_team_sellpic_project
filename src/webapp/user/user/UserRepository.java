@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import webapp.user.user.UserController.LoginDto;
 
 /**
  * 추후 JDBC로 마이그레이션
@@ -20,8 +22,14 @@ public class UserRepository {
   }
 
 
-  public User findById(Integer id){
-    return store.get(id);
+  public Optional<User> findById(Integer id){
+    return Optional.ofNullable(store.get(id));
+  }
+
+  public Optional<User> findByLoginEmail(LoginDto loginDto){
+    return store.values().stream().filter(user -> user.getLoginEmail().equals(loginDto.getLoginEmailId()))
+        .filter(user -> user.getPassword().equals(loginDto.getPassword()))
+        .findFirst();
   }
 
   public List<User> findAll(){
