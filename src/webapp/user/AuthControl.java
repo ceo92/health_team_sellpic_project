@@ -1,8 +1,6 @@
 package webapp.user;
 
-import webapp.user.user.Admin;
-import webapp.user.user.Member;
-import webapp.user.user.User;
+import webapp.user.domain.User;
 
 public class AuthControl {
 

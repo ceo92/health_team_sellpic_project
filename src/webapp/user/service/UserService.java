@@ -1,6 +1,12 @@
-package webapp.user.user;
+package webapp.user.service;
 
-import webapp.user.user.UserController.LoginDto;
+import webapp.user.domain.Member;
+import webapp.user.domain.User;
+import webapp.user.dto.DeliveryManDto;
+import webapp.user.dto.LoginDto;
+import webapp.user.dto.MemberDto;
+import webapp.user.dto.WarehouseManagerDto;
+import webapp.user.repository.UserRepository;
 
 public class UserService {
 
@@ -11,9 +17,20 @@ public class UserService {
    * 1. 로그인 아이디 중복 아닌지 검증
    * 2. 비밀번호 , 비밀번호 재확인 검증
    */
-  public void join(UserSaveDto userSaveDto){
-    validateAuthorize()
+
+  public void memberJoin(MemberDto memberDto){
+    User member = new Member();
   }
+
+  public void deliveryManJoin(DeliveryManDto deliveryManDto){
+
+  }
+
+  public void warehouseManagerJoin(WarehouseManagerDto warehouseManagerDto){
+
+  }
+
+
 
   /**
    * -- 로그인 검증 --

@@ -1,10 +1,11 @@
-package webapp.user.user;
+package webapp.user.domain;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import webapp.user.user.RoleType;
 
 /**
  * 공통 User 정의 , 배송기사와 회원 정도만 상속받음 , 총관리자(ADMIN) , 창고관리자(WarehouseAdmin)는 해당 User 폼에서 모든 데이터 받을 수 있으므로 별도로 extends 하지 않았음
@@ -19,5 +20,13 @@ public abstract class User {
   private String loginEmail; //로그인 아이디(이메일 형식)
   private String password; //비밀번호 SHA-256
   private RoleType roleType; //권한
+
+  public User(String name , String phoneNumber , String loginEmail , String password){
+    this.name =name;
+    this.phoneNumber = phoneNumber;
+    this.loginEmail = loginEmail;
+    this.password = password;
+  }
+
 
 }

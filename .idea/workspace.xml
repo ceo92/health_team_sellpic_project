@@ -5,32 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7bef152c-5c82-4c65-b708-328ba44755df" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/lombok.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lombok.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/webapp/StandardInputEx.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/webapp/WEB-INF/lib/gson-2.8.7.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/webapp/WEB-INF/lib/mysql-connector-j-8.3.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/webapp/user/Address.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/webapp/user/AuthControl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/webapp/user/connection/DBConnectionUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/webapp/user/security/SHA256WithSalt.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/webapp/user/user/Admin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/webapp/user/user/DeliveryMan.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/webapp/user/user/LoginController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/webapp/user/user/Member.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/webapp/user/user/RoleType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/webapp/user/user/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/webapp/user/user/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/webapp/user/user/WarehouseManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wms.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/webapp/user/dto/DeliveryManDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/webapp/user/dto/LoginDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/webapp/user/dto/MemberDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/webapp/user/dto/UserDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/webapp/user/dto/WarehouseManagerDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/webapp/user/AuthControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/AuthControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/webapp/user/user/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/domain/Admin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/webapp/user/user/DeliveryMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/domain/DeliveryMan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/webapp/user/user/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/domain/Member.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/webapp/user/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/domain/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/webapp/user/user/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/webapp/user/user/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/webapp/user/user/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/webapp/user/user/WarehouseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/domain/WarehouseManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,21 +48,21 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.LoginController.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/lee/Desktop/wms/src/webapp/user",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.LoginController.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/lee/Desktop/wms/src/webapp/user&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="webapp.user" />
@@ -86,12 +75,12 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="LoginController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="webapp.user.user.LoginController" />
+    <configuration name="UserController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="webapp.user.controller.UserController" />
       <module name="wms" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="webapp.user.user.*" />
+          <option name="PATTERN" value="webapp.user.domain.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -101,7 +90,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.LoginController" />
+        <item itemvalue="Application.UserController" />
       </list>
     </recent_temporary>
   </component>
@@ -114,6 +103,28 @@
       <option name="presentableId" value="Default" />
       <updated>1722504958810</updated>
     </task>
+    <task id="LOCAL-00001" summary="wms 프로젝트 생성 및 도메인 정의">
+      <option name="closed" value="true" />
+      <created>1722782766653</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1722782766653</updated>
+    </task>
+    <task id="LOCAL-00002" summary="리포지토리 , 서비스 , 컨트롤러 틀 구현">
+      <option name="closed" value="true" />
+      <created>1722823234592</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1722823234592</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="wms 프로젝트 생성 및 도메인 정의" />
+    <MESSAGE value="리포지토리 , 서비스 , 컨트롤러 틀 구현" />
+    <option name="LAST_COMMIT_MESSAGE" value="리포지토리 , 서비스 , 컨트롤러 틀 구현" />
   </component>
 </project>

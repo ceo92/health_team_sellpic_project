@@ -1,0 +1,13 @@
+package webapp.user.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class MemberDto extends UserDto{
+  private String businessNum; //사업자번호
+  private String businessName; //상호명
+
+
+}
