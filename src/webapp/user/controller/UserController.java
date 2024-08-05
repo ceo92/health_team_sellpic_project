@@ -42,6 +42,8 @@ public class UserController {
             String businessNum = br.readLine();
             System.out.print("상호명 입력 : ");
             String businessName = br.readLine();
+            System.out.println("임대할 창고 면적 입력");
+            int warehouseArea = Integer.parseInt(br.readLine());
             System.out.print("이름 : ");
             String memberName = br.readLine();
             System.out.print("핸드폰 번호 : ");
