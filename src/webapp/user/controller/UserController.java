@@ -3,9 +3,10 @@ package webapp.user.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import webapp.user.connection.DBConnectionUtil;
 import webapp.user.dto.DeliveryManDto;
 import webapp.user.dto.LoginDto;
-import webapp.user.dto.MemberDto;
+import webapp.user.dto.BusinessManDto;
 import webapp.user.dto.WarehouseManagerDto;
 import webapp.user.service.UserService;
 
@@ -44,15 +45,15 @@ public class UserController {
             String businessName = br.readLine();
             System.out.println("임대할 창고 면적 입력");
             int warehouseArea = Integer.parseInt(br.readLine());
+            String memberPhoneNumber = br.readLine();
             System.out.print("이름 : ");
             String memberName = br.readLine();
             System.out.print("핸드폰 번호 : ");
-            String memberPhoneNumber = br.readLine();
             System.out.print("이메일 아이디 : ");
             String memberLoginEmail = br.readLine();
             System.out.print("비밀번호 : ");
             String memberPassword = br.readLine();
-            MemberDto memberDto = new MemberDto(businessNum , businessName , memberName , memberPhoneNumber , memberLoginEmail , memberPassword);
+            BusinessManDto businessManDto = new BusinessManDto(businessNum , businessName , memberName , memberPhoneNumber , memberLoginEmail , memberPassword);
 
           case 2:
             System.out.print("이름 : ");

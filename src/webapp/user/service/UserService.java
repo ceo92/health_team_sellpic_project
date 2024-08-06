@@ -1,10 +1,10 @@
 package webapp.user.service;
 
-import webapp.user.domain.Member;
+import webapp.user.domain.BusinessMan;
 import webapp.user.domain.User;
 import webapp.user.dto.DeliveryManDto;
 import webapp.user.dto.LoginDto;
-import webapp.user.dto.MemberDto;
+import webapp.user.dto.BusinessManDto;
 import webapp.user.dto.WarehouseManagerDto;
 import webapp.user.repository.UserRepository;
 
@@ -18,8 +18,8 @@ public class UserService {
    * 2. 비밀번호 , 비밀번호 재확인 검증
    */
 
-  public void memberJoin(MemberDto memberDto){
-    User member = new Member();
+  public void memberJoin(BusinessManDto businessManDto){
+    User member = new BusinessMan();
   }
 
   public void deliveryManJoin(DeliveryManDto deliveryManDto){
