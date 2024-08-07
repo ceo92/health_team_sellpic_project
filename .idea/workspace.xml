@@ -5,15 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7bef152c-5c82-4c65-b708-328ba44755df" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/webapp/user/connection/DBConnectionUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/connection/DBConnectionUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/webapp/user/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/domain/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/domain/BusinessMan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/domain/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/webapp/user/domain/BusinessMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/domain/BusinessMan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/webapp/user/dto/BusinessManDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/dto/BusinessManDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/webapp/user/dto/DeliveryManDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/dto/DeliveryManDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/dto/MemberDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/dto/BusinessManDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/dto/UserDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/webapp/user/dto/WarehouseManagerDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/dto/WarehouseManagerDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/webapp/user/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/repository/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/webapp/user/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/webapp/user/user/RoleType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/user/RoleType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +59,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="webapp.user.exception" />
       <recent name="webapp.user" />
       <recent name="" />
     </key>
@@ -129,7 +130,23 @@
       <option name="project" value="LOCAL" />
       <updated>1722846873664</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="1. 도메인 명 Member =&gt; BusinessMan 변경 &#10;&#10;2. 이름 추가&#10;DeliveryManDto : carNum(차량번호) &#10;BusinessManDto warehouseArea(창고면적) 추가">
+      <option name="closed" value="true" />
+      <created>1722933681275</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1722933681275</updated>
+    </task>
+    <task id="LOCAL-00006" summary="1. 도메인 명 Member =&gt; BusinessMan 변경 &#10;&#10;2. 이름 추가&#10;DeliveryManDto : carNum(차량번호) &#10;BusinessManDto warehouseArea(창고면적) 추가">
+      <option name="closed" value="true" />
+      <created>1722933730654</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1722933730654</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -137,6 +154,7 @@
     <MESSAGE value="리포지토리 , 서비스 , 컨트롤러 틀 구현" />
     <MESSAGE value="도메인 완성(MEMBER : 창고면적 추가 , DELIVERY_MAN : 차량번호 추가)" />
     <MESSAGE value="Guest 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="Guest 추가" />
+    <MESSAGE value="1. 도메인 명 Member =&gt; BusinessMan 변경 &#10;&#10;2. 이름 추가&#10;DeliveryManDto : carNum(차량번호) &#10;BusinessManDto warehouseArea(창고면적) 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="1. 도메인 명 Member =&gt; BusinessMan 변경 &#10;&#10;2. 이름 추가&#10;DeliveryManDto : carNum(차량번호) &#10;BusinessManDto warehouseArea(창고면적) 추가" />
   </component>
 </project>

@@ -23,14 +23,16 @@ public class UserRepository {
   }
 
 
+
+
+
+
   public Optional<User> findById(Integer id){
     return Optional.ofNullable(store.get(id));
   }
 
-  public Optional<User> findByLoginEmail(LoginDto loginDto){
-    return store.values().stream().filter(user -> user.getLoginEmail().equals(loginDto.getLoginEmailId()))
-        .filter(user -> user.getPassword().equals(loginDto.getPassword()))
-        .findFirst();
+  public Optional<User> findByLoginEmail(String loginEmail){
+    return store.values().stream().filter(user -> user.getLoginEmail().equals(loginEmail)).findFirst();
   }
 
   public List<User> findAll(){

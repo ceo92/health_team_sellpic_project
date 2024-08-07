@@ -12,12 +12,7 @@ import java.util.Properties;
 
 public class DBConnectionUtil {
 
-  private static final DBConnectionUtil dbConnectionUtil = new DBConnectionUtil();
-
-  private static String dbUrl;
-  private static String dbUsername;
-  private static String dbPassword;
-  private DBConnectionUtil(){
+  public static Connection getConnection() {
     Properties properties = new Properties();
 
     // application.properties 파일 경로를 지정합니다.
@@ -28,9 +23,9 @@ public class DBConnectionUtil {
       properties.load(input);
 
       // properties 값을 가져옵니다.
-      dbUrl = properties.getProperty("database.url");
-      dbUsername = properties.getProperty("database.username");
-      dbPassword = properties.getProperty("database.password");
+      String dbUrl = properties.getProperty("database.url");
+      String dbUsername = properties.getProperty("database.username");
+      String dbPassword = properties.getProperty("database.password");
 
       con = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
     } catch (IOException e) {
@@ -38,17 +33,6 @@ public class DBConnectionUtil {
     } catch (SQLException e) {
       throw new IllegalStateException(e.getMessage());
     }
-  }
-  public static Connection getConnection() {
-    Connection con = null;
-    try {
-      con = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
-    }catch (SQLException e) {
-      throw new RuntimeException(e);
-    }
-
     return con;
-
-  }
 
 }
