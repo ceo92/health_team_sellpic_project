@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
 import webapp.user.connection.DBConnectionUtil;
+import webapp.user.domain.Admin;
 import webapp.user.domain.BusinessMan;
 import webapp.user.domain.DeliveryMan;
 import webapp.user.domain.User;
@@ -13,8 +14,9 @@ import webapp.user.dto.LoginDto;
 import webapp.user.dto.BusinessManDto;
 import webapp.user.dto.WarehouseManagerDto;
 import webapp.user.repository.UserRepository;
+import webapp.user.user.RoleType;
 
-public class UserService {
+public class UserService { //스프링 시큐리티의 UserDetails를 서비스에서 implements 함 ,
 
   private static final UserRepository userRepository = new UserRepository(); //DI , 하지만 스프링 없으니 불가능 , OCP DIP 위배 ㅜㅜ
 
@@ -28,7 +30,7 @@ public class UserService {
    * User
    */
 
-  public void businessManJoin(BusinessManDto businessManDto) throws SQLException {
+  public Integer businessManJoin(BusinessManDto businessManDto) throws SQLException { //SQLException은 어차피 처리 못해 db 에러이니 그냥 JVM까지 던지는 수밖에 없다. 오류 화면을 보여주거나 오류 api를 던지는 @ControllerAdvice의 @ExceptionHandler이 있는 것도 아니고
     Connection con = null;
     try {
       con = getConnection();
@@ -36,32 +38,31 @@ public class UserService {
 
       String businessName = businessManDto.getBusinessName();
       String businessNum = businessManDto.getBusinessNum();
-      int warehouseArea = businessManDto.getWarehouseArea();
       String name = businessManDto.getName();
       String phoneNumber = businessManDto.getPhoneNumber();
       String loginEmail = businessManDto.getLoginEmail();
       String password = businessManDto.getPassword();
       String rePassword = businessManDto.getRePassword();
-      validateBeforeJoin(loginEmail, password, rePassword);
+      validateBeforeJoin(loginEmail, password, rePassword , con);
 
-      User user = new BusinessMan(businessName, businessNum, warehouseArea, name, phoneNumber, loginEmail, password);
-      userRepository.save(user);
+      User user = new DeliveryMan(businessName ,businessNum , name, phoneNumber, loginEmail, password);
+      Integer saveId = userRepository.save(user, con);
       con.commit();
-    }catch (Exception e){
+      return saveId;
+    }catch (IllegalArgumentException e){
       System.out.println();
       System.out.println("=====ERROR=====");
       System.out.println(e.getMessage());
       System.out.println();
-      con.rollback();
-    }
-    finally {
+      con.rollback(); //어차피 처리 못해 그냥 main에 던져서 JVM으로 가서 실패할 수밖에 없음
+    } finally {
       closeConnection(con);
     }
   }
 
 
 
-  public void deliveryManJoin(DeliveryManDto deliveryManDto) throws SQLException {
+  public Integer deliveryManJoin(DeliveryManDto deliveryManDto) throws SQLException {
     Connection con = null;
     try {
       con = getConnection();
@@ -74,12 +75,13 @@ public class UserService {
       String loginEmail = deliveryManDto.getLoginEmail();
       String password = deliveryManDto.getPassword();
       String rePassword = deliveryManDto.getRePassword();
-      validateBeforeJoin(loginEmail, password, rePassword);
+      validateBeforeJoin(loginEmail, password, rePassword ,con);
 
       User user = new DeliveryMan(deliveryManNum ,carNum , name, phoneNumber, loginEmail, password);
-      userRepository.save(user);
+      Integer saveId = userRepository.save(user, con);
       con.commit();
-    }catch (Exception e){
+      return saveId;
+    }catch (IllegalArgumentException e){
       System.out.println();
       System.out.println("=====ERROR=====");
       System.out.println(e.getMessage());
@@ -90,7 +92,7 @@ public class UserService {
     }
   }
 
-  public void warehouseManagerJoin(WarehouseManagerDto warehouseManagerDto) throws SQLException {
+  public Integer warehouseManagerJoin(WarehouseManagerDto warehouseManagerDto) throws SQLException {
     Connection con = null;
     try {
       con = getConnection();
@@ -101,12 +103,13 @@ public class UserService {
       String loginEmail = warehouseManagerDto.getLoginEmail();
       String password = warehouseManagerDto.getPassword();
       String rePassword = warehouseManagerDto.getRePassword();
-      validateBeforeJoin(loginEmail, password, rePassword);
+      validateBeforeJoin(loginEmail, password, rePassword ,con);
 
       User user = new WarehouseManager(name, phoneNumber, loginEmail, password);
-      userRepository.save(user);
+      Integer saveId = userRepository.save(user, con);
       con.commit();
-    }catch (Exception e){
+      return saveId;
+    }catch (IllegalArgumentException e){
       System.out.println();
       System.out.println("=====ERROR=====");
       System.out.println(e.getMessage());
@@ -121,8 +124,9 @@ public class UserService {
   /**
    * 회원가입 전 검증
    */
-  private static void validateBeforeJoin(String loginEmail, String password, String rePassword) {
-    userRepository.findByLoginEmail(loginEmail).ifPresent(a -> {
+  private static void validateBeforeJoin(String loginEmail, String password, String rePassword , Connection con) {
+    //1. 이미 존재하는 아이디인지
+    userRepository.findByLoginEmail(loginEmail , con).ifPresent(a -> {
       throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
     });
 
@@ -148,25 +152,24 @@ public class UserService {
    * 1. 로그인 아이디 일치하는지
    * 2. 로그인 아이디 일치하면 비밀번호 일치한지
    */
-
-
-
-
-
-  public void validateAuthorize(User user , LoginDto loginDto){
-    switch (user.getRoleType()){
-      case ADMIN :
-
-
-      case WAREHOUSE_MANAGER:
-
-      case DELIVERY_MAN:
-
-      case MEMBER:
-
-      case GUEST:
-    }
+  public User login(String loginEmail , String password) throws SQLException {
+    Connection con = getConnection();
+    con.setReadOnly(true);
+    //이미 권한 다 할당된 사용자
+    User user = userRepository.findByLoginEmail(loginEmail, con)
+        .filter(u -> u.getPassword().equals(password))
+        .orElseThrow(() -> new IllegalArgumentException("로그인 아이디 혹은 비밀번호를 다시 한 번 확인해주세요"));
+    closeConnection(con);
+    return user;
   }
+
+  public void logout(){
+    Connection con = getConnection();
+
+  }
+
+
+
 
   private static Connection getConnection() {
     return DBConnectionUtil.getConnection();
@@ -176,6 +179,9 @@ public class UserService {
     if (con != null) {
       try {
         con.setAutoCommit(true); //종료 시에는 자동 커밋 모드로 ! , 커넥션 풀 쓸 경우
+        if (con.isReadOnly()){
+          con.setReadOnly(false);
+        }
         con.close(); //Connection 닫기
       } catch (SQLException e) {
         System.out.println("error = " + e.getMessage());

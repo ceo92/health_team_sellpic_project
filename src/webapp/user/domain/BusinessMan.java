@@ -11,14 +11,11 @@ import webapp.user.Address;
 public class BusinessMan extends User {
   private String businessNum; //사업자번호 , PK가 아님
   private String businessName; //상호명
-  private int warehouseArea; //창고 면적
-  //private Address address;
 
-  public BusinessMan(String businessNum , String businessName ,int warehouseArea, String name ,String phoneNumber ,String loginEmail ,String password){
+  public BusinessMan(String businessNum , String businessName , String name ,String phoneNumber ,String loginEmail ,String password){
     super(name , phoneNumber , loginEmail , password);
     this.businessNum = businessNum;
     this.businessName = businessName;
-    this.warehouseArea = warehouseArea;
   }
 
 

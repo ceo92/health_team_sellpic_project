@@ -13,7 +13,6 @@ public class BusinessManDto {
   private String rePassword; //비밀번호 한번 더
   private String businessNum; //사업자번호
   private String businessName; //상호명
-  private int warehouseArea; //창고 면적
 
 
 }

@@ -18,7 +18,7 @@ public class AuthControl {
         // 배송기사 기능 접근
         accessDeliveryPersonFeatures(feature);
         break;
-      case MEMBER:
+      case BUSINESS_MAN:
         // 회원 기능 접근
         accessMemberFeatures(feature);
         break;

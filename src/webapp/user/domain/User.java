@@ -20,6 +20,7 @@ public abstract class User {
   private String phoneNumber; //핸드폰 번호
   private String loginEmail; //로그인 아이디(이메일 형식)
   private String password; //비밀번호 SHA-256
+  private String dType; //DTYPE 어느 자식의 데이터인지를 식별하기 위한 값
   private RoleType roleType; //권한
 
   public User(String name , String phoneNumber , String loginEmail , String password){
@@ -28,6 +29,7 @@ public abstract class User {
     this.loginEmail = loginEmail;
     this.password = password;
   }
+
 
 
 }

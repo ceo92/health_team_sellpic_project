@@ -1,5 +1,6 @@
 package webapp.user.repository;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,10 +17,13 @@ public class UserRepository {
 
   private static final Map<Integer, User> store = new HashMap<>();
   private static Integer sequence = 0;
-  public Integer save(User user){
-    user.setId(++sequence);
-    store.put(user.getId(), user);
-    return user.getId();
+  public Integer save(User user , Connection con){
+    /*String superSql = "insert into user from values(null , ? , ? , ? , ? , ? , ?)";
+    //if ()
+    String subSql = "insert into user from values(null , ? , )";
+
+    con.prepareStatement();*/
+    return null;
   }
 
 
@@ -31,7 +35,7 @@ public class UserRepository {
     return Optional.ofNullable(store.get(id));
   }
 
-  public Optional<User> findByLoginEmail(String loginEmail){
+  public Optional<User> findByLoginEmail(String loginEmail , Connection con){
     return store.values().stream().filter(user -> user.getLoginEmail().equals(loginEmail)).findFirst();
   }
 
