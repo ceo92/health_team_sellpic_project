@@ -2,6 +2,7 @@ package webapp.user.connection;
 
 
 
+import com.zaxxer.hikari.HikariDataSource;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +11,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class DBConnectionUtil {
+public class DriverManagerDBConnectionUtil {
 
   public static Connection getConnection() {
     Properties properties = new Properties();
@@ -26,7 +27,6 @@ public class DBConnectionUtil {
       String dbUrl = properties.getProperty("database.url");
       String dbUsername = properties.getProperty("database.username");
       String dbPassword = properties.getProperty("database.password");
-
       con = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
     } catch (IOException e) {
       e.printStackTrace();

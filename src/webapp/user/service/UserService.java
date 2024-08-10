@@ -3,18 +3,14 @@ package webapp.user.service;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
-import webapp.user.connection.DBConnectionUtil;
-import webapp.user.domain.Admin;
-import webapp.user.domain.BusinessMan;
+import webapp.user.connection.DriverManagerDBConnectionUtil;
 import webapp.user.domain.DeliveryMan;
 import webapp.user.domain.User;
 import webapp.user.domain.WarehouseManager;
 import webapp.user.dto.DeliveryManDto;
-import webapp.user.dto.LoginDto;
 import webapp.user.dto.BusinessManDto;
 import webapp.user.dto.WarehouseManagerDto;
 import webapp.user.repository.UserRepository;
-import webapp.user.user.RoleType;
 
 public class UserService { //스프링 시큐리티의 UserDetails를 서비스에서 implements 함 ,
 
@@ -121,6 +117,11 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
     }
   }
 
+
+  public User findUser(Integer id){
+    return userRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 id의 사용자 정보는 없습니다"));
+  }
+
   /**
    * 회원가입 전 검증
    */
@@ -169,10 +170,8 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
   }
 
 
-
-
   private static Connection getConnection() {
-    return DBConnectionUtil.getConnection();
+    return DriverManagerDBConnectionUtil.getConnection();
   }
 
   private static void closeConnection(Connection con){
