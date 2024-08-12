@@ -1,5 +1,6 @@
 package webapp.user.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 

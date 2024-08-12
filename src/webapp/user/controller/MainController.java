@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.util.concurrent.ConcurrentHashMap;
 import webapp.user.domain.User;
 import webapp.user.dto.DeliveryManDto;
 import webapp.user.dto.BusinessManDto;
@@ -18,11 +19,9 @@ public class MainController {
 
   public static void main(String[] args) throws IOException, SQLException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
+    System.out.println("Welcome to Money Flow WMS");
     User loginUser = null; //로그인 여부 , (로그인 이미 돼있으면 authenticate() 호출 , 동시성 고려 X)
     while (true) {
-      System.out.println("Welcome to Money Flow WMS");
-
       /**
        * 로그인 여부에 따른 시작 로직(로그인)
        */

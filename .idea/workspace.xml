@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7bef152c-5c82-4c65-b708-328ba44755df" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/webapp/WEB-INF/lib/HikariCP-5.1.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/webapp/user/connection/HikariCpDBConnectionUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/connection/DBConnectionUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/connection/DriverManagerDBConnectionUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/webapp/user/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/webapp/user/domain/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/domain/Admin.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +174,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723200172668</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="히카리 cp 구현">
+      <option name="closed" value="true" />
+      <created>1723286862034</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1723286862034</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -188,6 +193,7 @@
     <MESSAGE value="1. 도메인 명 Member =&gt; BusinessMan 변경 &#10;&#10;2. 이름 추가&#10;DeliveryManDto : carNum(차량번호) &#10;BusinessManDto warehouseArea(창고면적) 추가" />
     <MESSAGE value="회원가입 서비스 로직 구현" />
     <MESSAGE value="회원가입 및 로그인 설계 중 동시성 고민 전단계까지 구현" />
-    <option name="LAST_COMMIT_MESSAGE" value="회원가입 및 로그인 설계 중 동시성 고민 전단계까지 구현" />
+    <MESSAGE value="히카리 cp 구현" />
+    <option name="LAST_COMMIT_MESSAGE" value="히카리 cp 구현" />
   </component>
 </project>
