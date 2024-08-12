@@ -119,7 +119,7 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
 
 
   public User findUser(Integer id){
-    return userRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 id의 사용자 정보는 없습니다"));
+    return userRepository.findById(id).orElse(null);
   }
 
   /**
@@ -166,6 +166,11 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
 
   public void logout(){
     Connection con = getConnection();
+
+  }
+
+  public void validateIsLogin(Integer id){
+    User user = findUser(id);
 
   }
 
