@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7bef152c-5c82-4c65-b708-328ba44755df" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/webapp/user/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/domain/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/domain/Admin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/webapp/user/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,7 +181,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723286862034</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="로그인 , 회원관리 완성">
+      <option name="closed" value="true" />
+      <created>1723453707892</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1723453707902</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -194,6 +201,7 @@
     <MESSAGE value="회원가입 서비스 로직 구현" />
     <MESSAGE value="회원가입 및 로그인 설계 중 동시성 고민 전단계까지 구현" />
     <MESSAGE value="히카리 cp 구현" />
-    <option name="LAST_COMMIT_MESSAGE" value="히카리 cp 구현" />
+    <MESSAGE value="로그인 , 회원관리 완성" />
+    <option name="LAST_COMMIT_MESSAGE" value="로그인 , 회원관리 완성" />
   </component>
 </project>
