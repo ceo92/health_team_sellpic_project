@@ -1,9 +1,10 @@
 package webapp.user.service;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
-import webapp.user.connection.DriverManagerDBConnectionUtil;
+import webapp.user.connection.HikariCpDBConnectionUtil;
 import webapp.user.domain.DeliveryMan;
 import webapp.user.domain.User;
 import webapp.user.domain.WarehouseManager;
@@ -26,7 +27,8 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
    * User
    */
 
-  public Integer businessManJoin(BusinessManDto businessManDto) throws SQLException { //SQLException은 어차피 처리 못해 db 에러이니 그냥 JVM까지 던지는 수밖에 없다. 오류 화면을 보여주거나 오류 api를 던지는 @ControllerAdvice의 @ExceptionHandler이 있는 것도 아니고
+  public Integer businessManJoin(BusinessManDto businessManDto)
+      throws SQLException { //SQLException은 어차피 처리 못해 db 에러이니 그냥 JVM까지 던지는 수밖에 없다. 오류 화면을 보여주거나 오류 api를 던지는 @ControllerAdvice의 @ExceptionHandler이 있는 것도 아니고
     Connection con = null;
     try {
       con = getConnection();
@@ -39,13 +41,14 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
       String loginEmail = businessManDto.getLoginEmail();
       String password = businessManDto.getPassword();
       String rePassword = businessManDto.getRePassword();
-      validateBeforeJoin(loginEmail, password, rePassword , con);
+      validateBeforeJoin(loginEmail, password, rePassword, con);
 
-      User user = new DeliveryMan(businessName ,businessNum , name, phoneNumber, loginEmail, password);
+      User user = new DeliveryMan(businessName, businessNum, name, phoneNumber, loginEmail,
+          password);
       Integer saveId = userRepository.save(user, con);
       con.commit();
       return saveId;
-    }catch (IllegalArgumentException e){
+    } catch (IllegalArgumentException e) {
       System.out.println();
       System.out.println("=====ERROR=====");
       System.out.println(e.getMessage());
@@ -54,7 +57,10 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
     } finally {
       closeConnection(con);
     }
+    return null;
+
   }
+
 
 
 
@@ -86,6 +92,7 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
     } finally {
       closeConnection(con);
     }
+    return null;
   }
 
   public Integer warehouseManagerJoin(WarehouseManagerDto warehouseManagerDto) throws SQLException {
@@ -115,6 +122,7 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
     finally {
       closeConnection(con);
     }
+    return null;
   }
 
 
@@ -175,8 +183,8 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
   }
 
 
-  private static Connection getConnection() {
-    return DriverManagerDBConnectionUtil.getConnection();
+  private static Connection getConnection(){
+    return HikariCpDBConnectionUtil.getConnection();
   }
 
   private static void closeConnection(Connection con){

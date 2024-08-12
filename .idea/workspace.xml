@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7bef152c-5c82-4c65-b708-328ba44755df" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/webapp/WEB-INF/lib/slf4j-api-2.0.13.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/webapp/user/connection/HikariCpDBConnectionUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/connection/HikariCpDBConnectionUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/webapp/user/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/controller/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/webapp/user/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/user/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wms.iml" beforeDir="false" afterPath="$PROJECT_DIR$/wms.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +27,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -35,22 +40,23 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.LoginController.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/lee/Desktop/wms/src/webapp/user&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.LoginController.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.MainController.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/lee/Desktop/wms/src/webapp/user",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="webapp.user.exception" />
@@ -66,7 +72,7 @@
       <recent name="$PROJECT_DIR$/src/webapp/WEB-INF/lib" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.MainController">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="webapp.user.Main" />
       <module name="wms" />
@@ -95,8 +101,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
         <item itemvalue="Application.MainController" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -189,7 +195,23 @@
       <option name="project" value="LOCAL" />
       <updated>1723453707902</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="로그인 인증 로직 변환(User =&gt; id)">
+      <option name="closed" value="true" />
+      <created>1723456608693</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1723456608693</updated>
+    </task>
+    <task id="LOCAL-00012" summary="로그인 인증 로직 변환(User =&gt; id)">
+      <option name="closed" value="true" />
+      <created>1723456655388</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1723456655388</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -202,6 +224,7 @@
     <MESSAGE value="회원가입 및 로그인 설계 중 동시성 고민 전단계까지 구현" />
     <MESSAGE value="히카리 cp 구현" />
     <MESSAGE value="로그인 , 회원관리 완성" />
-    <option name="LAST_COMMIT_MESSAGE" value="로그인 , 회원관리 완성" />
+    <MESSAGE value="로그인 인증 로직 변환(User =&gt; id)" />
+    <option name="LAST_COMMIT_MESSAGE" value="로그인 인증 로직 변환(User =&gt; id)" />
   </component>
 </project>

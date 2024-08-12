@@ -20,14 +20,13 @@ public class MainController {
   public static void main(String[] args) throws IOException, SQLException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("Welcome to Money Flow WMS");
-    //User loginUser = null; //로그인 여부 , (로그인 이미 돼있으면 authenticate() 호출 , 동시성 고려 X)
-    Integer loginId = null;
+    Integer loginUserId = null; //로그인 여부 판별용 id
     while (true) {
       /**
        * 로그인 여부에 따른 시작 로직(로그인)
        */
-      if (loginId !=null){
-        authenticate(loginId, br);
+      if (loginUserId !=null){
+        authenticate(loginUserId, br);
       }
       else{
         System.out.println("1. 로그인 2. 회원가입 3. Q&A 작성 , 번호로 입력");
@@ -68,7 +67,7 @@ public class MainController {
                   businessManPhoneNumber, businessManLoginEmail, businessManPassword,
                   businessManRePassword, businessNum, businessName);
               //사업자 id 리턴
-              loginId = userService.businessManJoin(businessManDto);//회원가입 성공하면 다시 초기 화면으로 돌아가서 로그인 되게끔
+              loginUserId = userService.businessManJoin(businessManDto);//회원가입 성공하면 다시 초기 화면으로 돌아가서 로그인 되게끔
               //사업자 id를 통해 조회
               break;
 
@@ -85,7 +84,7 @@ public class MainController {
               String whmRePassword = br.readLine();
               WarehouseManagerDto warehouseManagerDto = new WarehouseManagerDto(whmName,
                   whmPhoneNumber, whmLoginEmail, whmPassword, whmRePassword);
-              loginId = userService.warehouseManagerJoin(warehouseManagerDto);
+              loginUserId = userService.warehouseManagerJoin(warehouseManagerDto);
               break;
 
             case 3:
@@ -105,7 +104,7 @@ public class MainController {
               String dmRePassword = br.readLine();
               DeliveryManDto deliveryManDto = new DeliveryManDto(dmName, dmPhoneNumber,
                   dmLoginEmail, dmPassword, dmRePassword, dmNum, dmCarNum);
-              loginId = userService.deliveryManJoin(deliveryManDto);
+              loginUserId = userService.deliveryManJoin(deliveryManDto);
               break;
 
             default:
@@ -132,7 +131,9 @@ public class MainController {
         System.out.println("3. 재고 관리");
         System.out.println("4. 고객센터");
         System.out.println("5. 재무 관리");
+        System.out.println("6. 내 정보 조회");
         int adminNum = Integer.parseInt(br.readLine());
+
 
       case WAREHOUSE_MANAGER:
         System.out.println("어떤 시스템에 접속하시겠습니까?");
@@ -141,6 +142,7 @@ public class MainController {
         System.out.println("3. 재고 관리");
         System.out.println("4. 고객센터");
         System.out.println("5. 재무 관리");
+        System.out.println("6. 내 정보 조회");
         int whmNum = Integer.parseInt(br.readLine());
 
       case DELIVERY_MAN:
