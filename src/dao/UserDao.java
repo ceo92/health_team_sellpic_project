@@ -17,12 +17,8 @@ public class UserDao {
   private static final Map<Integer, User> store = new HashMap<>();
   private static Integer sequence = 0;
   public Integer save(User user , Connection con){
-    /*String superSql = "insert into user from values(null , ? , ? , ? , ? , ? , ?)";
-    //if ()
-    String subSql = "insert into user from values(null , ? , )";
-
-    con.prepareStatement();*/
-    return null;
+    store.put(user.getId(), user);
+    return user.getId();
   }
 
 

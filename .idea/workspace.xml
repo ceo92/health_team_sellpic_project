@@ -5,38 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7bef152c-5c82-4c65-b708-328ba44755df" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/WEB-INF/lib/HikariCP-5.0.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/security/SessionConst.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/security/SessionManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/HikariCP_5_1_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/HikariCP_5_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/logback-classic-1.5.6.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/logback-core-1.5.6.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/slf4j-api-2.0.9.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/StandardInputEx.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/WEB-INF/lib/HikariCP-5.1.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/WEB-INF/lib/gson-2.8.7.jar" beforeDir="false" afterPath="$PROJECT_DIR$/src/WEB-INF/lib/gson-2.8.7.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/WEB-INF/lib/mysql-connector-j-8.3.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/src/WEB-INF/lib/mysql-connector-j-8.3.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/WEB-INF/lib/slf4j-api-2.0.13.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/Address.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/AuthControl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/connection/DriverManagerDBConnectionUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/connection/DriverManagerDBConnectionUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/connection/HikariCpDBConnectionUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/connection/HikariCpDBConnectionUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/domain/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Admin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/domain/BusinessMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/BusinessMan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/domain/DeliveryMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/DeliveryMan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/domain/Guest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Guest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/domain/InboundStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/InboundStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/domain/WarehouseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/WarehouseManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/dto/BusinessManDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dto/BusinessManDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/dto/DeliveryManDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dto/DeliveryManDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/dto/LoginDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dto/LoginDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/dto/WarehouseManagerDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dto/WarehouseManagerDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/UserDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/security/SHA256WithSalt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/security/SHA256WithSalt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/webapp/user/user/RoleType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/RoleType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wms.iml" beforeDir="false" afterPath="$PROJECT_DIR$/wms.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WEB-INF/lib/HikariCP-5.0.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/HikariCP-5.0.1.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WEB-INF/lib/gson-2.8.7.jar" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/WEB-INF/lib/gson-2.8.7.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WEB-INF/lib/mysql-connector-j-8.3.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/WEB-INF/lib/mysql-connector-j-8.3.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/connection/HikariCpDBConnectionUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/connection/HikariCpDBConnectionUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/UserDao.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +53,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/lee/Desktop/wms/src/webapp/user",
+    "last_opened_file_path": "/Users/lee/Desktop/wms 오후 12.21.36/src",
     "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -90,9 +67,10 @@
       <recent name="" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/webapp/user" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/.idea" />
+      <recent name="$PROJECT_DIR$/src/webapp/user" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/webapp/WEB-INF/lib" />
@@ -245,7 +223,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723473539034</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="1. repository =&gt; dao 변경&#10;2. hikaricp 5.1.0 =&gt; 5.0.1변경">
+      <option name="closed" value="true" />
+      <created>1723520609763</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1723520609763</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -259,6 +245,7 @@
     <MESSAGE value="히카리 cp 구현" />
     <MESSAGE value="로그인 , 회원관리 완성" />
     <MESSAGE value="로그인 인증 로직 변환(User =&gt; id)" />
-    <option name="LAST_COMMIT_MESSAGE" value="로그인 인증 로직 변환(User =&gt; id)" />
+    <MESSAGE value="1. repository =&gt; dao 변경&#10;2. hikaricp 5.1.0 =&gt; 5.0.1변경" />
+    <option name="LAST_COMMIT_MESSAGE" value="1. repository =&gt; dao 변경&#10;2. hikaricp 5.1.0 =&gt; 5.0.1변경" />
   </component>
 </project>
