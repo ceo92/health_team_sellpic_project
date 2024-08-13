@@ -5,15 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7bef152c-5c82-4c65-b708-328ba44755df" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/logback-classic-1.5.6.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/logback-core-1.5.6.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/slf4j-api-2.0.9.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/junit_jupiter_api_5_9_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/service/UserServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/WEB-INF/lib/HikariCP-5.0.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/HikariCP-5.0.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/WEB-INF/lib/gson-2.8.7.jar" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/WEB-INF/lib/gson-2.8.7.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/WEB-INF/lib/mysql-connector-j-8.3.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/src/webapp/WEB-INF/lib/mysql-connector-j-8.3.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/connection/HikariCpDBConnectionUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/connection/HikariCpDBConnectionUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/UserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wms.iml" beforeDir="false" afterPath="$PROJECT_DIR$/wms.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +21,7 @@
       <list>
         <option value="Enum" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -48,12 +45,20 @@
     "Application.LoginController.executor": "Run",
     "Application.Main.executor": "Run",
     "Application.MainController.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.UserServiceTest.businessManJoin.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "create.test.in.the.same.root": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/lee/Desktop/wms 오후 12.21.36/src",
+    "last_opened_file_path": "/Users/lee/Desktop/wms 오후 12.21.36/lib",
     "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -67,6 +72,7 @@
       <recent name="" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/.idea" />
@@ -75,8 +81,14 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/webapp/WEB-INF/lib" />
     </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="service" />
+    </key>
   </component>
-  <component name="RunManager" selected="Application.MainController">
+  <component name="RunManager" selected="JUnit.UserServiceTest.businessManJoin">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="user.Main" />
       <module name="wms" />
@@ -103,8 +115,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="UserServiceTest.businessManJoin" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="wms" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.UserServiceTest" />
+      <option name="METHOD_NAME" value="businessManJoin" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.UserServiceTest.businessManJoin" />
         <item itemvalue="Application.MainController" />
         <item itemvalue="Application.Main" />
       </list>
@@ -231,7 +260,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723520609763</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="################ COMMIT START&#10;# &lt;타입&gt;: &lt;제목&gt; 의 형식으로 제목을 아래 공백줄에 작성 -- ex. feat: 로그인 기능 추가&#10;# 제목은 50자 이내, 변경사항 명확히 작성, 끝에 마침표 금지&#10;feat: 히카리 CP 연동 성공&#10;# 바로 아래 공백은 지우지 마세요 (제목과 본문의 분리를 위함)&#10;&#10;################&#10;# 본문(구체적인 내용)을 아랫줄에 작성&#10;# &quot;어떻게&quot; 보다 &quot;무엇을&quot;, &quot;왜&quot; 를 설명&#10;# 여러 줄의 메시지를 작성할 땐 &quot;-&quot;로 구분 (한 줄은 72자 이내)&#10;&#10;################ COMMIT END&#10;# --- COMMIT TYPE ---&#10;#  chore            : 프로젝트 초기 구성등 기타사항.&#10;#  feat             : 새로운 기능&#10;#  fix              : 버그 수정&#10;#  refactor         : 코드 리펙토링&#10;#  style            : 스타일 (코드 포맷팅, 세미콜론 등 비즈니스 로직에 영향 없는 변경 사항)&#10;#  design           : CSS/UI 변경 내용&#10;#  docs             : 문서 (문서 추가, 수정, 삭제)&#10;#  test             : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#10;#  update           : 전반적인 수정사항&#10;#  remove           : 삭제&#10;#  in progress      : 아직 완성하지는 못했지만 진행중인 부분을 커밋해야할 경우&#10;#  HOTFIX           : 급하게 치명적인 버그를 고쳐야 하는 경우&#10;#  add dependency   : dependency 추가&#10;#  typo fix         : 오탈자 수정&#10;################">
+      <option name="closed" value="true" />
+      <created>1723539980661</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1723539980661</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -246,6 +283,8 @@
     <MESSAGE value="로그인 , 회원관리 완성" />
     <MESSAGE value="로그인 인증 로직 변환(User =&gt; id)" />
     <MESSAGE value="1. repository =&gt; dao 변경&#10;2. hikaricp 5.1.0 =&gt; 5.0.1변경" />
-    <option name="LAST_COMMIT_MESSAGE" value="1. repository =&gt; dao 변경&#10;2. hikaricp 5.1.0 =&gt; 5.0.1변경" />
+    <MESSAGE value="################ COMMIT START&#13;&#10;# &lt;타입&gt;: &lt;제목&gt; 의 형식으로 제목을 아래 공백줄에 작성 -- ex. feat: 로그인 기능 추가&#13;&#10;# 제목은 50자 이내, 변경사항 명확히 작성, 끝에 마침표 금지&#13;&#10;&#13;&#10;# 바로 아래 공백은 지우지 마세요 (제목과 본문의 분리를 위함)&#13;&#10;&#13;&#10;################&#13;&#10;# 본문(구체적인 내용)을 아랫줄에 작성&#13;&#10;# &quot;어떻게&quot; 보다 &quot;무엇을&quot;, &quot;왜&quot; 를 설명&#13;&#10;# 여러 줄의 메시지를 작성할 땐 &quot;-&quot;로 구분 (한 줄은 72자 이내)&#13;&#10;&#13;&#10;################ COMMIT END&#13;&#10;# --- COMMIT TYPE ---&#13;&#10;#  chore            : 프로젝트 초기 구성등 기타사항.&#13;&#10;#  feat             : 새로운 기능&#13;&#10;#  fix              : 버그 수정&#13;&#10;#  refactor         : 코드 리펙토링&#13;&#10;#  style            : 스타일 (코드 포맷팅, 세미콜론 등 비즈니스 로직에 영향 없는 변경 사항)&#13;&#10;#  design           : CSS/UI 변경 내용&#13;&#10;#  docs             : 문서 (문서 추가, 수정, 삭제)&#13;&#10;#  test             : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#13;&#10;#  update           : 전반적인 수정사항&#13;&#10;#  remove           : 삭제&#13;&#10;#  in progress      : 아직 완성하지는 못했지만 진행중인 부분을 커밋해야할 경우&#13;&#10;#  HOTFIX           : 급하게 치명적인 버그를 고쳐야 하는 경우&#13;&#10;#  add dependency   : dependency 추가&#13;&#10;#  typo fix         : 오탈자 수정&#13;&#10;################" />
+    <MESSAGE value="################ COMMIT START&#10;# &lt;타입&gt;: &lt;제목&gt; 의 형식으로 제목을 아래 공백줄에 작성 -- ex. feat: 로그인 기능 추가&#10;# 제목은 50자 이내, 변경사항 명확히 작성, 끝에 마침표 금지&#10;feat: 히카리 CP 연동 성공&#10;# 바로 아래 공백은 지우지 마세요 (제목과 본문의 분리를 위함)&#10;&#10;################&#10;# 본문(구체적인 내용)을 아랫줄에 작성&#10;# &quot;어떻게&quot; 보다 &quot;무엇을&quot;, &quot;왜&quot; 를 설명&#10;# 여러 줄의 메시지를 작성할 땐 &quot;-&quot;로 구분 (한 줄은 72자 이내)&#10;&#10;################ COMMIT END&#10;# --- COMMIT TYPE ---&#10;#  chore            : 프로젝트 초기 구성등 기타사항.&#10;#  feat             : 새로운 기능&#10;#  fix              : 버그 수정&#10;#  refactor         : 코드 리펙토링&#10;#  style            : 스타일 (코드 포맷팅, 세미콜론 등 비즈니스 로직에 영향 없는 변경 사항)&#10;#  design           : CSS/UI 변경 내용&#10;#  docs             : 문서 (문서 추가, 수정, 삭제)&#10;#  test             : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#10;#  update           : 전반적인 수정사항&#10;#  remove           : 삭제&#10;#  in progress      : 아직 완성하지는 못했지만 진행중인 부분을 커밋해야할 경우&#10;#  HOTFIX           : 급하게 치명적인 버그를 고쳐야 하는 경우&#10;#  add dependency   : dependency 추가&#10;#  typo fix         : 오탈자 수정&#10;################" />
+    <option name="LAST_COMMIT_MESSAGE" value="################ COMMIT START&#10;# &lt;타입&gt;: &lt;제목&gt; 의 형식으로 제목을 아래 공백줄에 작성 -- ex. feat: 로그인 기능 추가&#10;# 제목은 50자 이내, 변경사항 명확히 작성, 끝에 마침표 금지&#10;feat: 히카리 CP 연동 성공&#10;# 바로 아래 공백은 지우지 마세요 (제목과 본문의 분리를 위함)&#10;&#10;################&#10;# 본문(구체적인 내용)을 아랫줄에 작성&#10;# &quot;어떻게&quot; 보다 &quot;무엇을&quot;, &quot;왜&quot; 를 설명&#10;# 여러 줄의 메시지를 작성할 땐 &quot;-&quot;로 구분 (한 줄은 72자 이내)&#10;&#10;################ COMMIT END&#10;# --- COMMIT TYPE ---&#10;#  chore            : 프로젝트 초기 구성등 기타사항.&#10;#  feat             : 새로운 기능&#10;#  fix              : 버그 수정&#10;#  refactor         : 코드 리펙토링&#10;#  style            : 스타일 (코드 포맷팅, 세미콜론 등 비즈니스 로직에 영향 없는 변경 사항)&#10;#  design           : CSS/UI 변경 내용&#10;#  docs             : 문서 (문서 추가, 수정, 삭제)&#10;#  test             : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#10;#  update           : 전반적인 수정사항&#10;#  remove           : 삭제&#10;#  in progress      : 아직 완성하지는 못했지만 진행중인 부분을 커밋해야할 경우&#10;#  HOTFIX           : 급하게 치명적인 버그를 고쳐야 하는 경우&#10;#  add dependency   : dependency 추가&#10;#  typo fix         : 오탈자 수정&#10;################" />
   </component>
 </project>
