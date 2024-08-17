@@ -1,5 +1,9 @@
 package domain;
 
+import java.util.HashMap;
+import java.util.Map;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,14 +14,16 @@ import lombok.Setter;
  */
 // DB와 자바는 매핑 방법이 다르므로
 
-@Getter @Setter
+@Getter @Setter(AccessLevel.PROTECTED)
 public class User {
   private Integer id;//PK
   private String name; //이름
   private String phoneNumber; //핸드폰 번호
   private String loginEmail; //로그인 아이디(이메일 형식)
   private String password; //비밀번호 SHA-256
-  private RoleType roleType; //권한이자 Dtype 이걸로 식별 가능 ㅇㅇ , dtype 굳이 필요 업슴 !
+  private Map<String, String> passwordQuestion = new HashMap<>();
+  private RoleType roleType; //권한 및 DTYPE
+
 
   public User(String name, String phoneNumber, String loginEmail, String password, RoleType roleType) {
     this.name = name;
@@ -36,9 +42,4 @@ public class User {
     this.password = password;
     this.roleType = roleType;
   }
-
-  public User(){}
-
-
-
 }

@@ -1,4 +1,4 @@
-package dto;
+package dto.savedto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

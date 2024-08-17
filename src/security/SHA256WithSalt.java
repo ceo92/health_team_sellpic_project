@@ -5,12 +5,12 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 public class SHA256WithSalt {
-  public String getEncryptPassword(String password, byte[] salt) {
+  public String getEncryptPassword(String password) {
 
     String encryptPassword = null;
     try {
       MessageDigest md = MessageDigest.getInstance("SHA-256");
-      md.update(salt);
+      md.update(getSalt());
       byte[] bytes = md.digest(password.getBytes());
       StringBuilder sb = new StringBuilder();
       for (int i = 0; i < bytes.length; i++) {

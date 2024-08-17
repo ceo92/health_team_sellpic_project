@@ -2,24 +2,30 @@ package service;
 
 import static domain.RoleType.BUSINESS_MAN;
 import static domain.RoleType.DELIVERY_MAN;
-import static domain.RoleType.WAREHOUSE_MANAGER;
 
+import dao.UserDao;
+import domain.BusinessMan;
 import domain.RoleType;
+import dto.updatedto.BusinessManUpdateDto;
+import dto.updatedto.DeliveryManUpdateDto;
+import dto.updatedto.WarehouseManagerUpdateDto;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.regex.Pattern;
 import connection.HikariCpDBConnectionUtil;
 import domain.DeliveryMan;
 import domain.User;
-import dto.DeliveryManSaveDto;
-import dto.BusinessManSaveDto;
-import dto.WarehouseManagerDto;
-import dao.UserDao;
+import domain.WarehouseManager;
+import dto.savedto.DeliveryManSaveDto;
+import dto.savedto.BusinessManSaveDto;
+import dto.savedto.WarehouseManagerSaveDto;
+import security.SHA256WithSalt;
 
 public class UserService { //스프링 시큐리티의 UserDetails를 서비스에서 implements 함 ,
 
   private static final UserDao userDao = new UserDao(); //DI , 하지만 스프링 없으니 불가능 , OCP DIP 위배 ㅜㅜ
-
+  private static final SHA256WithSalt sha256WithSalt = new SHA256WithSalt();
   /**
    * -- 회원가입 검증 --
    * 1. 로그인 아이디 중복 아닌지 검증
@@ -47,9 +53,10 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
       String rePassword = businessManSaveDto.getRePassword();
       validateBeforeJoin(loginEmail, password, rePassword, con);
 
-      User user = new DeliveryMan(businessName, businessNum, name, phoneNumber, loginEmail,
-          password , "BusinessMan" , BUSINESS_MAN);
-      saveId = userDao.save(user, con);
+      //비밀번호 암호화(SHA-256 알고리즘)
+      String encryptPassword = sha256WithSalt.getEncryptPassword(password);
+      BusinessMan businessMan = new BusinessMan(businessName, businessNum, name, phoneNumber, loginEmail, encryptPassword , BUSINESS_MAN);
+      saveId = userDao.save(businessMan, con);
       con.commit();
     } catch (IllegalArgumentException e) {
       System.out.println();
@@ -68,8 +75,8 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
 
 
   public Integer deliveryManJoin(DeliveryManSaveDto deliveryManSaveDto) throws SQLException {
-    Integer saveId = null;
     Connection con = null;
+    Integer saveId = null;
     try {
       con = getConnection();
       con.setAutoCommit(false);
@@ -83,7 +90,7 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
       String rePassword = deliveryManSaveDto.getRePassword();
       validateBeforeJoin(loginEmail, password, rePassword ,con);
 
-      User user = new DeliveryMan(deliveryManNum ,carNum , name, phoneNumber, loginEmail, password , "DeliveryMan" , DELIVERY_MAN);
+      User user = new DeliveryMan(deliveryManNum ,carNum , name, phoneNumber, loginEmail, password , DELIVERY_MAN);
       saveId = userDao.save(user, con);
       con.commit();
     }catch (IllegalArgumentException e){
@@ -98,25 +105,28 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
     return saveId;
   }
 
-  //그래도 회원가입은 해야지 ㅇㅇ 창고 관리자는 ?? 테이블이 암만 없어도 ~
-  public Integer warehouseManagerJoin(WarehouseManagerDto warehouseManagerDto) throws SQLException {
-    Integer saveId = null;
+  public Integer warehouseManagerJoin(WarehouseManagerSaveDto warehouseManagerSaveDto) throws SQLException {
     Connection con = null;
+    Integer saveId = null;
     try {
       con = getConnection();
       con.setAutoCommit(false);
 
-      String name = warehouseManagerDto.getName();
-      String phoneNumber = warehouseManagerDto.getPhoneNumber();
-      String loginEmail = warehouseManagerDto.getLoginEmail();
-      String password = warehouseManagerDto.getPassword();
-      String rePassword = warehouseManagerDto.getRePassword();
+      String name = warehouseManagerSaveDto.getName();
+      String phoneNumber = warehouseManagerSaveDto.getPhoneNumber();
+      String loginEmail = warehouseManagerSaveDto.getLoginEmail();
+      String password = warehouseManagerSaveDto.getPassword();
+      String rePassword = warehouseManagerSaveDto.getRePassword();
       validateBeforeJoin(loginEmail, password, rePassword ,con);
-      User user = new User(name, phoneNumber, loginEmail, password , "WarehouseManager" , WAREHOUSE_MANAGER);
+
+      User user = new WarehouseManager(name, phoneNumber, loginEmail, password);
       saveId = userDao.save(user, con);
       con.commit();
     }catch (IllegalArgumentException e){
+      System.out.println();
+      System.out.println("=====ERROR=====");
       System.out.println(e.getMessage());
+      System.out.println();
       con.rollback();
     }
     finally {
@@ -126,20 +136,119 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
   }
 
 
-  public User findUser(Integer id , RoleType roleType) throws SQLException {
+  //DTO 십년 때매 어쩔 수 없이 등록 , 수정 분리해줘야됨!
+
+  public void updateWarehouseManager(Integer id , WarehouseManagerUpdateDto warehouseManagerUpdateDto)
+      throws SQLException {
+    Connection con = null;
+    try {
+      con = getConnection();
+      con.setAutoCommit(false);
+      WarehouseManager warehouseManager = (WarehouseManager) findUser(id);
+      warehouseManager.changeBasicInformation(
+          warehouseManagerUpdateDto.getName(),
+          warehouseManagerUpdateDto.getPhoneNumber()
+      );
+      userDao.update(warehouseManager, con);
+      con.commit();
+    }catch (SQLException e) {
+      con.rollback();
+      System.out.println("수정에 오류가 발생하였습니다");
+    }
+    finally {
+      closeConnection(con);
+    }
+
+  }
+  public void updateBusinessMan(Integer id , BusinessManUpdateDto businessManUpdateDto) throws SQLException {
+    Connection con = null;
+    try {
+      con = getConnection();
+      con.setAutoCommit(false);
+      BusinessMan businessMan = (BusinessMan) findUser(id);
+      businessMan.changeBasicInformation(
+          businessManUpdateDto.getName(),
+          businessManUpdateDto.getPhoneNumber(),
+          businessManUpdateDto.getBusinessNum(),
+          businessManUpdateDto.getBusinessName()
+      );
+      userDao.update(businessMan, con);
+      con.commit();
+    }catch (SQLException e) {
+      con.rollback();
+      System.out.println("수정에 오류가 발생하였습니다");
+    }
+    finally {
+      closeConnection(con);
+    }
+  }
+  public void updateDeliveryMan(Integer id , DeliveryManUpdateDto deliveryManUpdateDto)
+      throws SQLException {
+    Connection con = null;
+    try {
+      con = getConnection();
+      con.setAutoCommit(false);
+      DeliveryMan deliveryMan = (DeliveryMan) findUser(id);
+      deliveryMan.changeBasicInformation(
+          deliveryManUpdateDto.getName(),
+          deliveryManUpdateDto.getPhoneNumber(),
+          deliveryManUpdateDto.getDeliveryManNum(),
+          deliveryManUpdateDto.getCarNum()
+      );
+      userDao.update(deliveryMan, con);
+      con.commit();
+    }catch (SQLException e) {
+      con.rollback();
+      System.out.println("수정에 오류가 발생하였습니다");
+    }
+    finally {
+      closeConnection(con);
+    }
+  }
+
+  public User findUser(Integer id) throws SQLException {
     Connection con = getConnection();
     con.setReadOnly(true);
-    User user = userDao.findById(id, roleType, con).orElse(null);
+    User findUser = userDao.findById(id, con)
+        .orElseThrow(() -> new IllegalArgumentException("찾으려는 회원 정보가 존재하지 않습니다")); //컨트롤러에서 처리하게 할까
     con.setReadOnly(false);
-    return user;
+    closeConnection(con);
+    return findUser;
+
   }
+
+
+  private Optional<User> findByLoginEmail(String loginEmail) throws SQLException {
+    Connection con = getConnection();
+    con.setReadOnly(true);
+    Optional<User> findUser = userDao.findAll(con).stream()
+        .filter(user -> user.getLoginEmail().equals(loginEmail))
+        .findFirst();
+    con.setReadOnly(false);
+    closeConnection(con);
+    return findUser;
+  }
+
+  private Optional<User> findByLoginEmailAndPassword(String loginEmail , String password) throws SQLException {
+    Connection con = getConnection();
+    con.setReadOnly(true);
+    Optional<User> findUser = userDao.findAll(con).stream().filter(
+            user -> user.getLoginEmail().equals(loginEmail) && user.getPassword().equals(password))
+        .findFirst();
+    con.setReadOnly(false);
+    closeConnection(con);
+    return findUser;
+  }
+
+
 
   /**
    * 회원가입 전 검증
    */
-  private static void validateBeforeJoin(String loginEmail, String password, String rePassword , Connection con) {
+  private void validateBeforeJoin(String loginEmail, String password, String rePassword , Connection con)
+      throws SQLException {
     //1. 이미 존재하는 아이디인지
-    userDao.findByLoginEmail(loginEmail , con).ifPresent(a -> {
+    findByLoginEmail(loginEmail).ifPresent(user -> {
       throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
     });
 
@@ -169,16 +278,28 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
     Connection con = getConnection();
     con.setReadOnly(true);
     //이미 권한 다 할당된 사용자
-    User user = userDao.findByLoginEmail(loginEmail, con)
-        .filter(u -> u.getPassword().equals(password))
-        .orElseThrow(() -> new IllegalArgumentException("로그인 아이디 혹은 비밀번호를 다시 한 번 확인해주세요"));
+    User findUser = findByLoginEmailAndPassword(loginEmail, password).orElseThrow(
+        () -> new IllegalArgumentException("아이디 혹은 비밀번호가 일치하지 않습니다"));
+    con.setReadOnly(false);
     closeConnection(con);
-    return user;
-
+    return findUser;
   }
 
   public void logout(User user){
     user = null;
+  }
+
+
+  public User checkLoginEmailExists(String name , String phoneNumber) throws SQLException {
+    Connection con = getConnection();
+    con.setReadOnly(true);
+    User findUser = userDao.findAll(con).stream()
+        .filter(user -> user.getName().equals(name) && user.getPhoneNumber().equals(phoneNumber))
+        .findFirst()
+        .orElseThrow(() -> new IllegalArgumentException("입력한 회원 정보에 대해 일치하는 아이디가 없습니다"));
+    con.setReadOnly(false);
+    return findUser;
+
   }
 
   public void validateIsLogin(Integer id){
@@ -187,9 +308,8 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
   }
 
 
-  private Connection getConnection(){
-    HikariCpDBConnectionUtil instance = HikariCpDBConnectionUtil.getInstance();
-    return instance.getConnection();
+  private static Connection getConnection(){
+    return HikariCpDBConnectionUtil.getInstance().getConnection();
   }
 
   private static void closeConnection(Connection con){

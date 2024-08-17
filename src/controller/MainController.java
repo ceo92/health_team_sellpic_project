@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
 import domain.User;
-import dto.DeliveryManSaveDto;
-import dto.BusinessManSaveDto;
-import dto.WarehouseManagerDto;
+import dto.savedto.DeliveryManSaveDto;
+import dto.savedto.BusinessManSaveDto;
+import dto.savedto.WarehouseManagerSaveDto;
 import service.UserService;
 
 public class MainController {
@@ -15,7 +15,7 @@ public class MainController {
 
   private static final UserService userService = new UserService();
 
-  public static void main(String[] args) throws IOException, SQLException {
+  public static void main(String[] args) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("Welcome to Money Flow WMS");
     Integer loginUserId = null; //로그인 여부 판별용 id
@@ -28,19 +28,47 @@ public class MainController {
         authenticate(loginUserId, br);
       }
       else{
-        System.out.println("1. 로그인 2. 회원가입 3. Q&A 작성 , 번호로 입력");
-        int guestInputValue = Integer.parseInt(br.readLine());
-        if (guestInputValue == 1) {
-          System.out.println("=".repeat(20) + "로그인 화면" + "=".repeat(20));
-          System.out.print("이메일 입력 : ");
-          String loginEmail = br.readLine();
-          System.out.print("비밀번호 입력 : ");
-          String password = br.readLine();
-          User loginUser = userService.login(loginEmail, password); //authservice에 로그인
+        System.out.println("★★★★★ 원하시는 번호를 입력해주세요 ★★★★★");
+        System.out.println("1. 로그인 페이지 이동 2. 회원가입 페이지 이동 3. Q&A 페이지 이동");
+        int guestInputNum = Integer.parseInt(br.readLine());
+        if (guestInputNum == 1) {
+          System.out.println("=".repeat(20) + "로그인 페이지" + "=".repeat(20));
+          System.out.println("1. 로그인 2. 아이디 찾기 3. 비밀번호 찾기");
+          switch (Integer.parseInt(br.readLine())){
+            case 1:
+              System.out.print("로그인 이메일 입력 : ");
+              String loginEmail = br.readLine();
+              System.out.print("비밀번호 입력 : ");
+              String password = br.readLine();
+              User loginUser = userService.login(loginEmail, password); //authservice에 로그인
+              authenticate(loginUserId, br);
+
+            case 2:
+              System.out.println("이름 입력");
+              String name = br.readLine();
+              System.out.println("휴대폰 번호 입력");
+              String phoneNumber = br.readLine();
+
+
+            case 3:
+              System.out.println("로그인 이메일 입력");
+              String loginEmailToFindPassword = br.readLine();
+              System.out.println("이름 입력");
+              String nameToFindPassword = br.readLine();
+              System.out.println("휴대폰 번호 입력");
+              String phoneNumberToFindPassword = br.readLine();
+              System.out.println("회원가입 시 문답을 하나 고르시오");
+
+              br.readLine();
+
+          }
 
 
 
-        } else if (guestInputValue == 2) {
+
+
+
+        } else if (guestInputNum == 2) {
           System.out.println("=".repeat(20) + "회원가입 화면" + "=".repeat(20));
           System.out.println();
           System.out.println("어느 권한의 회원으로 가입하시겠습니까?");
@@ -83,9 +111,9 @@ public class MainController {
               String whmPassword = br.readLine();
               System.out.print("비밀번호 재입력 ");
               String whmRePassword = br.readLine();
-              WarehouseManagerDto warehouseManagerDto = new WarehouseManagerDto(whmName,
+              WarehouseManagerSaveDto warehouseManagerSaveDto = new WarehouseManagerSaveDto(whmName,
                   whmPhoneNumber, whmLoginEmail, whmPassword, whmRePassword);
-              loginUserId = userService.warehouseManagerJoin(warehouseManagerDto);
+              loginUserId = userService.warehouseManagerJoin(warehouseManagerSaveDto);
               break;
 
             case 3:
@@ -112,7 +140,7 @@ public class MainController {
               System.out.println("잘못 입력하였습니다 처음부터 다시 입력해주세요"); //검증 로직
               break;
           }
-        } else if (guestInputValue == 3) {
+        } else if (guestInputNum == 3) {
           //q&a 작성
           System.out.println("잘못된 입력입니다.");
         }
@@ -122,7 +150,7 @@ public class MainController {
 
   }
 
-  private static void authenticate(Integer loginId, BufferedReader br) throws IOException {
+  private static void authenticate(Integer loginId, BufferedReader br) throws Exception{
     User user = userService.findUser(loginId);
     switch (user.getRoleType()) {
       case ADMIN:

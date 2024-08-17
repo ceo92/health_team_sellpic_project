@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/wms.iml" filepath="$PROJECT_DIR$/wms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kyungmin-wms.iml" filepath="$PROJECT_DIR$/kyungmin-wms.iml" />
     </modules>
   </component>
 </project>
