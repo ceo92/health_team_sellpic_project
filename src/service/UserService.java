@@ -6,7 +6,6 @@ import static domain.RoleType.WAREHOUSE_MANAGER;
 
 import dao.UserDao;
 import domain.BusinessMan;
-import domain.RoleType;
 import dto.PasswordResetDto;
 import dto.updatedto.BusinessManUpdateDto;
 import dto.updatedto.DeliveryManUpdateDto;
@@ -318,16 +317,24 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
   /**
    * 비밀번호 재설정
    */
-  public void resetPassword(PasswordResetDto passwordResetDto) throws SQLException {
+  public void checkBeforePasswordReset(PasswordResetDto passwordResetDto) throws SQLException {
     Connection con = getConnection();
     con.setReadOnly(true);
-    findByLoginEmail(passwordResetDto.getLoginEmail()).filter(user ->
+    User findUser = findByLoginEmail(passwordResetDto.getLoginEmail()).filter(user ->
         user.getName().equals(passwordResetDto.getName()) &&
             user.getPhoneNumber().equals(passwordResetDto.getPhoneNumber()) &&
-            user.getPasswordQuestion().equals());
+            user.getPasswordQuestion().equals(passwordResetDto.getPasswordQuestion()) &&
+            user.getPasswordAnswer().equals(passwordResetDto.getPasswordAnswer())
+    ).orElseThrow(() -> new IllegalArgumentException("입력된 정보가 일치하지 않습니다."));
+    resetPassword(findUser);
     con.setReadOnly(false);
     closeConnection(con);
 
+
+  }
+
+  private void resetPassword(User user) {
+    user.getPassword()
   }
 
 

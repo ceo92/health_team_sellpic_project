@@ -60,11 +60,18 @@ public class MainController {
               String nameFindPassword = br.readLine();
               System.out.println("휴대폰 번호 입력");
               String phoneNumberFindPassword = br.readLine();
-              System.out.println("비밀번호 찾기 위해 설정한 질문에 대해 대답해주세요");
+              System.out.println("비밀번호 확인 질문 중 하나 번호로 입력");
+              System.out.println("====================");
+              for (Integer i : passwordQuestionsMap.keySet()) {
+                System.out.println(i+". "+passwordQuestionsMap.get(i));
+              }
+              System.out.println("====================");
+              int passwordQuestionNum = Integer.parseInt(br.readLine());
+              System.out.print("질문에 대한 답변을 입력하시오 : ");
               String passwordAnswer = br.readLine();
-              PasswordResetDto passwordResetDto = new PasswordResetDto(loginEmailFindPassword , nameFindPassword , phoneNumberFindPassword , passwordAnswer);
-
-
+              PasswordResetDto passwordResetDto = new PasswordResetDto(loginEmailFindPassword , nameFindPassword ,
+                  phoneNumberFindPassword ,passwordQuestionsMap.get(passwordQuestionNum),  passwordAnswer);
+              userService.checkBeforePasswordReset(passwordResetDto);
               br.readLine();
 
           }

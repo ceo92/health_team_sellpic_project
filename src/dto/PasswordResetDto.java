@@ -10,6 +10,7 @@ public class PasswordResetDto {
   private String loginEmail;
   private String name;
   private String phoneNumber;
+  private String passwordQuestion;
   private String passwordAnswer;
 
 
