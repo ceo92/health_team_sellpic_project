@@ -2,6 +2,7 @@ package service;
 
 import static domain.RoleType.BUSINESS_MAN;
 import static domain.RoleType.DELIVERY_MAN;
+import static domain.RoleType.WAREHOUSE_MANAGER;
 
 import dao.UserDao;
 import domain.BusinessMan;
@@ -52,11 +53,13 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
       String loginEmail = businessManSaveDto.getLoginEmail();
       String password = businessManSaveDto.getPassword();
       String rePassword = businessManSaveDto.getRePassword();
+      String passwordQuestion = businessManSaveDto.getPasswordQuestion();
+      String passwordAnswer = businessManSaveDto.getPasswordAnswer();
       validateBeforeJoin(loginEmail, password, rePassword, con);
 
       //비밀번호 암호화(SHA-256 알고리즘)
       String encryptPassword = sha256WithSalt.getEncryptPassword(password);
-      BusinessMan businessMan = new BusinessMan(businessName, businessNum, name, phoneNumber, loginEmail, encryptPassword , BUSINESS_MAN);
+      BusinessMan businessMan = new BusinessMan(businessName, businessNum, name, phoneNumber, loginEmail, encryptPassword , BUSINESS_MAN , passwordQuestion , passwordAnswer);
       saveId = userDao.save(businessMan, con);
       con.commit();
     } catch (IllegalArgumentException e) {
@@ -89,9 +92,11 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
       String loginEmail = deliveryManSaveDto.getLoginEmail();
       String password = deliveryManSaveDto.getPassword();
       String rePassword = deliveryManSaveDto.getRePassword();
+      String passwordQuestion = deliveryManSaveDto.getPasswordQuestion();
+      String passwordAnswer = deliveryManSaveDto.getPasswordAnswer();
       validateBeforeJoin(loginEmail, password, rePassword ,con);
 
-      User user = new DeliveryMan(deliveryManNum ,carNum , name, phoneNumber, loginEmail, password , DELIVERY_MAN);
+      User user = new DeliveryMan(deliveryManNum ,carNum , name, phoneNumber, loginEmail, password , DELIVERY_MAN , passwordQuestion , passwordAnswer);
       saveId = userDao.save(user, con);
       con.commit();
     }catch (IllegalArgumentException e){
@@ -118,9 +123,11 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
       String loginEmail = warehouseManagerSaveDto.getLoginEmail();
       String password = warehouseManagerSaveDto.getPassword();
       String rePassword = warehouseManagerSaveDto.getRePassword();
+      String passwordQuestion = warehouseManagerSaveDto.getPasswordQuestion();
+      String passwordAnswer = warehouseManagerSaveDto.getPasswordAnswer();
       validateBeforeJoin(loginEmail, password, rePassword ,con);
 
-      User user = new WarehouseManager(name, phoneNumber, loginEmail, password);
+      User user = new WarehouseManager(name, phoneNumber, loginEmail, password , WAREHOUSE_MANAGER, passwordQuestion , passwordAnswer);
       saveId = userDao.save(user, con);
       con.commit();
     }catch (IllegalArgumentException e){

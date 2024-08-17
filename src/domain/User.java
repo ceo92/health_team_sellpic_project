@@ -21,16 +21,19 @@ public class User {
   private String phoneNumber; //핸드폰 번호
   private String loginEmail; //로그인 아이디(이메일 형식)
   private String password; //비밀번호 SHA-256
-  private Map<String, String> passwordQuestionAndAnswer = new HashMap<>();
+  private String passwordQuestion;
+  private String passwordAnswer;
   private RoleType roleType; //권한 및 DTYPE
 
 
-  public User(String name, String phoneNumber, String loginEmail, String password, RoleType roleType) {
+  public User(String name, String phoneNumber, String loginEmail, String password, RoleType roleType , String passwordQuestion , String passwordAnswer) {
     this.name = name;
     this.phoneNumber = phoneNumber;
     this.loginEmail = loginEmail;
     this.password = password;
     this.roleType = roleType;
+    this.passwordQuestion = passwordQuestion;
+    this.passwordAnswer = passwordAnswer;
   }
 
   public User(Integer id, String name, String phoneNumber, String loginEmail, String password,

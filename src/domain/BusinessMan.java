@@ -13,8 +13,8 @@ public class BusinessMan extends User {
   private String businessName; //상호명
 
   public BusinessMan(String businessNum, String businessName, String name, String phoneNumber,
-      String loginEmail, String password, RoleType roleType) {
-    super(name, phoneNumber, loginEmail, password  ,roleType);
+      String loginEmail, String password, RoleType roleType , String passwordQuestion , String passwordAnswer) {
+    super(name, phoneNumber, loginEmail, password  ,roleType , passwordQuestion , passwordAnswer);
     this.businessNum = businessNum;
     this.businessName = businessName;
   }

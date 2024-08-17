@@ -32,7 +32,7 @@ public class UserDao {
    */
   public Integer save(User user , Connection con) throws SQLException {
     //PreparedStatement는 각각의 쿼리에 지정해줘야됨
-    String superTableSql = "insert into user(name , phone_number , login_email , password , role_type) values(? , ? , ? , ? , ?)";
+    String superTableSql = "insert into user(name , phone_number , login_email , password , role_type , password_question , password_answer) values(? , ? , ? , ? , ?,?,?)";
     String subTableSql = null;
     PreparedStatement superTablePstmt = null;
     PreparedStatement subTablePstmt = null;
@@ -43,6 +43,8 @@ public class UserDao {
     superTablePstmt.setString(3, user.getLoginEmail()); //인덱스 1로 해서 1번필드에는 memberid 지정
     superTablePstmt.setString(4, user.getPassword()); //인덱스 1로 해서 1번필드에는 memberid 지정
     superTablePstmt.setString(5, user.getRoleType().name()); //인덱스 1로 해서 1번필드에는 memberid 지정
+    superTablePstmt.setString(6, user.getPasswordQuestion()); //인덱스 1로 해서 1번필드에는 memberid 지정
+    superTablePstmt.setString(7, user.getPasswordAnswer()); //인덱스 1로 해서 1번필드에는 memberid 지정
     superTablePstmt.executeUpdate();
     ResultSet rs = superTablePstmt.getGeneratedKeys();
     int generatedId = 0;

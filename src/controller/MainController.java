@@ -20,7 +20,7 @@ public class MainController {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("Welcome to Money Flow WMS");
     Integer loginUserId = null; //로그인 여부 판별용 id
-    Map<Integer, String> passwordQuestions = initPasswordQuestions();
+    Map<Integer, String> passwordQuestionsMap = initPasswordQuestions();
 
     while (true) {
       /**
@@ -101,18 +101,18 @@ public class MainController {
               
               System.out.println("비밀번호 확인 질문 중 하나 번호로 선택");
               System.out.println("====================");
-              for (Integer i : passwordQuestions.keySet()) {
-                System.out.println(i+". "+passwordQuestions.get(i));
+              for (Integer i : passwordQuestionsMap.keySet()) {
+                System.out.println(i+". "+passwordQuestionsMap.get(i));
               }
               System.out.println("====================");
-              
-              int passwordQuestionNum = Integer.parseInt(br.readLine());
+
+              int bmPasswordQuestionNum = Integer.parseInt(br.readLine());
               System.out.print("답변을 입력하시오 : ");
-              String passwordAnswerNum = br.readLine();
+              String bmPasswordAnswer = br.readLine();
 
               BusinessManSaveDto businessManSaveDto = new BusinessManSaveDto(businessManName,
                   businessManPhoneNumber, businessManLoginEmail, businessManPassword,
-                  businessManRePassword, passwordQuestionNum, passwordAnswerNum, businessNum, businessName);
+                  businessManRePassword, passwordQuestionsMap.get(bmPasswordQuestionNum), bmPasswordAnswer, businessNum, businessName);
               //사업자 id 리턴
               loginUserId = userService.businessManJoin(businessManSaveDto);//회원가입 성공하면 다시 초기 화면으로 돌아가서 로그인 되게끔
               //사업자 id를 통해 조회
@@ -129,8 +129,20 @@ public class MainController {
               String whmPassword = br.readLine();
               System.out.print("비밀번호 재입력 ");
               String whmRePassword = br.readLine();
+
+              System.out.println("비밀번호 확인 질문 중 하나 번호로 선택");
+              System.out.println("====================");
+              for (Integer i : passwordQuestionsMap.keySet()) {
+                System.out.println(i+". "+passwordQuestionsMap.get(i));
+              }
+              System.out.println("====================");
+
+              int wmPasswordQuestionNum = Integer.parseInt(br.readLine());
+              System.out.print("답변을 입력하시오 : ");
+              String wmPasswordAnswer = br.readLine();
+
               WarehouseManagerSaveDto warehouseManagerSaveDto = new WarehouseManagerSaveDto(whmName,
-                  whmPhoneNumber, whmLoginEmail, whmPassword, whmRePassword);
+                  whmPhoneNumber, whmLoginEmail, whmPassword, whmRePassword , passwordQuestionsMap.get(wmPasswordQuestionNum) , wmPasswordAnswer);
               loginUserId = userService.warehouseManagerJoin(warehouseManagerSaveDto);
               break;
 
@@ -149,8 +161,20 @@ public class MainController {
               String dmPassword = br.readLine();
               System.out.print("비밀번호 재입력 ");
               String dmRePassword = br.readLine();
+
+              System.out.println("비밀번호 확인 질문 중 하나 번호로 선택");
+              System.out.println("====================");
+              for (Integer i : passwordQuestionsMap.keySet()) {
+                System.out.println(i+". "+passwordQuestionsMap.get(i));
+              }
+              System.out.println("====================");
+
+              int dmPasswordQuestionNum = Integer.parseInt(br.readLine());
+              System.out.print("답변을 입력하시오 : ");
+              String dmPasswordAnswer = br.readLine();
+
               DeliveryManSaveDto deliveryManSaveDto = new DeliveryManSaveDto(dmName, dmPhoneNumber,
-                  dmLoginEmail, dmPassword, dmRePassword, dmNum, dmCarNum);
+                  dmLoginEmail, dmPassword, dmRePassword, passwordQuestionsMap.get(dmPasswordQuestionNum),  dmPasswordAnswer ,dmNum, dmCarNum);
               loginUserId = userService.deliveryManJoin(deliveryManSaveDto);
               break;
 

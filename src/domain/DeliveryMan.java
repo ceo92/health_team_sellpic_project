@@ -9,8 +9,8 @@ public class DeliveryMan extends User{
   private String deliveryManNum; //배송기사번호
   private String carNum;
   public DeliveryMan(String deliveryManNum, String carNum, String name, String phoneNumber,
-      String loginEmail, String password, RoleType roleType) {
-    super(name, phoneNumber, loginEmail, password, roleType);
+      String loginEmail, String password, RoleType roleType, String passwordQuestion , String passwordAnswer) {
+    super(name, phoneNumber, loginEmail, password  ,roleType , passwordQuestion , passwordAnswer);
     this.carNum = carNum;
     this.deliveryManNum = deliveryManNum;
   }
