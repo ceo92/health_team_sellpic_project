@@ -6,6 +6,7 @@ import static domain.RoleType.DELIVERY_MAN;
 import dao.UserDao;
 import domain.BusinessMan;
 import domain.RoleType;
+import dto.PasswordResetDto;
 import dto.updatedto.BusinessManUpdateDto;
 import dto.updatedto.DeliveryManUpdateDto;
 import dto.updatedto.WarehouseManagerUpdateDto;
@@ -290,20 +291,35 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
   }
 
 
-  public User checkLoginEmailExists(String name , String phoneNumber) throws SQLException {
+  /**
+   * 아이디 찾기
+   */
+  public void checkLoginEmailExists(String name , String phoneNumber) throws SQLException {
     Connection con = getConnection();
     con.setReadOnly(true);
-    User findUser = userDao.findAll(con).stream()
+    userDao.findAll(con).stream()
         .filter(user -> user.getName().equals(name) && user.getPhoneNumber().equals(phoneNumber))
-        .findFirst()
-        .orElseThrow(() -> new IllegalArgumentException("입력한 회원 정보에 대해 일치하는 아이디가 없습니다"));
+        .findFirst().ifPresentOrElse(
+            user -> System.out.printf("%s님 아이디 : %s\n", user.getName() , user.getLoginEmail().replaceAll("(?<=.{2})." , "*")),
+            ()-> System.out.println("입력된 정보에 대한 아이디가 존재하지 않습니다.")
+        );
     con.setReadOnly(false);
-    return findUser;
-
+    closeConnection(con);
   }
 
-  public void validateIsLogin(Integer id){
-    User user = findUser(id);
+
+  /**
+   * 비밀번호 재설정
+   */
+  public void resetPassword(PasswordResetDto passwordResetDto) throws SQLException {
+    Connection con = getConnection();
+    con.setReadOnly(true);
+    findByLoginEmail(passwordResetDto.getLoginEmail()).filter(user ->
+        user.getName().equals(passwordResetDto.getName()) &&
+            user.getPhoneNumber().equals(passwordResetDto.getPhoneNumber()) &&
+            user.getPasswordQuestion().equals());
+    con.setReadOnly(false);
+    closeConnection(con);
 
   }
 

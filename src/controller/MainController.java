@@ -1,13 +1,14 @@
 package controller;
 
+import dto.PasswordResetDto;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.SQLException;
 import domain.User;
 import dto.savedto.DeliveryManSaveDto;
 import dto.savedto.BusinessManSaveDto;
 import dto.savedto.WarehouseManagerSaveDto;
+import java.util.HashMap;
+import java.util.Map;
 import service.UserService;
 
 public class MainController {
@@ -19,6 +20,7 @@ public class MainController {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("Welcome to Money Flow WMS");
     Integer loginUserId = null; //로그인 여부 판별용 id
+    Map<Integer, String> passwordQuestions = initPasswordQuestions();
 
     while (true) {
       /**
@@ -40,24 +42,28 @@ public class MainController {
               String loginEmail = br.readLine();
               System.out.print("비밀번호 입력 : ");
               String password = br.readLine();
-              User loginUser = userService.login(loginEmail, password); //authservice에 로그인
-              authenticate(loginUserId, br);
-
+              User loginUser = userService.login(loginEmail, password);
+              authenticate(loginUser.getId(), br);
+              break;
             case 2:
               System.out.println("이름 입력");
               String name = br.readLine();
               System.out.println("휴대폰 번호 입력");
               String phoneNumber = br.readLine();
-
+              userService.checkLoginEmailExists(name, phoneNumber);
+              break;
 
             case 3:
               System.out.println("로그인 이메일 입력");
-              String loginEmailToFindPassword = br.readLine();
+              String loginEmailFindPassword = br.readLine();
               System.out.println("이름 입력");
-              String nameToFindPassword = br.readLine();
+              String nameFindPassword = br.readLine();
               System.out.println("휴대폰 번호 입력");
-              String phoneNumberToFindPassword = br.readLine();
-              System.out.println("회원가입 시 문답을 하나 고르시오");
+              String phoneNumberFindPassword = br.readLine();
+              System.out.println("비밀번호 찾기 위해 설정한 질문에 대해 대답해주세요");
+              String passwordAnswer = br.readLine();
+              PasswordResetDto passwordResetDto = new PasswordResetDto(loginEmailFindPassword , nameFindPassword , phoneNumberFindPassword , passwordAnswer);
+
 
               br.readLine();
 
@@ -92,9 +98,21 @@ public class MainController {
               String businessManPassword = br.readLine();
               System.out.print("비밀번호 재입력 ");
               String businessManRePassword = br.readLine();
+              
+              System.out.println("비밀번호 확인 질문 중 하나 번호로 선택");
+              System.out.println("====================");
+              for (Integer i : passwordQuestions.keySet()) {
+                System.out.println(i+". "+passwordQuestions.get(i));
+              }
+              System.out.println("====================");
+              
+              int passwordQuestionNum = Integer.parseInt(br.readLine());
+              System.out.print("답변을 입력하시오 : ");
+              String passwordAnswerNum = br.readLine();
+
               BusinessManSaveDto businessManSaveDto = new BusinessManSaveDto(businessManName,
                   businessManPhoneNumber, businessManLoginEmail, businessManPassword,
-                  businessManRePassword, businessNum, businessName);
+                  businessManRePassword, passwordQuestionNum, passwordAnswerNum, businessNum, businessName);
               //사업자 id 리턴
               loginUserId = userService.businessManJoin(businessManSaveDto);//회원가입 성공하면 다시 초기 화면으로 돌아가서 로그인 되게끔
               //사업자 id를 통해 조회
@@ -148,6 +166,23 @@ public class MainController {
     }
 
 
+  }
+
+  private static Map<Integer, String> initPasswordQuestions() {
+    Map<Integer, String> passwordQuestions = new HashMap<>();
+    passwordQuestions.put(1 , "가장 좋아하는 회사는?");
+    passwordQuestions.put(2 , "가장 존경하는 인물은?");
+    passwordQuestions.put(3 , "당신의 보물 1호는?");
+    passwordQuestions.put(4 , "다시 태어나면 되고싶은 것은?");
+    passwordQuestions.put(5 , "읽은 책 중에서 좋아하는 구절은?");
+    passwordQuestions.put(6 , "당신의 좌우명은?");
+    passwordQuestions.put(7 , "자주 방문하는 카페 이름은?");
+    passwordQuestions.put(8 , "당신의 첫사랑 이름은?");
+    passwordQuestions.put(9 , "태어난 병원 이름은?");
+    passwordQuestions.put(10 , "당신의 콤플렉스는?");
+    passwordQuestions.put(11 , "학창시절 친했던 친구 3명의 이름은?");
+    passwordQuestions.put(12 , "가장 좋아하는 색깔은?");
+    return passwordQuestions;
   }
 
   private static void authenticate(Integer loginId, BufferedReader br) throws Exception{
