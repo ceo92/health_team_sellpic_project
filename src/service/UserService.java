@@ -37,8 +37,7 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
    * User
    */
 
-  public Integer businessManJoin(BusinessManSaveDto businessManSaveDto)
-      throws SQLException { //SQLException은 어차피 처리 못해 db 에러이니 그냥 JVM까지 던지는 수밖에 없다. 오류 화면을 보여주거나 오류 api를 던지는 @ControllerAdvice의 @ExceptionHandler이 있는 것도 아니고
+  public Integer businessManJoin(BusinessManSaveDto businessManSaveDto) { //SQLException은 어차피 처리 못해 db 에러이니 그냥 JVM까지 던지는 수밖에 없다. 오류 화면을 보여주거나 오류 api를 던지는 @ControllerAdvice의 @ExceptionHandler이 있는 것도 아니고
     Connection con = null;
     Integer saveId = null;
     try {
@@ -54,19 +53,16 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
       String rePassword = businessManSaveDto.getRePassword();
       String passwordQuestion = businessManSaveDto.getPasswordQuestion();
       String passwordAnswer = businessManSaveDto.getPasswordAnswer();
-      validateBeforeJoin(loginEmail, password, rePassword, con);
+      validateBeforeJoin(loginEmail, password, rePassword);
 
       //비밀번호 암호화(SHA-256 알고리즘)
       String encryptPassword = sha256WithSalt.getEncryptPassword(password);
       BusinessMan businessMan = new BusinessMan(businessName, businessNum, name, phoneNumber, loginEmail, encryptPassword , BUSINESS_MAN , passwordQuestion , passwordAnswer);
       saveId = userDao.save(businessMan, con);
       con.commit();
-    } catch (IllegalArgumentException e) {
-      System.out.println();
-      System.out.println("=====ERROR=====");
-      System.out.println(e.getMessage());
-      System.out.println();
-      con.rollback(); //어차피 처리 못해 그냥 main에 던져서 JVM으로 가서 실패할 수밖에 없음
+    } catch (SQLException e){
+      rollback(con);
+      throw new RuntimeException(e);
     } finally {
       closeConnection(con);
     }
@@ -77,7 +73,7 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
 
 
 
-  public Integer deliveryManJoin(DeliveryManSaveDto deliveryManSaveDto) throws SQLException {
+  public Integer deliveryManJoin(DeliveryManSaveDto deliveryManSaveDto){
     Connection con = null;
     Integer saveId = null;
     try {
@@ -93,24 +89,22 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
       String rePassword = deliveryManSaveDto.getRePassword();
       String passwordQuestion = deliveryManSaveDto.getPasswordQuestion();
       String passwordAnswer = deliveryManSaveDto.getPasswordAnswer();
-      validateBeforeJoin(loginEmail, password, rePassword ,con);
+      validateBeforeJoin(loginEmail, password, rePassword);
 
       User user = new DeliveryMan(deliveryManNum ,carNum , name, phoneNumber, loginEmail, password , DELIVERY_MAN , passwordQuestion , passwordAnswer);
       saveId = userDao.save(user, con);
       con.commit();
-    }catch (IllegalArgumentException e){
-      System.out.println();
-      System.out.println("=====ERROR=====");
-      System.out.println(e.getMessage());
-      System.out.println();
-      con.rollback();
+    }catch (SQLException e){
+      rollback(con);
+      throw new RuntimeException(e);
     } finally {
       closeConnection(con);
     }
     return saveId;
   }
 
-  public Integer warehouseManagerJoin(WarehouseManagerSaveDto warehouseManagerSaveDto) throws SQLException {
+  //솔직히 서비스도 SQLException 하기 싫은데 트랜잭션을 프록시가 아닌 서비스가 직접 시작하므로 어쩔 수 없이 예외 처리를 해줘야됨 , 그래서 프레젠테이션 계층만이라도 독립적이게 하기 위해
+  public Integer warehouseManagerJoin(WarehouseManagerSaveDto warehouseManagerSaveDto){
     Connection con = null;
     Integer saveId = null;
     try {
@@ -124,17 +118,14 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
       String rePassword = warehouseManagerSaveDto.getRePassword();
       String passwordQuestion = warehouseManagerSaveDto.getPasswordQuestion();
       String passwordAnswer = warehouseManagerSaveDto.getPasswordAnswer();
-      validateBeforeJoin(loginEmail, password, rePassword ,con);
+      validateBeforeJoin(loginEmail, password, rePassword);
 
       User user = new WarehouseManager(name, phoneNumber, loginEmail, password , WAREHOUSE_MANAGER, passwordQuestion , passwordAnswer);
       saveId = userDao.save(user, con);
       con.commit();
-    }catch (IllegalArgumentException e){
-      System.out.println();
-      System.out.println("=====ERROR=====");
-      System.out.println(e.getMessage());
-      System.out.println();
-      con.rollback();
+    }catch (SQLException e){
+      rollback(con);
+      throw new RuntimeException(e);
     }
     finally {
       closeConnection(con);
@@ -145,8 +136,7 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
 
   //DTO 십년 때매 어쩔 수 없이 등록 , 수정 분리해줘야됨!
 
-  public void updateWarehouseManager(Integer id , WarehouseManagerUpdateDto warehouseManagerUpdateDto)
-      throws SQLException {
+  public void updateWarehouseManager(Integer id , WarehouseManagerUpdateDto warehouseManagerUpdateDto){
     Connection con = null;
     try {
       con = getConnection();
@@ -156,18 +146,18 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
           warehouseManagerUpdateDto.getName(),
           warehouseManagerUpdateDto.getPhoneNumber()
       );
-      userDao.update(warehouseManager, con);
+      userDao.updateBasicInformation(warehouseManager, con);
       con.commit();
     }catch (SQLException e) {
-      con.rollback();
-      System.out.println("수정에 오류가 발생하였습니다");
+      rollback(con);
+      throw new RuntimeException(e);
     }
     finally {
       closeConnection(con);
     }
 
   }
-  public void updateBusinessMan(Integer id , BusinessManUpdateDto businessManUpdateDto) throws SQLException {
+  public void updateBusinessMan(Integer id , BusinessManUpdateDto businessManUpdateDto) {
     Connection con = null;
     try {
       con = getConnection();
@@ -179,18 +169,17 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
           businessManUpdateDto.getBusinessNum(),
           businessManUpdateDto.getBusinessName()
       );
-      userDao.update(businessMan, con);
+      userDao.updateBasicInformation(businessMan, con);
       con.commit();
     }catch (SQLException e) {
-      con.rollback();
+      rollback(con);
       System.out.println("수정에 오류가 발생하였습니다");
     }
     finally {
       closeConnection(con);
     }
   }
-  public void updateDeliveryMan(Integer id , DeliveryManUpdateDto deliveryManUpdateDto)
-      throws SQLException {
+  public void updateDeliveryMan(Integer id , DeliveryManUpdateDto deliveryManUpdateDto) {
     Connection con = null;
     try {
       con = getConnection();
@@ -202,58 +191,77 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
           deliveryManUpdateDto.getDeliveryManNum(),
           deliveryManUpdateDto.getCarNum()
       );
-      userDao.update(deliveryMan, con);
+      userDao.updateBasicInformation(deliveryMan, con);
       con.commit();
     }catch (SQLException e) {
-      con.rollback();
-      System.out.println("수정에 오류가 발생하였습니다");
+      rollback(con);
+      throw new RuntimeException(e);
     }
     finally {
       closeConnection(con);
     }
   }
 
-  public User findUser(Integer id) throws SQLException {
-    Connection con = getConnection();
-    con.setReadOnly(true);
-    User findUser = userDao.findById(id, con)
-        .orElseThrow(() -> new IllegalArgumentException("찾으려는 회원 정보가 존재하지 않습니다")); //컨트롤러에서 처리하게 할까
-    con.setReadOnly(false);
-    closeConnection(con);
+  public User findUser(Integer id) {
+    Connection con = null;
+    User findUser = null;
+    try {
+      con = getConnection();
+      con.setReadOnly(true);
+      findUser = userDao.findById(id, con).orElseThrow(() -> new IllegalArgumentException("찾으려는 회원 정보가 존재하지 않습니다")); //컨트롤러에서 처리하게 할까
+    }catch (SQLException e){
+      throw new RuntimeException(e);
+    }finally {
+      closeConnection(con);
+    }
     return findUser;
 
   }
 
 
-  private Optional<User> findByLoginEmail(String loginEmail) throws SQLException {
-    Connection con = getConnection();
-    con.setReadOnly(true);
-    Optional<User> findUser = userDao.findAll(con).stream()
-        .filter(user -> user.getLoginEmail().equals(loginEmail))
-        .findFirst();
-    con.setReadOnly(false);
-    closeConnection(con);
+  /**
+   * findByLoginEmail , findByLoginEmailAndPassword 서비스 내에서만
+   */
+  private Optional<User> findByLoginEmail(String loginEmail){
+    Connection con = null;
+    Optional<User> findUser;
+    try {
+      con = getConnection();
+      con.setReadOnly(true);
+      findUser = userDao.findAll(con).stream()
+          .filter(user -> user.getLoginEmail().equals(loginEmail))
+          .findFirst();
+    }catch (SQLException e){
+      throw new RuntimeException(e);
+    }finally {
+      closeConnection(con);
+    }
     return findUser;
   }
 
-  private Optional<User> findByLoginEmailAndPassword(String loginEmail , String password) throws SQLException {
-    Connection con = getConnection();
-    con.setReadOnly(true);
-    Optional<User> findUser = userDao.findAll(con).stream().filter(
-            user -> user.getLoginEmail().equals(loginEmail) && user.getPassword().equals(password))
-        .findFirst();
-    con.setReadOnly(false);
-    closeConnection(con);
+  private Optional<User> findByLoginEmailAndPassword(String loginEmail , String password){
+    Connection con = null;
+    Optional<User> findUser;
+    try {
+      con = getConnection();
+      con.setReadOnly(true);
+      findUser = userDao.findAll(con).stream().filter(
+              user -> user.getLoginEmail().equals(loginEmail) && user.getPassword().equals(password))
+          .findFirst();
+    }catch (SQLException e){
+      throw new RuntimeException(e);
+    }finally {
+      closeConnection(con);
+    }
     return findUser;
   }
 
 
 
   /**
-   * 회원가입 전 검증
+   * 회원가입 전 검증 , 원래 앞단에서 입력받을 때 Bean Validation에서 검증해줘야하는데 쩔 수 없이 서비스에서 해주는 것일 뿐 그래서 해당 예외를 컨트롤러에서 잡아서 처리해줭도미
    */
-  private void validateBeforeJoin(String loginEmail, String password, String rePassword , Connection con)
-      throws SQLException {
+  private void validateBeforeJoin(String loginEmail, String password, String rePassword) {
     //1. 이미 존재하는 아이디인지
     findByLoginEmail(loginEmail).ifPresent(user -> {
       throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
@@ -281,14 +289,20 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
    * 1. 로그인 아이디 일치하는지
    * 2. 로그인 아이디 일치하면 비밀번호 일치한지
    */
-  public User login(String loginEmail , String password) throws SQLException {
-    Connection con = getConnection();
-    con.setReadOnly(true);
-    //이미 권한 다 할당된 사용자
-    User findUser = findByLoginEmailAndPassword(loginEmail, password).orElseThrow(
-        () -> new IllegalArgumentException("아이디 혹은 비밀번호가 일치하지 않습니다"));
-    con.setReadOnly(false);
-    closeConnection(con);
+  public User login(String loginEmail , String password){
+    Connection con = null;
+    User findUser = null;
+    try {
+      con = getConnection();
+      con.setReadOnly(true);
+      //이미 권한 다 할당된 사용자
+      findUser = findByLoginEmailAndPassword(loginEmail, password).orElseThrow(
+          () -> new IllegalArgumentException("아이디 혹은 비밀번호가 일치하지 않습니다"));
+    }catch (SQLException e){
+      throw new RuntimeException(e);
+    }finally {
+      closeConnection(con);
+    }
     return findUser;
   }
 
@@ -300,46 +314,89 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
   /**
    * 아이디 찾기
    */
-  public void checkLoginEmailExists(String name , String phoneNumber) throws SQLException {
-    Connection con = getConnection();
-    con.setReadOnly(true);
-    userDao.findAll(con).stream()
-        .filter(user -> user.getName().equals(name) && user.getPhoneNumber().equals(phoneNumber))
-        .findFirst().ifPresentOrElse(
-            user -> System.out.printf("%s님 아이디 : %s\n", user.getName() , user.getLoginEmail().replaceAll("(?<=.{2})." , "*")),
-            ()-> System.out.println("입력된 정보에 대한 아이디가 존재하지 않습니다.")
-        );
-    con.setReadOnly(false);
-    closeConnection(con);
+  public void checkLoginEmailExists(String name , String phoneNumber){
+    Connection con = null;
+    try {
+      con = getConnection();
+      con.setReadOnly(true);
+      userDao.findAll(con).stream()
+          .filter(user -> user.getName().equals(name) && user.getPhoneNumber().equals(phoneNumber))
+          .findFirst().ifPresentOrElse(
+              user -> System.out.printf("%s님 아이디 : %s\n", user.getName(),
+                  user.getLoginEmail().replaceAll("(?<=.{2}).", "*")),
+              () -> {
+                System.out.println("==========ERROR==========");
+                System.out.println("입력된 정보에 대한 아이디가 존재하지 않습니다.");
+                System.out.println("=========================");
+              }
+          );
+    }catch (SQLException e){
+      throw new RuntimeException(e);
+    }finally {
+      closeConnection(con);
+    }
   }
 
 
   /**
    * 비밀번호 재설정
    */
-  public void checkBeforePasswordReset(PasswordResetDto passwordResetDto) throws SQLException {
-    Connection con = getConnection();
-    con.setReadOnly(true);
-    User findUser = findByLoginEmail(passwordResetDto.getLoginEmail()).filter(user ->
-        user.getName().equals(passwordResetDto.getName()) &&
-            user.getPhoneNumber().equals(passwordResetDto.getPhoneNumber()) &&
-            user.getPasswordQuestion().equals(passwordResetDto.getPasswordQuestion()) &&
-            user.getPasswordAnswer().equals(passwordResetDto.getPasswordAnswer())
-    ).orElseThrow(() -> new IllegalArgumentException("입력된 정보가 일치하지 않습니다."));
-    resetPassword(findUser);
-    con.setReadOnly(false);
-    closeConnection(con);
+  public User checkBeforeResetPassword(PasswordResetDto passwordResetDto) {
+    Connection con = null;
+    User findUser = null;
+    try {
+      con = getConnection();
+      con.setReadOnly(true);
 
-
+      findUser = findByLoginEmail(passwordResetDto.getLoginEmail()).filter(user ->
+          user.getName().equals(passwordResetDto.getName()) &&
+              user.getPhoneNumber().equals(passwordResetDto.getPhoneNumber()) &&
+              user.getPasswordQuestion().equals(passwordResetDto.getPasswordQuestion()) &&
+              user.getPasswordAnswer().equals(passwordResetDto.getPasswordAnswer())
+      ).orElseThrow(() -> new IllegalArgumentException("입력된 정보가 일치하지 않습니다."));
+    }catch (SQLException e){
+      throw new RuntimeException(e);
+    }finally {
+      closeConnection(con);
+    }
+    return findUser;
   }
 
-  private void resetPassword(User user) {
-    user.getPassword()
+  //변경 : 애플리케이션에서 변경 + DB에서 변경 ==> JPA 쓰면 영속성 컨텍스트를 통하여 엔티티들을 관리해줌으로써 더티체킹을 통해 애플리케이션에서 바뀐 내용들을 자동으로 db에서도 바귀게 해줌
+  public void resetPassword(String newPassword , String reNewPassword , User user){
+    Connection con = null;
+    try {
+      con = getConnection();
+      con.setAutoCommit(false);
+      if (newPassword.equals(reNewPassword)) {
+        user.changePassword(newPassword);
+        userDao.updatePassword(user , con); //SQLException
+        con.commit();
+      } else {
+        throw new IllegalArgumentException("비밀번호 재확인이 필요합니다"); //이건 이제 컨트롤러에서 처리하는 거지
+      }
+    }catch (SQLException e){
+      rollback(con);
+      throw new RuntimeException(e);
+    }
+    finally {
+      closeConnection(con);
+    }
   }
 
 
   private static Connection getConnection(){
     return HikariCpDBConnectionUtil.getInstance().getConnection();
+  }
+
+  private static void rollback(Connection con) {
+    try {
+      if (con != null) {
+        con.rollback(); //어차피 처리 못해 그냥 main에 던져서 JVM으로 가서 실패할 수밖에 없음
+      }
+    } catch (SQLException ex) {
+      throw new RuntimeException(ex);
+    }
   }
 
   private static void closeConnection(Connection con){
@@ -351,7 +408,9 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
         }
         con.close(); //Connection 닫기
       } catch (SQLException e) {
-        System.out.println("error = " + e.getMessage());
+        System.out.println("==========ERROR==========");
+        System.out.println(e.getMessage());
+        System.out.println("=========================");
       }
     }
   }

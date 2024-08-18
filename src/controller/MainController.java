@@ -71,8 +71,18 @@ public class MainController {
               String passwordAnswer = br.readLine();
               PasswordResetDto passwordResetDto = new PasswordResetDto(loginEmailFindPassword , nameFindPassword ,
                   phoneNumberFindPassword ,passwordQuestionsMap.get(passwordQuestionNum),  passwordAnswer);
-              userService.checkBeforePasswordReset(passwordResetDto);
-              br.readLine();
+              try {
+                User checkedUser = userService.checkBeforeResetPassword(passwordResetDto);
+                System.out.print("새로운 비밀번호 입력 : ");
+                String newPassword = br.readLine();
+                System.out.print("비밀번호 한번 더 입력 : ");
+                String reNewPassword = br.readLine();
+                userService.resetPassword(newPassword , reNewPassword , checkedUser);
+              }catch (IllegalArgumentException e){
+                System.out.println("==========ERROR==========");
+                System.out.println(e.getMessage());
+                System.out.println("=========================");
+              }
 
           }
 
@@ -105,7 +115,6 @@ public class MainController {
               String businessManPassword = br.readLine();
               System.out.print("비밀번호 재입력 ");
               String businessManRePassword = br.readLine();
-              
               System.out.println("비밀번호 확인 질문 중 하나 번호로 선택");
               System.out.println("====================");
               for (Integer i : passwordQuestionsMap.keySet()) {

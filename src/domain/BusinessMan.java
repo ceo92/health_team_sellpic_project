@@ -36,10 +36,6 @@ public class BusinessMan extends User {
     setBusinessName(businessName);
   }
 
-  public void changePassword(String newPassword , String newRePassword){
-    if (newPassword.equals(newRePassword)){
-      setPassword(newPassword);
-    }
-  }
+
 
 }

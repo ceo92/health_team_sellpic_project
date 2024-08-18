@@ -13,7 +13,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -225,7 +224,7 @@ public class UserDao {
         rs = pstmt.executeQuery();
         while (rs.next()) {
           BusinessMan businessMan = new BusinessMan(rs.getInt("id"), rs.getString("name")
-              , rs.getString("phone_number"), rs.getString("login_email"), rs.getString("password"),
+              , rs.getString("phone_number"), rs.getString("login_email"), rs.getString("password")
               , roleType, rs.getString("business_num"), rs.getString("business_name")
           );
           users.add(businessMan);
@@ -297,8 +296,12 @@ public class UserDao {
   }
 
 
+  /**
+   * 변경 : 기본정보
+   */
+
 //서비스에서 dto를 domain으로 변경하고 주입해줌 , 트랜잭션 서비스에서 시작해야하므로 User객체 생성 서비스에서 해줌!
-  public void update(User user,  Connection con) throws SQLException {
+  public void updateBasicInformation(User user,  Connection con) throws SQLException {
     String sql = "update user set name = ? , phone_number = ?  where id = ?";
     PreparedStatement firstPstmt = null;
     PreparedStatement secondPstmt = null;
@@ -335,14 +338,34 @@ public class UserDao {
     }
   }
 
+  /**
+   * 변경 : 비밀번호
+   */
+
+  public void updatePassword(User user ,  Connection con) throws SQLException {
+    String sql = "update user set password = ? where id = ?";
+    PreparedStatement pstmt = null;
+
+    try {
+      pstmt = con.prepareStatement(sql);
+      pstmt.setString(1 , user.getPassword());
+      pstmt.setInt(2 , user.getId());
+      pstmt.executeUpdate();
+    }catch (SQLException e){
+      throw e;
+    }finally {
+      close(pstmt , null);
+    }
+  }
+
+
+
+
+
 
   public void delete(User user , Connection con) throws SQLException{
     StringBuilder sql = new StringBuilder("delete from user where id = ?");
-    sql.replace(12 , 16 , "business_man");
-    sql.replace(12 , 16 , "delivery_man");
-
     PreparedStatement pstmt = null;
-
 
     try {
       //이 단계에서 이미 창고 관리자 , admin 삭제됨
