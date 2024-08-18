@@ -80,10 +80,7 @@ public class UserDao {
   public Optional<User> findById(Integer id , Connection con){
     StringBuilder sql = new StringBuilder("select * from user where id = ?");
     PreparedStatement superTablePstmt = null , subTablePstmt = null;
-
     ResultSet superTableRs = null , subTableRs = null;
-    String name = null, phoneNumber = null, loginEmail = null , password = null;
-    RoleType roleType = null;
 
     try {
       superTablePstmt = con.prepareStatement(sql.toString());
@@ -259,27 +256,31 @@ public class UserDao {
 
 
   public List<User> findAll(Connection con) throws SQLException {
-    StringBuilder superTableSql = new StringBuilder("select * from user u");
-    PreparedStatement superTablePstmt = null;
-    ResultSet superTableRs = null;
+    StringBuilder sql = new StringBuilder("select * from user");
+    PreparedStatement pstmt = null , pstmt1;
+    ResultSet rs = null , rs1 = null;
     List<User> users = new ArrayList<>();
     try{
-      superTablePstmt = con.prepareStatement(superTableSql.toString());
-      superTableRs = superTablePstmt.executeQuery();
-      while (superTableRs.next()){
-        User user = new User(superTableRs.getInt("id") , superTableRs.getString("name") ,  superTableRs.getString("phone_number") ,
-            superTableRs.getString("login_email") , superTableRs.getString("password") , RoleType.valueOf(superTableRs.getString("role_type")));
+      pstmt = con.prepareStatement(sql.toString());
+      rs = pstmt.executeQuery();
+      while (rs.next()){
+        User user = new User(rs.getInt("id") , rs.getString("name") ,  rs.getString("phone_number") ,
+            rs.getString("login_email") , rs.getString("password") , RoleType.valueOf(rs.getString("role_type")) , rs.getString("password_question") , rs.getString("password_answer"));
         if (user.getRoleType() == BUSINESS_MAN){
-          StringBuilder subTableSql = new StringBuilder("select * from business_man");
-          a
+          sql.replace(14, 18, "business_man");
+          pstmt1 = con.prepareStatement(sql.toString());
+          rs1 = pstmt1.executeQuery();
           BusinessMan businessMan = new BusinessMan(user.getId() , user.getName() , user.getPhoneNumber(),
-              user.getLoginEmail() , user.getPassword(), user.getRoleType() ,
-              superTableRs.getString("business_num") , superTableRs.getString("business_name"));
+              user.getLoginEmail() , user.getPassword(), user.getRoleType() ,user.getPasswordQuestion() , user.getPasswordAnswer()
+              rs1.getString("business_num") , rs1.getString("business_name"));
           users.add(businessMan);
         } else if (user.getRoleType() == DELIVERY_MAN ) {
+          sql.replace(14, 18, "delivery_man");
+          pstmt1 = con.prepareStatement(sql.toString());
+          rs1 = pstmt1.executeQuery();
           DeliveryMan deliveryMan = new DeliveryMan(user.getId() , user.getName() , user.getPhoneNumber(),
-              user.getLoginEmail() , user.getPassword(), user.getRoleType() ,
-              superTableRs.getString("delivery_man_num") , superTableRs.getString("car_num"));
+              user.getLoginEmail() , user.getPassword(), user.getRoleType() , user.getPasswordQuestion() , user.getPasswordAnswer(),
+              rs.getString("delivery_man_num") , rs.getString("car_num"));
           users.add(deliveryMan);
         }
         else{
@@ -289,7 +290,7 @@ public class UserDao {
     }catch (SQLException e){
       throw e;
     }finally {
-      close(superTablePstmt , superTableRs);
+      close(pstmt , rs);
     }
     return users;
   }
