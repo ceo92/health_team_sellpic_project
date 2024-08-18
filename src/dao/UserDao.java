@@ -83,47 +83,48 @@ public class UserDao {
     ResultSet superTableRs = null , subTableRs = null;
 
     try {
+      User user = null;
       superTablePstmt = con.prepareStatement(sql.toString());
       superTablePstmt.setInt(1 , id);
       superTableRs = superTablePstmt.executeQuery();
       if (superTableRs.next()) {
-        name = superTableRs.getString("name");
-        phoneNumber = superTableRs.getString("phone_number");
-        loginEmail = superTableRs.getString("login_email");
-        password = superTableRs.getString("password");
-        roleType = RoleType.valueOf(superTableRs.getString("role_type"));
-      }
-
-      if (roleType == BUSINESS_MAN){
-        sql.replace(15 , 19 , "business_man");
+        user = new User(superTableRs.getString("name") , superTableRs.getString("phone_number")
+        , superTableRs.getString("login_email") , superTableRs.getString("password") ,
+            RoleType.valueOf(superTableRs.getString("role_type")) ,  superTableRs.getString("passwordQuestion")
+        , superTableRs.getString("passwordAnswer"));}
+      if (user.getRoleType() == BUSINESS_MAN){
+        sql.replace(14 , 18 , "business_man");
         subTablePstmt = con.prepareStatement(sql.toString());
         subTablePstmt.setInt(1, id);
         subTableRs = subTablePstmt.executeQuery();
         if (subTableRs.next()) {
-          BusinessMan businessMan = new BusinessMan(id , name , phoneNumber , loginEmail , password , roleType ,
+          BusinessMan businessMan = new BusinessMan(id , user.getName() , user.getPhoneNumber(), user.getLoginEmail() ,
+              user.getPassword(), user.getRoleType() ,user.getPasswordQuestion() , user.getPasswordAnswer(),
               subTableRs.getString("business_num") ,subTableRs.getString("business_name"));
-          return Optional.of(businessMan);
+          return Optional.ofNullable(businessMan);
         }
-      } else if (roleType == DELIVERY_MAN){
-        sql.replace(15 , 19 , "delivery_man");
+      } else if (user.getRoleType() == DELIVERY_MAN){
+        sql.replace(14 , 18 , "delivery_man");
         subTablePstmt = con.prepareStatement(sql.toString());
         subTablePstmt.setInt(1, id);
         subTableRs = subTablePstmt.executeQuery();
         if (subTableRs.next()) {
-          DeliveryMan deliveryMan = new DeliveryMan(id, name, phoneNumber, loginEmail, password , roleType,
-              subTableRs.getString("delivery_man_num") , subTableRs.getString("car_num"));
-          return Optional.of(deliveryMan);
+          DeliveryMan deliveryMan = new DeliveryMan(id , user.getName() , user.getPhoneNumber(), user.getLoginEmail() ,
+              user.getPassword(), user.getRoleType() ,user.getPasswordQuestion() , user.getPasswordAnswer(),
+              subTableRs.getString("delivery_man_num") ,subTableRs.getString("car_num"));
+          return Optional.ofNullable(deliveryMan);
         }
+      }else{
+        return Optional.ofNullable(user);
       }
-
     }catch (SQLException e){
       throw new RuntimeException(e);
     }finally {
       close(subTablePstmt , subTableRs);
       close(superTablePstmt , superTableRs);
     }
+    return Optional.empty();
     //BusinessMan , DeliveryMan도 아니면 ADMIN 혹은 WAREHOUSE_MANAGER이므로 해당 데이터를 던져주면 됨 ㅇㅇ 이게 사실은 else문이 되게 됨
-    return Optional.of(new User(id, name, phoneNumber, loginEmail, password, roleType));
   }
 
   /*public Optional<User> findById(Integer id , RoleType roleType , Connection con) throws SQLException {

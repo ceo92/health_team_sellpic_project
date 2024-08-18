@@ -2,6 +2,7 @@ package domain;
 
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -10,6 +11,7 @@ import lombok.Setter;
  */
 // DB와 자바는 매핑 방법이 다르므로
 
+@NoArgsConstructor
 @Getter @Setter(AccessLevel.PROTECTED)
 public class User {
   private Integer id;//PK
@@ -43,6 +45,7 @@ public class User {
     this.passwordQuestion = passwordQuestion;
     this.passwordAnswer = passwordAnswer;
   }
+
   public void changePassword(String password){
     setPassword(password); //this.password = password
   }
