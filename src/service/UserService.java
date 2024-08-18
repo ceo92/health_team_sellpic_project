@@ -309,6 +309,7 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
 
   public void logout(User user){
     user = null;
+
   }
 
 

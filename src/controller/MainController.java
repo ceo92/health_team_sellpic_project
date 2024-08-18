@@ -21,6 +21,10 @@ public class MainController {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("Welcome to Money Flow WMS");
     Map<Integer, String> passwordQuestionsMap = initPasswordQuestions();
+    /**
+     * 기본 회원 정보 및 ADMIN 초기화 ,이건 DataGrip에서 하자
+     */
+
     User loginUser = null;
     while (true) {
       /**
@@ -90,7 +94,7 @@ public class MainController {
           }
 
         } else if (guestInputNum == 2) {
-          System.out.println("=".repeat(20) + "회원가입 화면" + "=".repeat(20));
+          System.out.println("=".repeat(20) + "회원가입 페이지" + "=".repeat(20));
           System.out.println();
           System.out.println("어느 권한의 회원으로 가입하시겠습니까?");
           System.out.println("1. 사업자 (BusinessMan)");
@@ -128,7 +132,8 @@ public class MainController {
                   businessManPhoneNumber, businessManLoginEmail, businessManPassword,
                   businessManRePassword, passwordQuestionsMap.get(bmPasswordQuestionNum), bmPasswordAnswer, businessNum, businessName);
               //사업자 id 리턴
-              loginUserId = userService.businessManJoin(businessManSaveDto);//회원가입 성공하면 다시 초기 화면으로 돌아가서 로그인 되게끔
+              Integer businessManId = userService.businessManJoin(businessManSaveDto);//회원가입 성공하면 다시 초기 화면으로 돌아가서 로그인 되게끔
+              loginUser = userService.findUser(businessManId);
               //사업자 id를 통해 조회
               break;
 
@@ -157,7 +162,8 @@ public class MainController {
 
               WarehouseManagerSaveDto warehouseManagerSaveDto = new WarehouseManagerSaveDto(whmName,
                   whmPhoneNumber, whmLoginEmail, whmPassword, whmRePassword , passwordQuestionsMap.get(wmPasswordQuestionNum) , wmPasswordAnswer);
-              loginUserId = userService.warehouseManagerJoin(warehouseManagerSaveDto);
+              Integer warehouseManagerId = userService.warehouseManagerJoin(warehouseManagerSaveDto);
+              loginUser = userService.findUser(warehouseManagerId);
               break;
 
             case 3:
@@ -189,7 +195,8 @@ public class MainController {
 
               DeliveryManSaveDto deliveryManSaveDto = new DeliveryManSaveDto(dmName, dmPhoneNumber,
                   dmLoginEmail, dmPassword, dmRePassword, passwordQuestionsMap.get(dmPasswordQuestionNum),  dmPasswordAnswer ,dmNum, dmCarNum);
-              loginUserId = userService.deliveryManJoin(deliveryManSaveDto);
+              Integer deliveryManId = userService.deliveryManJoin(deliveryManSaveDto);
+              loginUser = userService.findUser(deliveryManId);
               break;
 
             default:
@@ -197,8 +204,22 @@ public class MainController {
               break;
           }
         } else if (guestInputNum == 3) {
-          //q&a 작성
-          System.out.println("잘못된 입력입니다.");
+          System.out.println("=".repeat(20) + "Q&A 게시판" + "=".repeat(20));
+          //for(qna : qnaList){
+          //  System.out.println(qna); 사람들 작성한 qna 리스트 보여짐 , 여기서 페이징 처리하면 좋을듯 ,,
+          //}
+          System.out.println("원하는 서비스의 번호를 입력하세요");
+          System.out.println("1.Q&A 작성  2. 내 Q&A 조회 3. 처음으로 되돌아가기");
+          switch (Integer.parseInt(br.readLine())){
+            case 1:
+              String qna = br.readLine();
+              break;
+            case 2:
+              //qnaService.findQnaList()
+              break;
+            case 3:
+              break;
+          }
         }
       }
     }
