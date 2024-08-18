@@ -1,5 +1,6 @@
 package dao;
 
+import static domain.RoleType.ADMIN;
 import static domain.RoleType.BUSINESS_MAN;
 import static domain.RoleType.DELIVERY_MAN;
 
@@ -81,7 +82,6 @@ public class UserDao {
     StringBuilder sql = new StringBuilder("select * from user where id = ?");
     PreparedStatement superTablePstmt = null , subTablePstmt = null;
     ResultSet superTableRs = null , subTableRs = null;
-
     try {
       User user = null;
       superTablePstmt = con.prepareStatement(sql.toString());
@@ -214,42 +214,42 @@ public class UserDao {
     List<User> users = new ArrayList<>();
     try {
       if (roleType == BUSINESS_MAN) {
-        sql.append("join business_man b and u.id = b.id");
+        sql.append("join ? b and u.id = b.id");
         pstmt = con.prepareStatement(sql.toString());
+        pstmt.setString(1 , roleType.name().toLowerCase());
         rs = pstmt.executeQuery();
         while (rs.next()) {
           BusinessMan businessMan = new BusinessMan(rs.getInt("id"), rs.getString("name")
-              , rs.getString("phone_number"), rs.getString("login_email"), rs.getString("password")
-              , rs.getString("business_num"), rs.getString("business_name") ,roleType,
-              rs.getString("password_question") , rs.getString("password_answer"));
+              , rs.getString("phone_number"), rs.getString("login_email"), rs.getString("password") ,
+              roleType , rs.getString("password_question") , rs.getString("password_answer")
+              , rs.getString("business_num"), rs.getString("business_name"));
           users.add(businessMan);
         }
       } else if (roleType == DELIVERY_MAN) {
-        sql.append("join ").append("delivery_man d").append("and u.id = d.id");
+        sql.append("join ? b and u.id = b.id");
         pstmt = con.prepareStatement(sql.toString());
+        pstmt.setString(1 , roleType.name().toLowerCase());
         rs = pstmt.executeQuery();
         while (rs.next()) {
           DeliveryMan deliveryMan = new DeliveryMan(rs.getInt("id"), rs.getString("name")
-              , rs.getString("phone_number"), rs.getString("login_email"), rs.getString("password"),
-              roleType, rs.getString("delivery_man_num"), rs.getString("car_num")
-          );
+              , rs.getString("phone_number"), rs.getString("login_email"), rs.getString("password") ,
+              roleType , rs.getString("password_question") , rs.getString("password_answer")
+              , rs.getString("delivery_man_num"), rs.getString("car_num"));
           users.add(deliveryMan);
         }
       } else {
         pstmt = con.prepareStatement(sql.toString());
         rs = pstmt.executeQuery();
         while (rs.next()) {
-          User user = new User(rs.getInt("id"), rs.getString("name")
-              , rs.getString("phone_number"), rs.getString("login_email"),
-              rs.getString("password"), roleType);
-          if (user instanceof Admin)continue;
+          User user = new User(rs.getInt("id"), rs.getString("name"), rs.getString("phone_number"), rs.getString("login_email"),
+              rs.getString("password"), roleType , rs.getString("password_question") , rs.getString("password_answer"));
+          if (user.getRoleType() == ADMIN) continue;
           users.add(user);
         }
       }
-
       return users;
     }catch (SQLException e){
-      throw e;
+      throw new RuntimeException(e);
     }finally {
       close(pstmt , rs);
     }
@@ -258,30 +258,30 @@ public class UserDao {
 
   public List<User> findAll(Connection con) throws SQLException {
     StringBuilder sql = new StringBuilder("select * from user");
-    PreparedStatement pstmt = null , pstmt1;
-    ResultSet rs = null , rs1 = null;
+    PreparedStatement superTablePstmt = null, subTablePstmt;
+    ResultSet superTableRs = null, subTableRs;
     List<User> users = new ArrayList<>();
     try{
-      pstmt = con.prepareStatement(sql.toString());
-      rs = pstmt.executeQuery();
-      while (rs.next()){
-        User user = new User(rs.getInt("id") , rs.getString("name") ,  rs.getString("phone_number") ,
-            rs.getString("login_email") , rs.getString("password") , RoleType.valueOf(rs.getString("role_type")) , rs.getString("password_question") , rs.getString("password_answer"));
+      superTablePstmt = con.prepareStatement(sql.toString());
+      superTableRs = superTablePstmt.executeQuery();
+      while (superTableRs.next()){
+        User user = new User(superTableRs.getInt("id") , superTableRs.getString("name") ,  superTableRs.getString("phone_number") ,
+            superTableRs.getString("login_email") , superTableRs.getString("password") , RoleType.valueOf(superTableRs.getString("role_type")) , superTableRs.getString("password_question") , superTableRs.getString("password_answer"));
         if (user.getRoleType() == BUSINESS_MAN){
           sql.replace(14, 18, "business_man");
-          pstmt1 = con.prepareStatement(sql.toString());
-          rs1 = pstmt1.executeQuery();
+          subTablePstmt = con.prepareStatement(sql.toString());
+          subTableRs = subTablePstmt.executeQuery();
           BusinessMan businessMan = new BusinessMan(user.getId() , user.getName() , user.getPhoneNumber(),
-              user.getLoginEmail() , user.getPassword(), user.getRoleType() ,user.getPasswordQuestion() , user.getPasswordAnswer()
-              rs1.getString("business_num") , rs1.getString("business_name"));
+              user.getLoginEmail() , user.getPassword(), user.getRoleType() ,user.getPasswordQuestion() , user.getPasswordAnswer(),
+              subTableRs.getString("business_num") , subTableRs.getString("business_name"));
           users.add(businessMan);
         } else if (user.getRoleType() == DELIVERY_MAN ) {
           sql.replace(14, 18, "delivery_man");
-          pstmt1 = con.prepareStatement(sql.toString());
-          rs1 = pstmt1.executeQuery();
+          subTablePstmt = con.prepareStatement(sql.toString());
+          subTableRs = subTablePstmt.executeQuery();
           DeliveryMan deliveryMan = new DeliveryMan(user.getId() , user.getName() , user.getPhoneNumber(),
               user.getLoginEmail() , user.getPassword(), user.getRoleType() , user.getPasswordQuestion() , user.getPasswordAnswer(),
-              rs.getString("delivery_man_num") , rs.getString("car_num"));
+              superTableRs.getString("delivery_man_num") , superTableRs.getString("car_num"));
           users.add(deliveryMan);
         }
         else{
@@ -291,7 +291,7 @@ public class UserDao {
     }catch (SQLException e){
       throw e;
     }finally {
-      close(pstmt , rs);
+      close(superTablePstmt , superTableRs);
     }
     return users;
   }
@@ -332,7 +332,7 @@ public class UserDao {
 
 
     }catch (SQLException e){
-      throw e;
+      throw new RuntimeException(e);
 
     }finally {
       close(firstPstmt , null);
@@ -353,7 +353,7 @@ public class UserDao {
       pstmt.setInt(2 , user.getId());
       pstmt.executeUpdate();
     }catch (SQLException e){
-      throw e;
+      throw new RuntimeException(e);
     }finally {
       close(pstmt , null);
     }
@@ -394,31 +394,6 @@ public class UserDao {
     }
   }
 
-
-
-  private void close(Statement stmt, ResultSet rs) {
-
-    if (rs != null) {
-      try {
-        rs.close(); //ResultSet 닫기
-      } catch (SQLException e) {
-        System.out.println("error = " + e.getMessage());
-      }
-    }
-
-    if (stmt != null) {
-      try {
-        stmt.close(); //PreparedStatement 닫기
-      } catch (SQLException e) {
-        System.out.println("error = " + e.getMessage());
-      }
-    }
-    //이렇게 로직을 구성하면 쿼리 날리는 요청 stmt 닫을때 예외 터져도 결국 catch로 잡으니 con도 정상적으로 닫힘
-    //안 닫으면 커넥션 계속 유지가 되니 메모리 터짐 ㅇㅇ
-
-    // 이미 닫을때 예외가 터지는 거니 특별히 할 수 있는거 없음 , 로그로 찍는거밖에.
-  }
-  //단건 수정 , 삭제 : executeQuery()에 sql 지정 x ,
   public void remove(Connection con, int bno) {
     String sql = "delete from Board where bno=?";
     PreparedStatement pstmt = null;
@@ -436,6 +411,31 @@ public class UserDao {
       close(pstmt, null);
     }
   }
+
+  private void close(Statement stmt, ResultSet rs) {
+
+    if (rs != null) {
+      try {
+        rs.close(); //ResultSet 닫기
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
+    }
+
+    if (stmt != null) {
+      try {
+        stmt.close(); //PreparedStatement 닫기
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
+    }
+    //이렇게 로직을 구성하면 쿼리 날리는 요청 stmt 닫을때 예외 터져도 결국 catch로 잡으니 con도 정상적으로 닫힘
+    //안 닫으면 커넥션 계속 유지가 되니 메모리 터짐 ㅇㅇ
+
+    // 이미 닫을때 예외가 터지는 거니 특별히 할 수 있는거 없음 , 로그로 찍는거밖에.
+  }
+  //단건 수정 , 삭제 : executeQuery()에 sql 지정 x ,
+
 
 
 
