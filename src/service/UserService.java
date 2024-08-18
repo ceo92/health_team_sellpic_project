@@ -296,8 +296,7 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
       con = getConnection();
       con.setReadOnly(true);
       //이미 권한 다 할당된 사용자
-      findUser = findByLoginEmailAndPassword(loginEmail, password).orElseThrow(
-          () -> new IllegalArgumentException("아이디 혹은 비밀번호가 일치하지 않습니다"));
+      findUser = findByLoginEmailAndPassword(loginEmail, password).orElseThrow(() -> new IllegalArgumentException("아이디 혹은 비밀번호가 일치하지 않습니다"));
     }catch (SQLException e){
       throw new RuntimeException(e);
     }finally {

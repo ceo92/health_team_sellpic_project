@@ -1,10 +1,6 @@
 package domain;
 
-import java.util.HashMap;
-import java.util.Map;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,7 +22,8 @@ public class User {
   private RoleType roleType; //권한 및 DTYPE
 
 
-  public User(String name, String phoneNumber, String loginEmail, String password, RoleType roleType , String passwordQuestion , String passwordAnswer) {
+  public User(Integer id, String name, String phoneNumber, String loginEmail, String password, RoleType roleType , String passwordQuestion , String passwordAnswer) {
+    this.id = id;
     this.name = name;
     this.phoneNumber = phoneNumber;
     this.loginEmail = loginEmail;
@@ -36,16 +33,16 @@ public class User {
     this.passwordAnswer = passwordAnswer;
   }
 
-  public User(Integer id, String name, String phoneNumber, String loginEmail, String password,
-      RoleType roleType) {
-    this.id = id;
+
+  public User(String name, String phoneNumber, String loginEmail, String password, RoleType roleType , String passwordQuestion , String passwordAnswer) {
     this.name = name;
     this.phoneNumber = phoneNumber;
     this.loginEmail = loginEmail;
     this.password = password;
     this.roleType = roleType;
+    this.passwordQuestion = passwordQuestion;
+    this.passwordAnswer = passwordAnswer;
   }
-
   public void changePassword(String password){
     setPassword(password); //this.password = password
   }

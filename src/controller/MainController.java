@@ -86,11 +86,6 @@ public class MainController {
 
           }
 
-
-
-
-
-
         } else if (guestInputNum == 2) {
           System.out.println("=".repeat(20) + "회원가입 화면" + "=".repeat(20));
           System.out.println();
@@ -225,8 +220,7 @@ public class MainController {
     return passwordQuestions;
   }
 
-  private static void authenticate(Integer loginId, BufferedReader br) throws Exception{
-    User user = userService.findUser(loginId);
+  private static void authenticate(User user, BufferedReader br) throws Exception{
     switch (user.getRoleType()) {
       case ADMIN:
         System.out.println("어떤 시스템에 접속하시겠습니까?");
