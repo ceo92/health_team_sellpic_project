@@ -35,8 +35,7 @@ public class BusinessMan extends User {
 
 
   public void changeBasicInformation(String name , String phoneNumber , String businessNum , String businessName){
-    setName(name);
-    setPhoneNumber(phoneNumber);
+    super.changeBasicInformation(name , phoneNumber);
     setBusinessNum(businessNum);
     setBusinessName(businessName);
   }

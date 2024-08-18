@@ -57,7 +57,7 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
 
       //비밀번호 암호화(SHA-256 알고리즘)
       String encryptPassword = sha256WithSalt.getEncryptPassword(password);
-      BusinessMan businessMan = new BusinessMan(businessName, businessNum, name, phoneNumber, loginEmail, encryptPassword , BUSINESS_MAN , passwordQuestion , passwordAnswer);
+      BusinessMan businessMan = new BusinessMan(name, phoneNumber, loginEmail, encryptPassword , BUSINESS_MAN , passwordQuestion , passwordAnswer , businessName, businessNum);
       saveId = userDao.save(businessMan, con);
       con.commit();
     } catch (SQLException e){
@@ -75,7 +75,7 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
 
   public Integer deliveryManJoin(DeliveryManSaveDto deliveryManSaveDto){
     Connection con = null;
-    Integer saveId = null;
+    Integer saveId;
     try {
       con = getConnection();
       con.setAutoCommit(false);
@@ -91,7 +91,10 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
       String passwordAnswer = deliveryManSaveDto.getPasswordAnswer();
       validateBeforeJoin(loginEmail, password, rePassword);
 
-      User user = new DeliveryMan(deliveryManNum ,carNum , name, phoneNumber, loginEmail, password , DELIVERY_MAN , passwordQuestion , passwordAnswer);
+      //비밀번호 암호화(SHA-256 알고리즘)
+      String encryptPassword = sha256WithSalt.getEncryptPassword(password);
+
+      User user = new DeliveryMan(name, phoneNumber, loginEmail, encryptPassword , DELIVERY_MAN , passwordQuestion , passwordAnswer , deliveryManNum ,carNum);
       saveId = userDao.save(user, con);
       con.commit();
     }catch (SQLException e){
@@ -120,7 +123,9 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
       String passwordAnswer = warehouseManagerSaveDto.getPasswordAnswer();
       validateBeforeJoin(loginEmail, password, rePassword);
 
-      User user = new WarehouseManager(name, phoneNumber, loginEmail, password , WAREHOUSE_MANAGER, passwordQuestion , passwordAnswer);
+      //비밀번호 암호화(SHA-256 알고리즘)
+      String encryptPassword = sha256WithSalt.getEncryptPassword(password);
+      User user = new User(name, phoneNumber, loginEmail, encryptPassword , WAREHOUSE_MANAGER, passwordQuestion , passwordAnswer);
       saveId = userDao.save(user, con);
       con.commit();
     }catch (SQLException e){
@@ -141,11 +146,8 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
     try {
       con = getConnection();
       con.setAutoCommit(false);
-      WarehouseManager warehouseManager = (WarehouseManager) findUser(id);
-      warehouseManager.changeBasicInformation(
-          warehouseManagerUpdateDto.getName(),
-          warehouseManagerUpdateDto.getPhoneNumber()
-      );
+      User warehouseManager = findUser(id);
+      warehouseManager.changeBasicInformation(warehouseManagerUpdateDto.getName(), warehouseManagerUpdateDto.getPhoneNumber());
       userDao.updateBasicInformation(warehouseManager, con);
       con.commit();
     }catch (SQLException e) {
@@ -173,7 +175,7 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
       con.commit();
     }catch (SQLException e) {
       rollback(con);
-      System.out.println("수정에 오류가 발생하였습니다");
+      throw new RuntimeException(e);
     }
     finally {
       closeConnection(con);
@@ -291,7 +293,7 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
    */
   public User login(String loginEmail , String password){
     Connection con = null;
-    User findUser = null;
+    User findUser;
     try {
       con = getConnection();
       con.setReadOnly(true);
@@ -324,11 +326,8 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
               user -> System.out.printf("%s님 아이디 : %s\n", user.getName(),
                   user.getLoginEmail().replaceAll("(?<=.{2}).", "*")),
               () -> {
-                System.out.println("==========ERROR==========");
-                System.out.println("입력된 정보에 대한 아이디가 존재하지 않습니다.");
-                System.out.println("=========================");
-              }
-          );
+                throw new IllegalArgumentException("입력한 정보에 해당되는 아이디가 존재하지 않습니다.");
+              });
     }catch (SQLException e){
       throw new RuntimeException(e);
     }finally {
@@ -353,6 +352,7 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
               user.getPasswordQuestion().equals(passwordResetDto.getPasswordQuestion()) &&
               user.getPasswordAnswer().equals(passwordResetDto.getPasswordAnswer())
       ).orElseThrow(() -> new IllegalArgumentException("입력된 정보가 일치하지 않습니다."));
+      findUser.changePassword(findUser.getPassword());
     }catch (SQLException e){
       throw new RuntimeException(e);
     }finally {
@@ -407,9 +407,7 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
         }
         con.close(); //Connection 닫기
       } catch (SQLException e) {
-        System.out.println("==========ERROR==========");
-        System.out.println(e.getMessage());
-        System.out.println("=========================");
+        throw new RuntimeException(e);
       }
     }
   }

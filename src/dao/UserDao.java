@@ -4,7 +4,6 @@ import static domain.RoleType.ADMIN;
 import static domain.RoleType.BUSINESS_MAN;
 import static domain.RoleType.DELIVERY_MAN;
 
-import domain.Admin;
 import domain.BusinessMan;
 import domain.DeliveryMan;
 import domain.RoleType;

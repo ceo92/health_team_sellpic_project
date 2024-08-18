@@ -28,8 +28,7 @@ public class DeliveryMan extends User{
 
 
   public void changeBasicInformation(String name, String phoneNumber , String deliveryManNum , String carNum) {
-    setName(name);
-    setPhoneNumber(phoneNumber);
+    super.changeBasicInformation(name , phoneNumber);
     setDeliveryManNum(deliveryManNum);
     setCarNum(carNum);
   }

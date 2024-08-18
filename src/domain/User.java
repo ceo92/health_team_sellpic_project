@@ -49,4 +49,9 @@ public class User {
   public void changePassword(String password){
     setPassword(password); //this.password = password
   }
+
+  public void changeBasicInformation(String name , String phoneNumber){
+    this.name = name;
+    this.phoneNumber = phoneNumber;
+  }
 }

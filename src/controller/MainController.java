@@ -2,6 +2,7 @@ package controller;
 
 import dto.PasswordResetDto;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import domain.User;
 import dto.savedto.DeliveryManSaveDto;
@@ -16,18 +17,17 @@ public class MainController {
 
   private static final UserService userService = new UserService();
 
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) throws IOException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("Welcome to Money Flow WMS");
-    Integer loginUserId = null; //로그인 여부 판별용 id
     Map<Integer, String> passwordQuestionsMap = initPasswordQuestions();
-
+    User loginUser = null;
     while (true) {
       /**
        * 로그인 여부에 따른 시작 로직(로그인)
        */
-      if (loginUserId !=null){
-        authenticate(loginUserId, br);
+      if (loginUser != null){
+        authenticate(loginUser, br);
       }
       else{
         System.out.println("★★★★★ 원하시는 번호를 입력해주세요 ★★★★★");
@@ -42,15 +42,19 @@ public class MainController {
               String loginEmail = br.readLine();
               System.out.print("비밀번호 입력 : ");
               String password = br.readLine();
-              User loginUser = userService.login(loginEmail, password);
-              authenticate(loginUser.getId(), br);
+              loginUser = userService.login(loginEmail, password);
               break;
             case 2:
               System.out.println("이름 입력");
               String name = br.readLine();
               System.out.println("휴대폰 번호 입력");
               String phoneNumber = br.readLine();
-              userService.checkLoginEmailExists(name, phoneNumber);
+              try {
+                userService.checkLoginEmailExists(name, phoneNumber);
+              }catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
+                System.out.println("처음부터 다시 시도하세요");
+              }
               break;
 
             case 3:
@@ -60,7 +64,7 @@ public class MainController {
               String nameFindPassword = br.readLine();
               System.out.println("휴대폰 번호 입력");
               String phoneNumberFindPassword = br.readLine();
-              System.out.println("비밀번호 확인 질문 중 하나 번호로 입력");
+              System.out.println("회원가입 시 등록했던 비밀번호 확인 질문 번호로 입력");
               System.out.println("====================");
               for (Integer i : passwordQuestionsMap.keySet()) {
                 System.out.println(i+". "+passwordQuestionsMap.get(i));
@@ -79,9 +83,8 @@ public class MainController {
                 String reNewPassword = br.readLine();
                 userService.resetPassword(newPassword , reNewPassword , checkedUser);
               }catch (IllegalArgumentException e){
-                System.out.println("==========ERROR==========");
                 System.out.println(e.getMessage());
-                System.out.println("=========================");
+                System.out.println("처음부터 다시 시도해주세요");
               }
 
           }
@@ -220,7 +223,7 @@ public class MainController {
     return passwordQuestions;
   }
 
-  private static void authenticate(User user, BufferedReader br) throws Exception{
+  private static void authenticate(User user, BufferedReader br) throws IOException{
     switch (user.getRoleType()) {
       case ADMIN:
         System.out.println("어떤 시스템에 접속하시겠습니까?");
