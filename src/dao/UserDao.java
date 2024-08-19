@@ -52,12 +52,13 @@ public class UserDao {
     }
     //WAREHOUSE_MANAGER일 때는 추가적으로
     if (user instanceof DeliveryMan deliveryMan){
-      subTableSql = "insert into delivery_man values(? ,? , ?)";
+      subTableSql = "insert into delivery_man values(? ,? , ? , ?)";
       subTablePstmt = con.prepareStatement(subTableSql);
 
       subTablePstmt.setInt(1 , generatedId); //슈퍼타입테이블의 Generated된 PK 값 할당
       subTablePstmt.setString(2 , deliveryMan.getDeliveryManNum());
       subTablePstmt.setString(3 , deliveryMan.getCarNum());
+      subTablePstmt.setInt(4 , deliveryMan.getRegionId());
       subTablePstmt.executeUpdate();
     }
     else if (user instanceof BusinessMan businessMan){
@@ -386,7 +387,7 @@ public class UserDao {
         pstmt.executeUpdate();
       }
     } catch (SQLException ex) {
-      throw ex;
+      throw new RuntimeException(ex);
     } finally {
       //커넥션 연결 => 쿼리 요청 역순으로 close
       close(pstmt, null);

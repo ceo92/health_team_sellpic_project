@@ -1,6 +1,7 @@
 package controller;
 
 import dto.PasswordResetDto;
+import exception.MoneyFlowWmsException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,6 +21,7 @@ public class MainController {
   public static void main(String[] args) throws IOException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("Welcome to Money Flow WMS");
+    initUser();
     Map<Integer, String> passwordQuestionsMap = initPasswordQuestions();
     /**
      * 기본 회원 정보 및 ADMIN 초기화 ,이건 DataGrip에서 하자
@@ -86,7 +88,7 @@ public class MainController {
                 System.out.print("비밀번호 한번 더 입력 : ");
                 String reNewPassword = br.readLine();
                 userService.resetPassword(newPassword , reNewPassword , checkedUser);
-              }catch (IllegalArgumentException e){
+              }catch (MoneyFlowWmsException e){
                 System.out.println(e.getMessage());
                 System.out.println("처음부터 다시 시도해주세요");
               }
@@ -227,6 +229,10 @@ public class MainController {
 
   }
 
+  private static void initUser() {
+    userService.businessManJoin();
+  }
+
   private static Map<Integer, String> initPasswordQuestions() {
     Map<Integer, String> passwordQuestions = new HashMap<>();
     passwordQuestions.put(1 , "가장 좋아하는 회사는?");
@@ -283,7 +289,6 @@ public class MainController {
         System.out.println("2. 출고 관리");
         System.out.println("3. 재고 관리");
         System.out.println("4. 고객센터");
-        System.out.println("5. 재무 관리");
         int busNum = Integer.parseInt(br.readLine());
 
     }

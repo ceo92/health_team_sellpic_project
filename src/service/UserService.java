@@ -10,6 +10,7 @@ import dto.PasswordResetDto;
 import dto.updatedto.BusinessManUpdateDto;
 import dto.updatedto.DeliveryManUpdateDto;
 import dto.updatedto.WarehouseManagerUpdateDto;
+import exception.MoneyFlowWmsException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -17,16 +18,15 @@ import java.util.regex.Pattern;
 import connection.HikariCpDBConnectionUtil;
 import domain.DeliveryMan;
 import domain.User;
-import domain.WarehouseManager;
 import dto.savedto.DeliveryManSaveDto;
 import dto.savedto.BusinessManSaveDto;
 import dto.savedto.WarehouseManagerSaveDto;
-import security.SHA256WithSalt;
+import security.SHA256;
 
 public class UserService { //스프링 시큐리티의 UserDetails를 서비스에서 implements 함 ,
 
   private static final UserDao userDao = new UserDao(); //DI , 하지만 스프링 없으니 불가능 , OCP DIP 위배 ㅜㅜ
-  private static final SHA256WithSalt sha256WithSalt = new SHA256WithSalt();
+  private static final SHA256 sha256 = new SHA256();
   /**
    * -- 회원가입 검증 --
    * 1. 로그인 아이디 중복 아닌지 검증
@@ -56,7 +56,7 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
       validateBeforeJoin(loginEmail, password, rePassword);
 
       //비밀번호 암호화(SHA-256 알고리즘)
-      String encryptPassword = sha256WithSalt.getEncryptPassword(password);
+      String encryptPassword = sha256.getEncryptPassword(password);
       BusinessMan businessMan = new BusinessMan(name, phoneNumber, loginEmail, encryptPassword , BUSINESS_MAN , passwordQuestion , passwordAnswer , businessName, businessNum);
       saveId = userDao.save(businessMan, con);
       con.commit();
@@ -92,7 +92,7 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
       validateBeforeJoin(loginEmail, password, rePassword);
 
       //비밀번호 암호화(SHA-256 알고리즘)
-      String encryptPassword = sha256WithSalt.getEncryptPassword(password);
+      String encryptPassword = sha256.getEncryptPassword(password);
 
       User user = new DeliveryMan(name, phoneNumber, loginEmail, encryptPassword , DELIVERY_MAN , passwordQuestion , passwordAnswer , deliveryManNum ,carNum);
       saveId = userDao.save(user, con);
@@ -124,7 +124,7 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
       validateBeforeJoin(loginEmail, password, rePassword);
 
       //비밀번호 암호화(SHA-256 알고리즘)
-      String encryptPassword = sha256WithSalt.getEncryptPassword(password);
+      String encryptPassword = sha256.getEncryptPassword(password);
       User user = new User(name, phoneNumber, loginEmail, encryptPassword , WAREHOUSE_MANAGER, passwordQuestion , passwordAnswer);
       saveId = userDao.save(user, con);
       con.commit();
@@ -247,8 +247,9 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
     try {
       con = getConnection();
       con.setReadOnly(true);
+      String encryptPassword = sha256.getEncryptPassword(password);
       findUser = userDao.findAll(con).stream().filter(
-              user -> user.getLoginEmail().equals(loginEmail) && user.getPassword().equals(password))
+              user -> user.getLoginEmail().equals(loginEmail) && user.getPassword().equals(encryptPassword))
           .findFirst();
     }catch (SQLException e){
       throw new RuntimeException(e);
@@ -266,23 +267,23 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
   private void validateBeforeJoin(String loginEmail, String password, String rePassword) {
     //1. 이미 존재하는 아이디인지
     findByLoginEmail(loginEmail).ifPresent(user -> {
-      throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
+      throw new MoneyFlowWmsException("이미 존재하는 아이디입니다.");
     });
 
     //2.이메일 형식 검증
     if (!Pattern.matches("^[a-z0-9A-Z._-]*@[a-z0-9A-Z]*.[a-zA-Z.]*$", loginEmail)){
-      throw new IllegalArgumentException("이메일 형식을 다시 한 번 확인해주세요 ");
+      throw new MoneyFlowWmsException("이메일 형식을 다시 한 번 확인해주세요 ");
     }
 
     //3. 8자리 이상비밀번호 영문 , 특수문자 , 숫자 검증
     if (!Pattern.matches("^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&])[A-Za-z[0-9]$@$!%*#?&]{8,20}$" ,
         password)){
-      throw new IllegalArgumentException("비밀번호는 특수문자 , 영문 , 숫자의 조합이어야합니다.");
+      throw new MoneyFlowWmsException("비밀번호는 특수문자 , 영문 , 숫자의 조합이어야합니다.");
     }
 
     // 4. 비밀번호 더블체크
     if (!password.equals(rePassword)) {
-      throw new IllegalArgumentException("비밀번호를 다시 한 번 확인해주세요");
+      throw new MoneyFlowWmsException("비밀번호를 다시 한 번 확인해주세요");
     }
   }
 

@@ -8,6 +8,7 @@ import lombok.Setter;
 public class DeliveryMan extends User{
   private String deliveryManNum; //배송기사번호
   private String carNum;
+  private Integer regionId;
   public DeliveryMan(Integer id , String name, String phoneNumber, String loginEmail, String password, RoleType roleType,
       String passwordQuestion , String passwordAnswer, String deliveryManNum, String carNum) {
     super(id, name, phoneNumber, loginEmail, password  ,roleType , passwordQuestion , passwordAnswer);
