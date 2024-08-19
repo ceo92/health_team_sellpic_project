@@ -1,7 +1,7 @@
 package controller;
 
 import dto.PasswordResetDto;
-import exception.MoneyFlowWmsException;
+import exception.WmsException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -88,7 +88,7 @@ public class MainController {
                 System.out.print("비밀번호 한번 더 입력 : ");
                 String reNewPassword = br.readLine();
                 userService.resetPassword(newPassword , reNewPassword , checkedUser);
-              }catch (MoneyFlowWmsException e){
+              }catch (WmsException e){
                 System.out.println(e.getMessage());
                 System.out.println("처음부터 다시 시도해주세요");
               }
@@ -262,6 +262,7 @@ public class MainController {
         System.out.println("6. 내 정보 조회");
         int adminNum = Integer.parseInt(br.readLine());
 
+        //outBoundController.start(user);
 
       case WAREHOUSE_MANAGER:
         System.out.println("어떤 시스템에 접속하시겠습니까?");

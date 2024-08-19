@@ -10,7 +10,7 @@ import dto.PasswordResetDto;
 import dto.updatedto.BusinessManUpdateDto;
 import dto.updatedto.DeliveryManUpdateDto;
 import dto.updatedto.WarehouseManagerUpdateDto;
-import exception.MoneyFlowWmsException;
+import exception.WmsException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -267,23 +267,23 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
   private void validateBeforeJoin(String loginEmail, String password, String rePassword) {
     //1. 이미 존재하는 아이디인지
     findByLoginEmail(loginEmail).ifPresent(user -> {
-      throw new MoneyFlowWmsException("이미 존재하는 아이디입니다.");
+      throw new WmsException("이미 존재하는 아이디입니다.");
     });
 
     //2.이메일 형식 검증
     if (!Pattern.matches("^[a-z0-9A-Z._-]*@[a-z0-9A-Z]*.[a-zA-Z.]*$", loginEmail)){
-      throw new MoneyFlowWmsException("이메일 형식을 다시 한 번 확인해주세요 ");
+      throw new WmsException("이메일 형식을 다시 한 번 확인해주세요 ");
     }
 
     //3. 8자리 이상비밀번호 영문 , 특수문자 , 숫자 검증
     if (!Pattern.matches("^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&])[A-Za-z[0-9]$@$!%*#?&]{8,20}$" ,
         password)){
-      throw new MoneyFlowWmsException("비밀번호는 특수문자 , 영문 , 숫자의 조합이어야합니다.");
+      throw new WmsException("비밀번호는 특수문자 , 영문 , 숫자의 조합이어야합니다.");
     }
 
     // 4. 비밀번호 더블체크
     if (!password.equals(rePassword)) {
-      throw new MoneyFlowWmsException("비밀번호를 다시 한 번 확인해주세요");
+      throw new WmsException("비밀번호를 다시 한 번 확인해주세요");
     }
   }
 

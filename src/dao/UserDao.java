@@ -38,12 +38,12 @@ public class UserDao {
 
     superTablePstmt = con.prepareStatement(superTableSql , Statement.RETURN_GENERATED_KEYS);
     superTablePstmt.setString(1, user.getName()); //인덱스 1로 해서 1번필드에는 memberid 지정
-    superTablePstmt.setString(2, user.getPhoneNumber()); //인덱스 1로 해서 1번필드에는 memberid 지정
-    superTablePstmt.setString(3, user.getLoginEmail()); //인덱스 1로 해서 1번필드에는 memberid 지정
-    superTablePstmt.setString(4, user.getPassword()); //인덱스 1로 해서 1번필드에는 memberid 지정
-    superTablePstmt.setString(5, user.getRoleType().name()); //인덱스 1로 해서 1번필드에는 memberid 지정
-    superTablePstmt.setString(6, user.getPasswordQuestion()); //인덱스 1로 해서 1번필드에는 memberid 지정
-    superTablePstmt.setString(7, user.getPasswordAnswer()); //인덱스 1로 해서 1번필드에는 memberid 지정
+    superTablePstmt.setString(2, user.getPhoneNumber());
+    superTablePstmt.setString(3, user.getLoginEmail());
+    superTablePstmt.setString(4, user.getPassword());
+    superTablePstmt.setString(5, user.getRoleType().name());
+    superTablePstmt.setString(6, user.getPasswordQuestion());
+    superTablePstmt.setString(7, user.getPasswordAnswer());
     superTablePstmt.executeUpdate();
     ResultSet rs = superTablePstmt.getGeneratedKeys(); //곧바로 가져옴
     int generatedId = 0;
@@ -58,7 +58,7 @@ public class UserDao {
       subTablePstmt.setInt(1 , generatedId); //슈퍼타입테이블의 Generated된 PK 값 할당
       subTablePstmt.setString(2 , deliveryMan.getDeliveryManNum());
       subTablePstmt.setString(3 , deliveryMan.getCarNum());
-      subTablePstmt.setInt(4 , deliveryMan.getRegionId());
+      subTablePstmt.setInt(4 , deliveryMan.getRegionId()); //region과 연관관계
       subTablePstmt.executeUpdate();
     }
     else if (user instanceof BusinessMan businessMan){
@@ -111,7 +111,7 @@ public class UserDao {
         if (subTableRs.next()) {
           DeliveryMan deliveryMan = new DeliveryMan(id , user.getName() , user.getPhoneNumber(), user.getLoginEmail() ,
               user.getPassword(), user.getRoleType() ,user.getPasswordQuestion() , user.getPasswordAnswer(),
-              subTableRs.getString("delivery_man_num") ,subTableRs.getString("car_num"));
+              subTableRs.getString("delivery_man_num") ,subTableRs.getString("car_num") , subTableRs.getInt("region_id"));
           return Optional.ofNullable(deliveryMan);
         }
       }else{
@@ -234,7 +234,7 @@ public class UserDao {
           DeliveryMan deliveryMan = new DeliveryMan(rs.getInt("id"), rs.getString("name")
               , rs.getString("phone_number"), rs.getString("login_email"), rs.getString("password") ,
               roleType , rs.getString("password_question") , rs.getString("password_answer")
-              , rs.getString("delivery_man_num"), rs.getString("car_num"));
+              , rs.getString("delivery_man_num"), rs.getString("car_num"), rs.getInt("region_id"));
           users.add(deliveryMan);
         }
       } else {
@@ -258,8 +258,8 @@ public class UserDao {
 
   public List<User> findAll(Connection con) throws SQLException {
     StringBuilder sql = new StringBuilder("select * from user");
-    PreparedStatement superTablePstmt = null, subTablePstmt;
-    ResultSet superTableRs = null, subTableRs;
+    PreparedStatement superTablePstmt = null, subTablePstmt = null;
+    ResultSet superTableRs = null, subTableRs = null;
     List<User> users = new ArrayList<>();
     try{
       superTablePstmt = con.prepareStatement(sql.toString());
@@ -281,7 +281,7 @@ public class UserDao {
           subTableRs = subTablePstmt.executeQuery();
           DeliveryMan deliveryMan = new DeliveryMan(user.getId() , user.getName() , user.getPhoneNumber(),
               user.getLoginEmail() , user.getPassword(), user.getRoleType() , user.getPasswordQuestion() , user.getPasswordAnswer(),
-              superTableRs.getString("delivery_man_num") , superTableRs.getString("car_num"));
+              subTableRs.getString("delivery_man_num") , subTableRs.getString("car_num") , subTableRs.getInt("region_id"));
           users.add(deliveryMan);
         }
         else{
@@ -291,6 +291,7 @@ public class UserDao {
     }catch (SQLException e){
       throw e;
     }finally {
+      close(subTablePstmt , subTableRs);
       close(superTablePstmt , superTableRs);
     }
     return users;
@@ -335,6 +336,7 @@ public class UserDao {
       throw new RuntimeException(e);
 
     }finally {
+      close(secondPstmt , null);
       close(firstPstmt , null);
     }
   }
@@ -369,11 +371,6 @@ public class UserDao {
     PreparedStatement pstmt = null;
 
     try {
-      //이 단계에서 이미 창고 관리자 , admin 삭제됨
-      pstmt = con.prepareStatement(sql.toString());
-      pstmt.setInt(1 , user.getId());
-      pstmt.executeUpdate();
-
       if (user instanceof BusinessMan){
         sql.replace(12 , 16 , "business_man");
         pstmt = con.prepareStatement(sql.toString());
@@ -386,24 +383,12 @@ public class UserDao {
         pstmt.setInt(1 , user.getId());
         pstmt.executeUpdate();
       }
-    } catch (SQLException ex) {
-      throw new RuntimeException(ex);
-    } finally {
-      //커넥션 연결 => 쿼리 요청 역순으로 close
-      close(pstmt, null);
-    }
-  }
-
-  public void remove(Connection con, int bno) {
-    String sql = "delete from Board where bno=?";
-    PreparedStatement pstmt = null;
-
-    try {
-      pstmt = con.prepareStatement(sql);
-      pstmt.setInt(1, bno);
-
-      pstmt.executeUpdate();
-
+      else{
+        //admin , warehouse_manager 지정
+        pstmt = con.prepareStatement(sql.toString());
+        pstmt.setInt(1 , user.getId());
+        pstmt.executeUpdate();
+      }
     } catch (SQLException ex) {
       throw new RuntimeException(ex);
     } finally {
