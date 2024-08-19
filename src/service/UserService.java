@@ -299,7 +299,7 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
       con = getConnection();
       con.setReadOnly(true);
       //이미 권한 다 할당된 사용자
-      findUser = findByLoginEmailAndPassword(loginEmail, password).orElseThrow(() -> new IllegalArgumentException("아이디 혹은 비밀번호가 일치하지 않습니다"));
+      findUser = findByLoginEmailAndPassword(loginEmail, password).orElseThrow(() -> new WmsException("아이디 혹은 비밀번호가 일치하지 않습니다"));
     }catch (SQLException e){
       throw new RuntimeException(e);
     }finally {
@@ -374,7 +374,7 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
         userDao.updatePassword(user , con); //SQLException
         con.commit();
       } else {
-        throw new IllegalArgumentException("비밀번호 재확인이 필요합니다"); //이건 이제 컨트롤러에서 처리하는 거지
+        throw new WmsException("비밀번호 재확인이 필요합니다"); //이건 이제 컨트롤러에서 처리하는 거지
       }
     }catch (SQLException e){
       rollback(con);

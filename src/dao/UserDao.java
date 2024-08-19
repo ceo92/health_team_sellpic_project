@@ -6,6 +6,7 @@ import static domain.RoleType.DELIVERY_MAN;
 
 import domain.BusinessMan;
 import domain.DeliveryMan;
+import domain.Region;
 import domain.RoleType;
 import domain.User;
 import java.sql.Connection;
@@ -58,7 +59,7 @@ public class UserDao {
       subTablePstmt.setInt(1 , generatedId); //슈퍼타입테이블의 Generated된 PK 값 할당
       subTablePstmt.setString(2 , deliveryMan.getDeliveryManNum());
       subTablePstmt.setString(3 , deliveryMan.getCarNum());
-      subTablePstmt.setInt(4 , deliveryMan.getRegionId()); //region과 연관관계
+      subTablePstmt.setInt(4 , deliveryMan.getRegion().getId()); //region과 연관관계
       subTablePstmt.executeUpdate();
     }
     else if (user instanceof BusinessMan businessMan){
@@ -66,7 +67,7 @@ public class UserDao {
       subTablePstmt = con.prepareStatement(subTableSql); //이렇게 하면 User과 식별관계인 BusinessMan테이블에 User의 PK 값이 자동으로 삽입됨
 
       subTablePstmt.setInt(1 , generatedId); //슈퍼타입테이블의  Generated된 PK 값 할당
-      subTablePstmt.setString(2 , businessMan.getBusinessName());
+      subTablePstmt.setString(2 , businessMan.getBusinessNum());
       subTablePstmt.setString(3 , businessMan.getBusinessName());
       subTablePstmt.executeUpdate();
     }
@@ -90,8 +91,9 @@ public class UserDao {
       if (superTableRs.next()) {
         user = new User(superTableRs.getString("name") , superTableRs.getString("phone_number")
         , superTableRs.getString("login_email") , superTableRs.getString("password") ,
-            RoleType.valueOf(superTableRs.getString("role_type")) ,  superTableRs.getString("passwordQuestion")
-        , superTableRs.getString("passwordAnswer"));}
+            RoleType.valueOf(superTableRs.getString("role_type")) ,  superTableRs.getString("password_question")
+        , superTableRs.getString("password_answer"));
+      }
       if (user.getRoleType() == BUSINESS_MAN){
         sql.replace(14 , 18 , "business_man");
         subTablePstmt = con.prepareStatement(sql.toString());
@@ -104,14 +106,16 @@ public class UserDao {
           return Optional.ofNullable(businessMan);
         }
       } else if (user.getRoleType() == DELIVERY_MAN){
-        sql.replace(14 , 18 , "delivery_man");
+        sql.delete(0 , sql.length());
+        sql.append("select * from delivery_man d join region r on d.region_id = r.id where d.id = ?");
         subTablePstmt = con.prepareStatement(sql.toString());
         subTablePstmt.setInt(1, id);
         subTableRs = subTablePstmt.executeQuery();
         if (subTableRs.next()) {
           DeliveryMan deliveryMan = new DeliveryMan(id , user.getName() , user.getPhoneNumber(), user.getLoginEmail() ,
               user.getPassword(), user.getRoleType() ,user.getPasswordQuestion() , user.getPasswordAnswer(),
-              subTableRs.getString("delivery_man_num") ,subTableRs.getString("car_num") , subTableRs.getInt("region_id"));
+              subTableRs.getString("delivery_man_num") ,subTableRs.getString("car_num") ,
+              new Region(subTableRs.getInt("r.id") , subTableRs.getString("code") , subTableRs.getString("name") , subTableRs.getObject("parent_id",  Integer.class)));
           return Optional.ofNullable(deliveryMan);
         }
       }else{
@@ -127,81 +131,6 @@ public class UserDao {
     //BusinessMan , DeliveryMan도 아니면 ADMIN 혹은 WAREHOUSE_MANAGER이므로 해당 데이터를 던져주면 됨 ㅇㅇ 이게 사실은 else문이 되게 됨
   }
 
-  /*public Optional<User> findById(Integer id , RoleType roleType , Connection con) throws SQLException {
-    String sql = "select * from user ";
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
-    //id , name , phoneNumber , loginEmail , password , roleType , deliveryManNum , carNum
-    try {
-      if (roleType == DELIVERY_MAN) {
-        sql += "join delivery_man on user.id = delivery_man.id and user.id = ?"; //
-        pstmt = con.prepareStatement(sql);
-        pstmt.setInt(1, id);
-        rs = pstmt.executeQuery();
-        if (rs.next()) {
-          DeliveryMan deliveryMan = new DeliveryMan(
-              rs.getObject("user_id", Integer.class),
-              rs.getString("name"),
-              rs.getString("phone_number"),
-              rs.getString("login_email"),
-              rs.getString("password"),
-              roleType,
-              rs.getString("delivery_man_num"),
-              rs.getString("car_num")
-          );
-          return Optional.of(deliveryMan);
-        }
-      }
-      //1. 조인 조회 => ResultSet하나하나 꺼내서 User 및 DeliveryMan 할당
-      //2. 조회 쿼리 각 테이블에 두 번 => 각 테이블에서 꺼내진 데이터들 바탕으로 User
-
-      else if (roleType == BUSINESS_MAN) {
-        sql += "join business_man on user.id = business_man.id and user.id = ?";
-        pstmt = con.prepareStatement(sql);
-        pstmt.setInt(1, id);
-        rs = pstmt.executeQuery();
-        if (rs.next()) {
-          BusinessMan businessMan = new BusinessMan(
-              rs.getObject("user_id", Integer.class),
-              rs.getString("name"),
-              rs.getString("phone_number"),
-              rs.getString("login_email"),
-              rs.getString("password"),
-              roleType,
-              rs.getString("business_num"),
-              rs.getString("business_name")
-          );
-          return Optional.of(businessMan);
-
-        }
-      } else { //ADMIN , WAREHOUSE_MANAGER
-        sql += "user.id = ?";
-        pstmt = con.prepareStatement(sql);
-        pstmt.setInt(1, id);
-        rs = pstmt.executeQuery();
-        User user = new User(
-            rs.getObject("user_id", Integer.class),
-            rs.getString("name"),
-            rs.getString("phone_number"),
-            rs.getString("login_email"),
-            rs.getString("password"),
-            roleType
-        );
-        return Optional.of(user);
-      }
-
-
-    }catch (SQLException e){
-      throw e;
-    }
-    finally {
-      close(pstmt, rs);
-
-    }
-    return Optional.empty();
-  }*/
-
-
   /**
    * 권한 별로 조회하기
    */
@@ -214,35 +143,43 @@ public class UserDao {
     List<User> users = new ArrayList<>();
     try {
       if (roleType == BUSINESS_MAN) {
-        sql.append("join ? b and u.id = b.id");
+        sql.append("join business_man b on u.id = b.id");
+        sql.append("where u.role_type = 'BUSINESS_MAN'");
         pstmt = con.prepareStatement(sql.toString());
         pstmt.setString(1 , roleType.name().toLowerCase());
         rs = pstmt.executeQuery();
         while (rs.next()) {
-          BusinessMan businessMan = new BusinessMan(rs.getInt("id"), rs.getString("name")
+          BusinessMan businessMan = new BusinessMan(rs.getInt("u.id"), rs.getString("u.name")
               , rs.getString("phone_number"), rs.getString("login_email"), rs.getString("password") ,
               roleType , rs.getString("password_question") , rs.getString("password_answer")
               , rs.getString("business_num"), rs.getString("business_name"));
           users.add(businessMan);
         }
       } else if (roleType == DELIVERY_MAN) {
-        sql.append("join ? b and u.id = b.id");
+        sql.append("join delivery_man d on u.id = d.id");
+        sql.append("join region r on d.id = r.id");
+        sql.append("where u.role_type = 'DELIVERY_MAN'");
         pstmt = con.prepareStatement(sql.toString());
-        pstmt.setString(1 , roleType.name().toLowerCase());
         rs = pstmt.executeQuery();
         while (rs.next()) {
-          DeliveryMan deliveryMan = new DeliveryMan(rs.getInt("id"), rs.getString("name")
+          Region region = new Region(rs.getInt("r.id"),
+              rs.getString("r.code"),
+              rs.getString("r.name"),
+              rs.getObject("r.parent_id", Integer.class));
+          DeliveryMan deliveryMan = new DeliveryMan(rs.getInt("u.id"), rs.getString("u.name")
               , rs.getString("phone_number"), rs.getString("login_email"), rs.getString("password") ,
               roleType , rs.getString("password_question") , rs.getString("password_answer")
-              , rs.getString("delivery_man_num"), rs.getString("car_num"), rs.getInt("region_id"));
+              , rs.getString("delivery_man_num"), rs.getString("car_num") , region);
           users.add(deliveryMan);
         }
       } else {
         pstmt = con.prepareStatement(sql.toString());
         rs = pstmt.executeQuery();
         while (rs.next()) {
-          User user = new User(rs.getInt("id"), rs.getString("name"), rs.getString("phone_number"), rs.getString("login_email"),
-              rs.getString("password"), roleType , rs.getString("password_question") , rs.getString("password_answer"));
+          User user = new User(rs.getInt("u.id"), rs.getString("u.name"),
+              rs.getString("phone_number"), rs.getString("login_email"),
+              rs.getString("password"), roleType , rs.getString("password_question")
+              , rs.getString("password_answer"));
           if (user.getRoleType() == ADMIN) continue;
           users.add(user);
         }
@@ -279,9 +216,11 @@ public class UserDao {
           sql.replace(14, 18, "delivery_man");
           subTablePstmt = con.prepareStatement(sql.toString());
           subTableRs = subTablePstmt.executeQuery();
+          subTableRs = subTablePstmt.executeQuery();
           DeliveryMan deliveryMan = new DeliveryMan(user.getId() , user.getName() , user.getPhoneNumber(),
               user.getLoginEmail() , user.getPassword(), user.getRoleType() , user.getPasswordQuestion() , user.getPasswordAnswer(),
-              subTableRs.getString("delivery_man_num") , subTableRs.getString("car_num") , subTableRs.getInt("region_id"));
+              subTableRs.getString("delivery_man_num") , subTableRs.getString("car_num")
+              , new Region(subTableRs.getInt("id") , subTableRs.getString("code") , subTableRs.getString("name") , subTableRs.getObject("parent_id" , Integer.class)));
           users.add(deliveryMan);
         }
         else{
@@ -362,38 +301,31 @@ public class UserDao {
   }
 
 
-
-
-
-
   public void delete(User user , Connection con) throws SQLException{
     StringBuilder sql = new StringBuilder("delete from user where id = ?");
-    PreparedStatement pstmt = null;
-
+    PreparedStatement superTablePstmt = null , subTablePstmt = null;
+    superTablePstmt = con.prepareStatement(sql.toString());
+    superTablePstmt.setInt(1 , user.getId());
+    superTablePstmt.executeUpdate();
     try {
       if (user instanceof BusinessMan){
         sql.replace(12 , 16 , "business_man");
-        pstmt = con.prepareStatement(sql.toString());
-        pstmt.setInt(1 , user.getId());
-        pstmt.executeUpdate();
+        subTablePstmt = con.prepareStatement(sql.toString());
+        subTablePstmt.setInt(1 , user.getId());
+        subTablePstmt.executeUpdate();
       }
       else if (user instanceof  DeliveryMan){
         sql.replace(12, 16, "delivery_man");
-        pstmt = con.prepareStatement(sql.toString());
-        pstmt.setInt(1 , user.getId());
-        pstmt.executeUpdate();
-      }
-      else{
-        //admin , warehouse_manager 지정
-        pstmt = con.prepareStatement(sql.toString());
-        pstmt.setInt(1 , user.getId());
-        pstmt.executeUpdate();
+        subTablePstmt = con.prepareStatement(sql.toString());
+        subTablePstmt.setInt(1 , user.getId());
+        subTablePstmt.executeUpdate();
       }
     } catch (SQLException ex) {
       throw new RuntimeException(ex);
     } finally {
       //커넥션 연결 => 쿼리 요청 역순으로 close
-      close(pstmt, null);
+      close(subTablePstmt, null);
+      close(superTablePstmt, null);
     }
   }
 
