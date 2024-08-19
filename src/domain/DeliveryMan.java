@@ -35,6 +35,17 @@ public DeliveryMan(Integer id , String name, String phoneNumber, String loginEma
   }
 
 
+public DeliveryMan(String name, String phoneNumber, String loginEmail, String password, RoleType roleType,
+      String passwordQuestion , String passwordAnswer, String deliveryManNum, String carNum , Region region) {
+    super(name, phoneNumber, loginEmail, password, roleType, passwordQuestion, passwordAnswer);
+    this.carNum = carNum;
+    this.deliveryManNum = deliveryManNum;
+    this.region = region;
+  }
+
+
+
+
 
 
 

@@ -6,6 +6,7 @@ import static domain.RoleType.WAREHOUSE_MANAGER;
 
 import dao.UserDao;
 import domain.BusinessMan;
+import domain.Region;
 import dto.PasswordResetDto;
 import dto.updatedto.BusinessManUpdateDto;
 import dto.updatedto.DeliveryManUpdateDto;
@@ -89,12 +90,13 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
       String rePassword = deliveryManSaveDto.getRePassword();
       String passwordQuestion = deliveryManSaveDto.getPasswordQuestion();
       String passwordAnswer = deliveryManSaveDto.getPasswordAnswer();
+      Region region = deliveryManSaveDto.getRegion();
       validateBeforeJoin(loginEmail, password, rePassword);
 
       //비밀번호 암호화(SHA-256 알고리즘)
       String encryptPassword = sha256.getEncryptPassword(password);
 
-      User user = new DeliveryMan(name, phoneNumber, loginEmail, encryptPassword , DELIVERY_MAN , passwordQuestion , passwordAnswer , deliveryManNum ,carNum);
+      User user = new DeliveryMan(name, phoneNumber, loginEmail, encryptPassword , DELIVERY_MAN , passwordQuestion , passwordAnswer , deliveryManNum ,carNum , region);
       saveId = userDao.save(user, con);
       con.commit();
     }catch (SQLException e){
@@ -123,6 +125,7 @@ public class UserService { //스프링 시큐리티의 UserDetails를 서비스�
       String passwordAnswer = warehouseManagerSaveDto.getPasswordAnswer();
       validateBeforeJoin(loginEmail, password, rePassword);
 
+      
       //비밀번호 암호화(SHA-256 알고리즘)
       String encryptPassword = sha256.getEncryptPassword(password);
       User user = new User(name, phoneNumber, loginEmail, encryptPassword , WAREHOUSE_MANAGER, passwordQuestion , passwordAnswer);

@@ -197,41 +197,18 @@ public class MainController {
               int dmPasswordQuestionNum = Integer.parseInt(br.readLine());
               System.out.print("답변을 입력하시오 : ");
               String dmPasswordAnswer = br.readLine();
-              System.out.println("담당할 지역 번호를 입력하세요");
-              regionService.findAllRegions().stream().map(region -> region.getName().substring(0 , region.getName().indexOf(" "))).forEach(System.out::println);
-
-              String aa = "Dd";
-              aa.split(" ");
-              System.out.println("1. 서울");
-              System.out.println("27. 부산광역시");
-              System.out.println("44. 대구광역시");
-              System.out.println("54. 인천광역시");
-              System.out.println("65. 광주광역시");
-              System.out.println("71. 대전광역시");
-              System.out.println("77. 울산광역시");
-              System.out.println("84. 경기도");
-              System.out.println("136. 충청북도");
-              System.out.println("152. 충청남도");
-              System.out.println("170. 전라남도");
-              System.out.println("193. 경상북도");
-              System.out.println("218. 경상남도");
-              System.out.println("242. 제주도");
-              System.out.println("245. 강원도");
-              System.out.println("264. 전라북도");
-              String dmParentRegionId = br.readLine();
-
-              switch (dmParentRegionId){
-                case 1:
-
-                case 2:
-                case 3:
-              }
-
-
-
+              System.out.println("담당할 행정구역을 코드 숫자로 입력하세요");
+              int i=0;
+              regionService.findAllRegions().stream().filter(r->r.getParentId() == null).forEach(r-> System.out.println(r.getId()+". "+r.getName()));
+              int regionParentId = Integer.parseInt(br.readLine());
+              String regionParentName = regionService.findRegionById(regionParentId).getName();
+              System.out.println(regionParentName +"의 구체적인 지역을 코드 숫자로 입력하세요");
+              regionService.findAllRegions().stream().filter(r->r.getParentId()==regionParentId).forEach(r->System.out.println(r.getId()+". "+r.getName()));
+              int regionChildId = Integer.parseInt(br.readLine());
+              Region region = regionService.findRegionById(regionChildId);
 
               DeliveryManSaveDto deliveryManSaveDto = new DeliveryManSaveDto(dmName, dmPhoneNumber,
-                  dmLoginEmail, dmPassword, dmRePassword, passwordQuestionsMap.get(dmPasswordQuestionNum),  dmPasswordAnswer ,dmNum, dmCarNum);
+                  dmLoginEmail, dmPassword, dmRePassword, passwordQuestionsMap.get(dmPasswordQuestionNum),  dmPasswordAnswer ,dmNum, dmCarNum , region);
               Integer deliveryManId = userService.deliveryManJoin(deliveryManSaveDto);
               loginUser = userService.findUser(deliveryManId);
               break;

@@ -1,5 +1,6 @@
 package dto.savedto;
 
+import domain.Region;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -16,4 +17,5 @@ public class DeliveryManSaveDto {
   private String passwordAnswer;
   private String deliveryManNum; //배송기사번호
   private String carNum;
+  private Region region;
 }
