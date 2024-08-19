@@ -5,17 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7bef152c-5c82-4c65-b708-328ba44755df" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/dao/RegionDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/domain/Region.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/domain/RegionChild.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/domain/RegionParent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/service/RegionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/TestClass.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/UserDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain/DeliveryMan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/DeliveryMan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/RegionChild.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/RegionChild.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/domain/RegionParent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/RegionParent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +96,7 @@
       <recent name="dto" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TestClass.aa">
+  <component name="RunManager" selected="Application.controller.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="user.Main" />
       <module name="kyungmin-wms" />
@@ -116,8 +110,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MainController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="controller.MainController" />
+    <configuration name="controller.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="controller.Main" />
       <module name="kyungmin-wms" />
       <extension name="coverage">
         <pattern>
@@ -163,9 +157,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.controller.Main" />
         <item itemvalue="JUnit.TestClass.aa" />
         <item itemvalue="JUnit.UserServiceTest.businessManJoin" />
-        <item itemvalue="Application.MainController" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -419,7 +413,23 @@
       <option name="project" value="LOCAL" />
       <updated>1724033699713</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="################ COMMIT START&#10;# &lt;타입&gt;: &lt;제목&gt; 의 형식으로 제목을 아래 공백줄에 작성 -- ex. feat: 로그인 기능 추가&#10;# 제목은 50자 이내, 변경사항 명확히 작성, 끝에 마침표 금지&#10;feat: Region 추가 및 SQL작성&#10;# 바로 아래 공백은 지우지 마세요 (제목과 본문의 분리를 위함)&#10;&#10;################&#10;# 본문(구체적인 내용)을 아랫줄에 작성&#10;# &quot;어떻게&quot; 보다 &quot;무엇을&quot;, &quot;왜&quot; 를 설명&#10;# 여러 줄의 메시지를 작성할 땐 &quot;-&quot;로 구분 (한 줄은 72자 이내)&#10;&#10;################ COMMIT END&#10;# --- COMMIT TYPE ---&#10;#  chore            : 프로젝트 초기 구성등 기타사항.&#10;#  feat             : 새로운 기능&#10;#  fix              : 버그 수정&#10;#  refactor         : 코드 리펙토링&#10;#  style            : 스타일 (코드 포맷팅, 세미콜론 등 비즈니스 로직에 영향 없는 변경 사항)&#10;#  design           : CSS/UI 변경 내용&#10;#  docs             : 문서 (문서 추가, 수정, 삭제)&#10;#  test             : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#10;#  update           : 전반적인 수정사항&#10;#  remove           : 삭제&#10;#  in progress      : 아직 완성하지는 못했지만 진행중인 부분을 커밋해야할 경우&#10;#  HOTFIX           : 급하게 치명적인 버그를 고쳐야 하는 경우&#10;#  add dependency   : dependency 추가&#10;#  typo fix         : 오탈자 수정&#10;################">
+      <option name="closed" value="true" />
+      <created>1724055229069</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1724055229069</updated>
+    </task>
+    <task id="LOCAL-00032" summary="################ COMMIT START&#10;# &lt;타입&gt;: &lt;제목&gt; 의 형식으로 제목을 아래 공백줄에 작성 -- ex. feat: 로그인 기능 추가&#10;# 제목은 50자 이내, 변경사항 명확히 작성, 끝에 마침표 금지&#10;feat: Region 컨트롤러 및 서비스 처리 완성&#10;# 바로 아래 공백은 지우지 마세요 (제목과 본문의 분리를 위함)&#10;&#10;################&#10;# 본문(구체적인 내용)을 아랫줄에 작성&#10;# &quot;어떻게&quot; 보다 &quot;무엇을&quot;, &quot;왜&quot; 를 설명&#10;# 여러 줄의 메시지를 작성할 땐 &quot;-&quot;로 구분 (한 줄은 72자 이내)&#10;&#10;################ COMMIT END&#10;# --- COMMIT TYPE ---&#10;#  chore            : 프로젝트 초기 구성등 기타사항.&#10;#  feat             : 새로운 기능&#10;#  fix              : 버그 수정&#10;#  refactor         : 코드 리펙토링&#10;#  style            : 스타일 (코드 포맷팅, 세미콜론 등 비즈니스 로직에 영향 없는 변경 사항)&#10;#  design           : CSS/UI 변경 내용&#10;#  docs             : 문서 (문서 추가, 수정, 삭제)&#10;#  test             : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#10;#  update           : 전반적인 수정사항&#10;#  remove           : 삭제&#10;#  in progress      : 아직 완성하지는 못했지만 진행중인 부분을 커밋해야할 경우&#10;#  HOTFIX           : 급하게 치명적인 버그를 고쳐야 하는 경우&#10;#  add dependency   : dependency 추가&#10;#  typo fix         : 오탈자 수정&#10;################">
+      <option name="closed" value="true" />
+      <created>1724056895312</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1724056895312</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -434,8 +444,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Guest 추가" />
-    <MESSAGE value="1. 도메인 명 Member =&gt; BusinessMan 변경 &#10;&#10;2. 이름 추가&#10;DeliveryManDto : carNum(차량번호) &#10;BusinessManDto warehouseArea(창고면적) 추가" />
     <MESSAGE value="회원가입 서비스 로직 구현" />
     <MESSAGE value="회원가입 및 로그인 설계 중 동시성 고민 전단계까지 구현" />
     <MESSAGE value="히카리 cp 구현" />
@@ -457,8 +465,10 @@
     <MESSAGE value="################ COMMIT START&#10;# &lt;타입&gt;: &lt;제목&gt; 의 형식으로 제목을 아래 공백줄에 작성 -- ex. feat: 로그인 기능 추가&#10;# 제목은 50자 이내, 변경사항 명확히 작성, 끝에 마침표 금지&#10;refactor: 아이디 찾기 시 예외 로직 print문에서 IllegalArgumentException throw하는 로직으로 변경 &#10;# 바로 아래 공백은 지우지 마세요 (제목과 본문의 분리를 위함)&#10;&#10;################&#10;# 본문(구체적인 내용)을 아랫줄에 작성&#10;# &quot;어떻게&quot; 보다 &quot;무엇을&quot;, &quot;왜&quot; 를 설명&#10;# 여러 줄의 메시지를 작성할 땐 &quot;-&quot;로 구분 (한 줄은 72자 이내)&#10;&#10;################ COMMIT END&#10;# --- COMMIT TYPE ---&#10;#  chore            : 프로젝트 초기 구성등 기타사항.&#10;#  feat             : 새로운 기능&#10;#  fix              : 버그 수정&#10;#  refactor         : 코드 리펙토링&#10;#  style            : 스타일 (코드 포맷팅, 세미콜론 등 비즈니스 로직에 영향 없는 변경 사항)&#10;#  design           : CSS/UI 변경 내용&#10;#  docs             : 문서 (문서 추가, 수정, 삭제)&#10;#  test             : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#10;#  update           : 전반적인 수정사항&#10;#  remove           : 삭제&#10;#  in progress      : 아직 완성하지는 못했지만 진행중인 부분을 커밋해야할 경우&#10;#  HOTFIX           : 급하게 치명적인 버그를 고쳐야 하는 경우&#10;#  add dependency   : dependency 추가&#10;#  typo fix         : 오탈자 수정&#10;################" />
     <MESSAGE value="################ COMMIT START&#10;# &lt;타입&gt;: &lt;제목&gt; 의 형식으로 제목을 아래 공백줄에 작성 -- ex. feat: 로그인 기능 추가&#10;# 제목은 50자 이내, 변경사항 명확히 작성, 끝에 마침표 금지&#10;feat: 회원 서비스 , 회원 dao 임시 구현 완성&#10;# 바로 아래 공백은 지우지 마세요 (제목과 본문의 분리를 위함)&#10;&#10;################&#10;# 본문(구체적인 내용)을 아랫줄에 작성&#10;# &quot;어떻게&quot; 보다 &quot;무엇을&quot;, &quot;왜&quot; 를 설명&#10;# 여러 줄의 메시지를 작성할 땐 &quot;-&quot;로 구분 (한 줄은 72자 이내)&#10;&#10;################ COMMIT END&#10;# --- COMMIT TYPE ---&#10;#  chore            : 프로젝트 초기 구성등 기타사항.&#10;#  feat             : 새로운 기능&#10;#  fix              : 버그 수정&#10;#  refactor         : 코드 리펙토링&#10;#  style            : 스타일 (코드 포맷팅, 세미콜론 등 비즈니스 로직에 영향 없는 변경 사항)&#10;#  design           : CSS/UI 변경 내용&#10;#  docs             : 문서 (문서 추가, 수정, 삭제)&#10;#  test             : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#10;#  update           : 전반적인 수정사항&#10;#  remove           : 삭제&#10;#  in progress      : 아직 완성하지는 못했지만 진행중인 부분을 커밋해야할 경우&#10;#  HOTFIX           : 급하게 치명적인 버그를 고쳐야 하는 경우&#10;#  add dependency   : dependency 추가&#10;#  typo fix         : 오탈자 수정&#10;################" />
     <MESSAGE value="################ COMMIT START&#10;# &lt;타입&gt;: &lt;제목&gt; 의 형식으로 제목을 아래 공백줄에 작성 -- ex. feat: 로그인 기능 추가&#10;# 제목은 50자 이내, 변경사항 명확히 작성, 끝에 마침표 금지&#10;feat: DeliveryMan 도메인에 Region 연관관계 필드 추가&#10;# 바로 아래 공백은 지우지 마세요 (제목과 본문의 분리를 위함)&#10;&#10;################&#10;# 본문(구체적인 내용)을 아랫줄에 작성&#10;# &quot;어떻게&quot; 보다 &quot;무엇을&quot;, &quot;왜&quot; 를 설명&#10;# 여러 줄의 메시지를 작성할 땐 &quot;-&quot;로 구분 (한 줄은 72자 이내)&#10;&#10;################ COMMIT END&#10;# --- COMMIT TYPE ---&#10;#  chore            : 프로젝트 초기 구성등 기타사항.&#10;#  feat             : 새로운 기능&#10;#  fix              : 버그 수정&#10;#  refactor         : 코드 리펙토링&#10;#  style            : 스타일 (코드 포맷팅, 세미콜론 등 비즈니스 로직에 영향 없는 변경 사항)&#10;#  design           : CSS/UI 변경 내용&#10;#  docs             : 문서 (문서 추가, 수정, 삭제)&#10;#  test             : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#10;#  update           : 전반적인 수정사항&#10;#  remove           : 삭제&#10;#  in progress      : 아직 완성하지는 못했지만 진행중인 부분을 커밋해야할 경우&#10;#  HOTFIX           : 급하게 치명적인 버그를 고쳐야 하는 경우&#10;#  add dependency   : dependency 추가&#10;#  typo fix         : 오탈자 수정&#10;################" />
-    <MESSAGE value="################ COMMIT START&#13;&#10;# &lt;타입&gt;: &lt;제목&gt; 의 형식으로 제목을 아래 공백줄에 작성 -- ex. feat: 로그인 기능 추가&#13;&#10;# 제목은 50자 이내, 변경사항 명확히 작성, 끝에 마침표 금지&#13;&#10;&#13;&#10;# 바로 아래 공백은 지우지 마세요 (제목과 본문의 분리를 위함)&#13;&#10;&#13;&#10;################&#13;&#10;# 본문(구체적인 내용)을 아랫줄에 작성&#13;&#10;# &quot;어떻게&quot; 보다 &quot;무엇을&quot;, &quot;왜&quot; 를 설명&#13;&#10;# 여러 줄의 메시지를 작성할 땐 &quot;-&quot;로 구분 (한 줄은 72자 이내)&#13;&#10;&#13;&#10;################ COMMIT END&#13;&#10;# --- COMMIT TYPE ---&#13;&#10;#  chore            : 프로젝트 초기 구성등 기타사항.&#13;&#10;#  feat             : 새로운 기능&#13;&#10;#  fix              : 버그 수정&#13;&#10;#  refactor         : 코드 리펙토링&#13;&#10;#  style            : 스타일 (코드 포맷팅, 세미콜론 등 비즈니스 로직에 영향 없는 변경 사항)&#13;&#10;#  design           : CSS/UI 변경 내용&#13;&#10;#  docs             : 문서 (문서 추가, 수정, 삭제)&#13;&#10;#  test             : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#13;&#10;#  update           : 전반적인 수정사항&#13;&#10;#  remove           : 삭제&#13;&#10;#  in progress      : 아직 완성하지는 못했지만 진행중인 부분을 커밋해야할 경우&#13;&#10;#  HOTFIX           : 급하게 치명적인 버그를 고쳐야 하는 경우&#13;&#10;#  add dependency   : dependency 추가&#13;&#10;#  typo fix         : 오탈자 수정&#13;&#10;################" />
     <MESSAGE value="################ COMMIT START&#10;# &lt;타입&gt;: &lt;제목&gt; 의 형식으로 제목을 아래 공백줄에 작성 -- ex. feat: 로그인 기능 추가&#10;# 제목은 50자 이내, 변경사항 명확히 작성, 끝에 마침표 금지&#10;fix: 서브 테이블 SQL pstmt , rs 리소스 안 닫은 버그 수정&#10;# 바로 아래 공백은 지우지 마세요 (제목과 본문의 분리를 위함)&#10;&#10;################&#10;# 본문(구체적인 내용)을 아랫줄에 작성&#10;# &quot;어떻게&quot; 보다 &quot;무엇을&quot;, &quot;왜&quot; 를 설명&#10;# 여러 줄의 메시지를 작성할 땐 &quot;-&quot;로 구분 (한 줄은 72자 이내)&#10;&#10;################ COMMIT END&#10;# --- COMMIT TYPE ---&#10;#  chore            : 프로젝트 초기 구성등 기타사항.&#10;#  feat             : 새로운 기능&#10;#  fix              : 버그 수정&#10;#  refactor         : 코드 리펙토링&#10;#  style            : 스타일 (코드 포맷팅, 세미콜론 등 비즈니스 로직에 영향 없는 변경 사항)&#10;#  design           : CSS/UI 변경 내용&#10;#  docs             : 문서 (문서 추가, 수정, 삭제)&#10;#  test             : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#10;#  update           : 전반적인 수정사항&#10;#  remove           : 삭제&#10;#  in progress      : 아직 완성하지는 못했지만 진행중인 부분을 커밋해야할 경우&#10;#  HOTFIX           : 급하게 치명적인 버그를 고쳐야 하는 경우&#10;#  add dependency   : dependency 추가&#10;#  typo fix         : 오탈자 수정&#10;################" />
-    <option name="LAST_COMMIT_MESSAGE" value="################ COMMIT START&#10;# &lt;타입&gt;: &lt;제목&gt; 의 형식으로 제목을 아래 공백줄에 작성 -- ex. feat: 로그인 기능 추가&#10;# 제목은 50자 이내, 변경사항 명확히 작성, 끝에 마침표 금지&#10;fix: 서브 테이블 SQL pstmt , rs 리소스 안 닫은 버그 수정&#10;# 바로 아래 공백은 지우지 마세요 (제목과 본문의 분리를 위함)&#10;&#10;################&#10;# 본문(구체적인 내용)을 아랫줄에 작성&#10;# &quot;어떻게&quot; 보다 &quot;무엇을&quot;, &quot;왜&quot; 를 설명&#10;# 여러 줄의 메시지를 작성할 땐 &quot;-&quot;로 구분 (한 줄은 72자 이내)&#10;&#10;################ COMMIT END&#10;# --- COMMIT TYPE ---&#10;#  chore            : 프로젝트 초기 구성등 기타사항.&#10;#  feat             : 새로운 기능&#10;#  fix              : 버그 수정&#10;#  refactor         : 코드 리펙토링&#10;#  style            : 스타일 (코드 포맷팅, 세미콜론 등 비즈니스 로직에 영향 없는 변경 사항)&#10;#  design           : CSS/UI 변경 내용&#10;#  docs             : 문서 (문서 추가, 수정, 삭제)&#10;#  test             : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#10;#  update           : 전반적인 수정사항&#10;#  remove           : 삭제&#10;#  in progress      : 아직 완성하지는 못했지만 진행중인 부분을 커밋해야할 경우&#10;#  HOTFIX           : 급하게 치명적인 버그를 고쳐야 하는 경우&#10;#  add dependency   : dependency 추가&#10;#  typo fix         : 오탈자 수정&#10;################" />
+    <MESSAGE value="################ COMMIT START&#10;# &lt;타입&gt;: &lt;제목&gt; 의 형식으로 제목을 아래 공백줄에 작성 -- ex. feat: 로그인 기능 추가&#10;# 제목은 50자 이내, 변경사항 명확히 작성, 끝에 마침표 금지&#10;feat: Region 추가 및 SQL작성&#10;# 바로 아래 공백은 지우지 마세요 (제목과 본문의 분리를 위함)&#10;&#10;################&#10;# 본문(구체적인 내용)을 아랫줄에 작성&#10;# &quot;어떻게&quot; 보다 &quot;무엇을&quot;, &quot;왜&quot; 를 설명&#10;# 여러 줄의 메시지를 작성할 땐 &quot;-&quot;로 구분 (한 줄은 72자 이내)&#10;&#10;################ COMMIT END&#10;# --- COMMIT TYPE ---&#10;#  chore            : 프로젝트 초기 구성등 기타사항.&#10;#  feat             : 새로운 기능&#10;#  fix              : 버그 수정&#10;#  refactor         : 코드 리펙토링&#10;#  style            : 스타일 (코드 포맷팅, 세미콜론 등 비즈니스 로직에 영향 없는 변경 사항)&#10;#  design           : CSS/UI 변경 내용&#10;#  docs             : 문서 (문서 추가, 수정, 삭제)&#10;#  test             : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#10;#  update           : 전반적인 수정사항&#10;#  remove           : 삭제&#10;#  in progress      : 아직 완성하지는 못했지만 진행중인 부분을 커밋해야할 경우&#10;#  HOTFIX           : 급하게 치명적인 버그를 고쳐야 하는 경우&#10;#  add dependency   : dependency 추가&#10;#  typo fix         : 오탈자 수정&#10;################" />
+    <MESSAGE value="################ COMMIT START&#13;&#10;# &lt;타입&gt;: &lt;제목&gt; 의 형식으로 제목을 아래 공백줄에 작성 -- ex. feat: 로그인 기능 추가&#13;&#10;# 제목은 50자 이내, 변경사항 명확히 작성, 끝에 마침표 금지&#13;&#10;&#13;&#10;# 바로 아래 공백은 지우지 마세요 (제목과 본문의 분리를 위함)&#13;&#10;&#13;&#10;################&#13;&#10;# 본문(구체적인 내용)을 아랫줄에 작성&#13;&#10;# &quot;어떻게&quot; 보다 &quot;무엇을&quot;, &quot;왜&quot; 를 설명&#13;&#10;# 여러 줄의 메시지를 작성할 땐 &quot;-&quot;로 구분 (한 줄은 72자 이내)&#13;&#10;&#13;&#10;################ COMMIT END&#13;&#10;# --- COMMIT TYPE ---&#13;&#10;#  chore            : 프로젝트 초기 구성등 기타사항.&#13;&#10;#  feat             : 새로운 기능&#13;&#10;#  fix              : 버그 수정&#13;&#10;#  refactor         : 코드 리펙토링&#13;&#10;#  style            : 스타일 (코드 포맷팅, 세미콜론 등 비즈니스 로직에 영향 없는 변경 사항)&#13;&#10;#  design           : CSS/UI 변경 내용&#13;&#10;#  docs             : 문서 (문서 추가, 수정, 삭제)&#13;&#10;#  test             : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#13;&#10;#  update           : 전반적인 수정사항&#13;&#10;#  remove           : 삭제&#13;&#10;#  in progress      : 아직 완성하지는 못했지만 진행중인 부분을 커밋해야할 경우&#13;&#10;#  HOTFIX           : 급하게 치명적인 버그를 고쳐야 하는 경우&#13;&#10;#  add dependency   : dependency 추가&#13;&#10;#  typo fix         : 오탈자 수정&#13;&#10;################" />
+    <MESSAGE value="################ COMMIT START&#10;# &lt;타입&gt;: &lt;제목&gt; 의 형식으로 제목을 아래 공백줄에 작성 -- ex. feat: 로그인 기능 추가&#10;# 제목은 50자 이내, 변경사항 명확히 작성, 끝에 마침표 금지&#10;feat: Region 컨트롤러 및 서비스 처리 완성&#10;# 바로 아래 공백은 지우지 마세요 (제목과 본문의 분리를 위함)&#10;&#10;################&#10;# 본문(구체적인 내용)을 아랫줄에 작성&#10;# &quot;어떻게&quot; 보다 &quot;무엇을&quot;, &quot;왜&quot; 를 설명&#10;# 여러 줄의 메시지를 작성할 땐 &quot;-&quot;로 구분 (한 줄은 72자 이내)&#10;&#10;################ COMMIT END&#10;# --- COMMIT TYPE ---&#10;#  chore            : 프로젝트 초기 구성등 기타사항.&#10;#  feat             : 새로운 기능&#10;#  fix              : 버그 수정&#10;#  refactor         : 코드 리펙토링&#10;#  style            : 스타일 (코드 포맷팅, 세미콜론 등 비즈니스 로직에 영향 없는 변경 사항)&#10;#  design           : CSS/UI 변경 내용&#10;#  docs             : 문서 (문서 추가, 수정, 삭제)&#10;#  test             : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#10;#  update           : 전반적인 수정사항&#10;#  remove           : 삭제&#10;#  in progress      : 아직 완성하지는 못했지만 진행중인 부분을 커밋해야할 경우&#10;#  HOTFIX           : 급하게 치명적인 버그를 고쳐야 하는 경우&#10;#  add dependency   : dependency 추가&#10;#  typo fix         : 오탈자 수정&#10;################" />
+    <option name="LAST_COMMIT_MESSAGE" value="################ COMMIT START&#10;# &lt;타입&gt;: &lt;제목&gt; 의 형식으로 제목을 아래 공백줄에 작성 -- ex. feat: 로그인 기능 추가&#10;# 제목은 50자 이내, 변경사항 명확히 작성, 끝에 마침표 금지&#10;feat: Region 컨트롤러 및 서비스 처리 완성&#10;# 바로 아래 공백은 지우지 마세요 (제목과 본문의 분리를 위함)&#10;&#10;################&#10;# 본문(구체적인 내용)을 아랫줄에 작성&#10;# &quot;어떻게&quot; 보다 &quot;무엇을&quot;, &quot;왜&quot; 를 설명&#10;# 여러 줄의 메시지를 작성할 땐 &quot;-&quot;로 구분 (한 줄은 72자 이내)&#10;&#10;################ COMMIT END&#10;# --- COMMIT TYPE ---&#10;#  chore            : 프로젝트 초기 구성등 기타사항.&#10;#  feat             : 새로운 기능&#10;#  fix              : 버그 수정&#10;#  refactor         : 코드 리펙토링&#10;#  style            : 스타일 (코드 포맷팅, 세미콜론 등 비즈니스 로직에 영향 없는 변경 사항)&#10;#  design           : CSS/UI 변경 내용&#10;#  docs             : 문서 (문서 추가, 수정, 삭제)&#10;#  test             : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#10;#  update           : 전반적인 수정사항&#10;#  remove           : 삭제&#10;#  in progress      : 아직 완성하지는 못했지만 진행중인 부분을 커밋해야할 경우&#10;#  HOTFIX           : 급하게 치명적인 버그를 고쳐야 하는 경우&#10;#  add dependency   : dependency 추가&#10;#  typo fix         : 오탈자 수정&#10;################" />
   </component>
 </project>

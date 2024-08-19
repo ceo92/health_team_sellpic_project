@@ -11,12 +11,11 @@ import dto.savedto.DeliveryManSaveDto;
 import dto.savedto.BusinessManSaveDto;
 import dto.savedto.WarehouseManagerSaveDto;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import service.RegionService;
 import service.UserService;
 
-public class MainController {
+public class Main {
 
 
   private static final UserService userService = new UserService();
@@ -25,8 +24,8 @@ public class MainController {
   public static void main(String[] args) throws IOException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("Welcome to Money Flow WMS");
-    initUser();
-    Map<Integer, String> passwordQuestionsMap = initPasswordQuestions();
+    initializeDefaultUser();
+    Map<Integer, String> passwordQuestionsMap = initializePasswordQuestions();
     /**
      * 기본 회원 정보 및 ADMIN 초기화 ,이건 DataGrip에서 하자
      */
@@ -241,11 +240,19 @@ public class MainController {
 
   }
 
-  private static void initUser() {
-    userService.businessManJoin();
+  private static void initializeDefaultUser() {
+    userService.businessManJoin(new BusinessManSaveDto("businessManA" , "100-0000-0000" , "businessmanA@naver.com"
+        , "rdA!@$1234198" , "rdA!@$1234198" , "가장 좋아하는 회사는?" , "신세계 아이앤씨" ,
+        "000-00-00000" , "신세계A"));
+    userService.warehouseManagerJoin(new WarehouseManagerSaveDto("warehouseManagerA" , "200-0000-0000" , "warehousemanagerA@naver.com"
+        , "rdA!@$1234198" , "rdA!@$1234198" , "가장 좋아하는 회사는?" , "신세계 아이앤씨"));
+    userService.deliveryManJoin(new DeliveryManSaveDto("deliveryManA","300-0000-0000" , "delivarymanA@naver.com" ,
+        "passwordA@#$23r9" , "passwordA@#$23r9" ,"가장 좋아하는 회사는?"  , "신세계 아이앤씨" ,
+        "" , "333아 3333" , regionService.findRegionById(1)));
+
   }
 
-  private static Map<Integer, String> initPasswordQuestions() {
+  private static Map<Integer, String> initializePasswordQuestions() {
     Map<Integer, String> passwordQuestions = new HashMap<>();
     passwordQuestions.put(1 , "가장 좋아하는 회사는?");
     passwordQuestions.put(2 , "가장 존경하는 인물은?");

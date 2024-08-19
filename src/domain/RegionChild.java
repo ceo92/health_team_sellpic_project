@@ -1,3 +1,4 @@
+/*
 package domain;
 
 import lombok.AccessLevel;
@@ -15,3 +16,4 @@ public class RegionChild {
 
 
 }
+*/

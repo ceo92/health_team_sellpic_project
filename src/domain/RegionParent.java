@@ -1,3 +1,4 @@
+/*
 package domain;
 
 import java.util.ArrayList;
@@ -15,3 +16,4 @@ public class RegionParent {//서울 , 부산 , 인천 , 충청남도 , 충청북
   private List<RegionChild> regionChildList = new ArrayList<>(); //조회용 , 양방향 연관관계 mappedBy
 
 }
+*/

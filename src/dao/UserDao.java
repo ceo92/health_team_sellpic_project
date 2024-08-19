@@ -208,20 +208,28 @@ public class UserDao {
           sql.replace(14, 18, "business_man");
           subTablePstmt = con.prepareStatement(sql.toString());
           subTableRs = subTablePstmt.executeQuery();
-          BusinessMan businessMan = new BusinessMan(user.getId() , user.getName() , user.getPhoneNumber(),
-              user.getLoginEmail() , user.getPassword(), user.getRoleType() ,user.getPasswordQuestion() , user.getPasswordAnswer(),
-              subTableRs.getString("business_num") , subTableRs.getString("business_name"));
-          users.add(businessMan);
+          while (subTableRs.next()) {
+            BusinessMan businessMan = new BusinessMan(user.getId(), user.getName(),
+                user.getPhoneNumber(),
+                user.getLoginEmail(), user.getPassword(), user.getRoleType(),
+                user.getPasswordQuestion(), user.getPasswordAnswer(),
+                subTableRs.getString("business_num"), subTableRs.getString("business_name"));
+            users.add(businessMan);
+          }
         } else if (user.getRoleType() == DELIVERY_MAN ) {
           sql.replace(14, 18, "delivery_man");
           subTablePstmt = con.prepareStatement(sql.toString());
           subTableRs = subTablePstmt.executeQuery();
-          subTableRs = subTablePstmt.executeQuery();
-          DeliveryMan deliveryMan = new DeliveryMan(user.getId() , user.getName() , user.getPhoneNumber(),
-              user.getLoginEmail() , user.getPassword(), user.getRoleType() , user.getPasswordQuestion() , user.getPasswordAnswer(),
-              subTableRs.getString("delivery_man_num") , subTableRs.getString("car_num")
-              , new Region(subTableRs.getInt("id") , subTableRs.getString("code") , subTableRs.getString("name") , subTableRs.getObject("parent_id" , Integer.class)));
-          users.add(deliveryMan);
+          while (subTableRs.next()) {
+            DeliveryMan deliveryMan = new DeliveryMan(user.getId(), user.getName(),
+                user.getPhoneNumber(),
+                user.getLoginEmail(), user.getPassword(), user.getRoleType(),
+                user.getPasswordQuestion(), user.getPasswordAnswer(),
+                subTableRs.getString("delivery_man_num"), subTableRs.getString("car_num")
+                , new Region(subTableRs.getInt("id"), subTableRs.getString("code"),
+                subTableRs.getString("name"), subTableRs.getObject("parent_id", Integer.class)));
+            users.add(deliveryMan);
+          }
         }
         else{
           users.add(user);
